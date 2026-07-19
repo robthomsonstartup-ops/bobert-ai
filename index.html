@@ -442,34 +442,22 @@
 
     .video-wrap {
       margin-top: 48px;
-      background: var(--card);
-      border: 1px solid var(--border);
+      max-width: 360px;
+      margin-left: auto; margin-right: auto;
       border-radius: 20px;
       overflow: hidden;
-      max-width: 800px;
-      margin-left: auto; margin-right: auto;
-      aspect-ratio: 16/9;
-      display: flex; align-items: center; justify-content: center;
-      position: relative;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      border: 1px solid var(--border);
     }
 
-    .video-placeholder {
-      display: flex; flex-direction: column; align-items: center; gap: 16px;
-      color: var(--muted);
+    .video-wrap iframe {
+      display: block;
+      width: 100%;
+      aspect-ratio: 9/16;
+      border: none;
     }
 
-    .play-btn {
-      width: 72px; height: 72px;
-      background: var(--red);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      cursor: pointer;
-      transition: transform 0.15s;
-    }
-    .play-btn:hover { transform: scale(1.08); }
-
-    .video-caption { font-size: 14px; }
+    .video-caption { font-size: 14px; color: var(--muted); margin-top: 16px; }
 
     /* ─── BETA SIGNUP ─── */
     .signup-section {
@@ -717,11 +705,14 @@
     <div class="section-label" style="text-align:center;">See It In Action</div>
     <h2 class="section-title">Watch the capture flow.</h2>
     <div class="video-wrap">
-      <div class="video-placeholder">
-        <div class="play-btn">▶</div>
-        <div class="video-caption">Bobert demo — coming soon</div>
-      </div>
+      <iframe
+        src="https://www.youtube.com/embed/Z4C_fkGVAmw"
+        title="Bobert App Demo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
     </div>
+    <p class="video-caption" style="text-align:center;">Capture to saved in under 10 seconds.</p>
   </div>
 </div>
 
