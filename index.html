@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bobert — See what others drive past.</title>
+  <meta name="description" content="Bobert helps field professionals capture opportunities the moment they see them. Photo, GPS, voice note — saved before you leave the curb." />
+  <meta property="og:title" content="Bobert — See what others drive past." />
+  <meta property="og:description" content="Capture field opportunities before they're forgotten. Photo + GPS + note in seconds." />
+  <meta property="og:url" content="https://bobert.ai" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #0A0A0A;
+      --surface: #141414;
+      --card:    #1A1A1A;
+      --border:  #2A2A2A;
+      --red:     #DC2626;
+      --red-dim: #B91C1C;
+      --red-glow:rgba(220,38,38,0.18);
+      --white:   #FFFFFF;
+      --muted:   #888888;
+      --light:   #CCCCCC;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      height: 64px;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .b-mark {
+      width: 32px; height: 32px;
+      background: var(--red);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; font-weight: 900; color: var(--white);
+      letter-spacing: -1px;
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 18px; font-weight: 800;
+      color: var(--white); letter-spacing: -0.3px;
+    }
+
+    .brand-tld { color: var(--red); }
+
+    .nav-cta {
+      background: var(--red);
+      color: var(--white);
+      border: none; border-radius: 8px;
+      padding: 9px 20px;
+      font-size: 14px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .nav-cta:hover { background: var(--red-dim); }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 13px; font-weight: 500; color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    .hero-badge-dot {
+      width: 6px; height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 8vw, 88px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -2px;
+      max-width: 900px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--red);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 44px;
+    }
+
+    .hero-actions {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 72px;
+    }
+
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      border: none; border-radius: 10px;
+      padding: 15px 32px;
+      font-size: 16px; font-weight: 700;
+      cursor: pointer; text-decoration: none;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-primary:hover { background: var(--red-dim); transform: translateY(-1px); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 15px 32px;
+      font-size: 16px; font-weight: 600;
+      cursor: pointer; text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-secondary:hover { border-color: var(--muted); color: var(--white); }
+
+    /* ─── PHONE MOCKUP ─── */
+    .phone-wrap {
+      position: relative;
+      display: inline-block;
+    }
+
+    .phone-frame {
+      width: 280px;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 44px;
+      padding: 14px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+      position: relative;
+    }
+
+    .phone-notch {
+      width: 100px; height: 28px;
+      background: var(--black);
+      border-radius: 20px;
+      margin: 0 auto 12px;
+    }
+
+    .phone-screen {
+      background: var(--black);
+      border-radius: 32px;
+      overflow: hidden;
+      aspect-ratio: 9/19;
+      display: flex; flex-direction: column;
+    }
+
+    .app-header {
+      background: var(--surface);
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-title {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .app-b {
+      width: 22px; height: 22px;
+      background: var(--red);
+      border-radius: 5px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 900; color: white;
+    }
+
+    .app-name { font-size: 15px; font-weight: 800; }
+
+    .app-tagline {
+      font-size: 9px; color: var(--muted);
+    }
+    .app-tagline span { color: var(--red); }
+
+    .capture-area {
+      flex: 1;
+      background: #111;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .capture-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+    }
+
+    .camera-icon {
+      width: 36px; height: 36px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .capture-label { font-size: 9px; color: var(--muted); }
+
+    .app-controls {
+      padding: 12px 16px;
+      background: var(--surface);
+      display: flex; flex-direction: column; gap: 8px;
+      border-top: 1px solid var(--border);
+    }
+
+    .toggle-row {
+      display: flex; gap: 6px;
+    }
+
+    .toggle-btn {
+      flex: 1; padding: 6px 0;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 8px; color: var(--muted);
+      text-align: center;
+    }
+
+    .toggle-btn.active {
+      background: rgba(220,38,38,0.15);
+      border-color: var(--red);
+      color: var(--red);
+    }
+
+    .save-btn {
+      background: var(--red);
+      border-radius: 8px;
+      padding: 8px;
+      text-align: center;
+      font-size: 10px; font-weight: 700; color: white;
+    }
+
+    .app-tabs {
+      background: var(--surface);
+      display: flex;
+      border-top: 1px solid var(--border);
+      padding: 8px 0 10px;
+    }
+
+    .tab {
+      flex: 1; text-align: center;
+      font-size: 7px; color: var(--muted);
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .tab.active { color: var(--red); }
+    .tab-icon { font-size: 12px; }
+
+    /* ─── STATS BAR ─── */
+    .stats {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 24px;
+      display: flex; justify-content: center; gap: 0;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      flex: 1; min-width: 160px;
+      text-align: center;
+      padding: 20px;
+      border-right: 1px solid var(--border);
+    }
+    .stat:last-child { border-right: none; }
+
+    .stat-num {
+      font-size: 36px; font-weight: 900; color: var(--red);
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 13px; color: var(--muted);
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 96px 24px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 12px; font-weight: 600;
+      color: var(--red);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--muted);
+      line-height: 1.6;
+      max-width: 560px;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 2px;
+      margin-top: 56px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--card);
+      padding: 36px 32px;
+      position: relative;
+    }
+
+    .step-num {
+      font-size: 48px; font-weight: 900;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 20px;
+    }
+
+    .step-icon {
+      font-size: 28px; margin-bottom: 16px;
+    }
+
+    .step h3 {
+      font-size: 18px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ─── FEATURES ─── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+      margin-top: 56px;
+    }
+
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      transition: border-color 0.2s;
+    }
+    .feature-card:hover { border-color: var(--red); }
+
+    .feature-icon {
+      width: 44px; height: 44px;
+      background: var(--red-glow);
+      border: 1px solid rgba(220,38,38,0.3);
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 17px; font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .feature-card p {
+      font-size: 14px; color: var(--muted); line-height: 1.6;
+    }
+
+    /* ─── VIDEO ─── */
+    .video-section {
+      padding: 96px 24px;
+      text-align: center;
+    }
+
+    .video-wrap {
+      margin-top: 48px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      max-width: 800px;
+      margin-left: auto; margin-right: auto;
+      aspect-ratio: 16/9;
+      display: flex; align-items: center; justify-content: center;
+      position: relative;
+    }
+
+    .video-placeholder {
+      display: flex; flex-direction: column; align-items: center; gap: 16px;
+      color: var(--muted);
+    }
+
+    .play-btn {
+      width: 72px; height: 72px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      cursor: pointer;
+      transition: transform 0.15s;
+    }
+    .play-btn:hover { transform: scale(1.08); }
+
+    .video-caption { font-size: 14px; }
+
+    /* ─── BETA SIGNUP ─── */
+    .signup-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .signup-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 96px 24px;
+      text-align: center;
+    }
+
+    .signup-inner .section-title { margin-bottom: 12px; }
+
+    .signup-inner .section-sub {
+      margin: 0 auto 36px;
+    }
+
+    .email-form {
+      display: flex; gap: 10px;
+      max-width: 440px; margin: 0 auto;
+      flex-wrap: wrap;
+    }
+
+    .email-input {
+      flex: 1; min-width: 200px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 15px; color: var(--white);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .email-input::placeholder { color: var(--muted); }
+    .email-input:focus { border-color: var(--red); }
+
+    .form-note {
+      font-size: 12px; color: var(--muted);
+      margin-top: 14px;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 48px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 16px;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-brand {
+      display: flex; align-items: center; gap: 8px;
+      text-decoration: none;
+    }
+
+    .footer-links {
+      display: flex; gap: 24px;
+    }
+
+    .footer-links a {
+      color: var(--muted); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-links a:hover { color: var(--white); }
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .stat { min-width: 120px; padding: 16px; }
+      .stat-num { font-size: 28px; }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">
+    <div class="b-mark">B</div>
+    <span class="brand-name">bobert<span class="brand-tld">.ai</span></span>
+  </a>
+  <a class="nav-cta" href="#beta">Join the Beta</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:none; padding-top:140px;">
+  <div class="hero-badge">
+    <span class="hero-badge-dot"></span>
+    Now in private beta
+  </div>
+
+  <h1>See what <em>others</em><br>drive past.</h1>
+
+  <p class="hero-sub">
+    Bobert is the field intelligence app for professionals who find opportunity on the road. Capture it in seconds — before you leave the curb.
+  </p>
+
+  <div class="hero-actions">
+    <a class="btn-primary" href="#beta">Join the Beta</a>
+    <a class="btn-secondary" href="#how">See How It Works</a>
+  </div>
+
+  <!-- Phone Mockup -->
+  <div class="phone-wrap">
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="app-header">
+          <div class="app-title">
+            <div class="app-b">B</div>
+            <span class="app-name">Bobert</span>
+          </div>
+          <div class="app-tagline">See what <span>others</span> drive past.</div>
+        </div>
+        <div class="capture-area">
+          <div class="capture-placeholder">
+            <div class="camera-icon">📷</div>
+            <div class="capture-label">Tap to capture</div>
+          </div>
+        </div>
+        <div class="app-controls">
+          <div class="toggle-row">
+            <div class="toggle-btn active">📷 Photo</div>
+            <div class="toggle-btn">🎤 Voice</div>
+          </div>
+          <div class="save-btn">Save Opportunity</div>
+        </div>
+        <div class="app-tabs">
+          <div class="tab"><span class="tab-icon">📋</span>Leads</div>
+          <div class="tab active"><span class="tab-icon">📷</span>Capture</div>
+          <div class="tab"><span class="tab-icon">🗺️</span>Map</div>
+          <div class="tab"><span class="tab-icon">⚙️</span>Settings</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="stat-num">&lt;10s</div>
+    <div class="stat-label">Capture time, curb to saved</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">GPS</div>
+    <div class="stat-label">Auto-tagged location every time</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">0</div>
+    <div class="stat-label">Opportunities forgotten</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">Leads you used to miss</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-label">How It Works</div>
+  <h2 class="section-title">Three taps.<br>Opportunity saved.</h2>
+  <p class="section-sub">No forms. No friction. Built for people who are already moving.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-icon">👁️</div>
+      <h3>See It</h3>
+      <p>Spot a sign, a property, a job site — any opportunity on the road that your competition drives past.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-icon">📷</div>
+      <h3>Capture It</h3>
+      <p>Take a photo or drop a voice note. Bobert tags it with GPS automatically. Done in under 10 seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-icon">🔔</div>
+      <h3>Follow Up</h3>
+      <p>Set a reminder before you pull away. Bobert keeps your pipeline moving — nothing slips through the cracks.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- FEATURES -->
+<section id="features" style="padding-top:80px;">
+  <div class="section-label">Features</div>
+  <h2 class="section-title">Everything you need.<br>Nothing you don't.</h2>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📷</div>
+      <h3>Photo Capture</h3>
+      <p>Shoot the sign, the property, the job site. Your camera roll stays clean — Bobert keeps it organized separately.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📍</div>
+      <h3>Auto GPS Tag</h3>
+      <p>Every opportunity is pinned to where you found it. Pull up a map view and see your entire territory at a glance.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎤</div>
+      <h3>Voice Notes</h3>
+      <p>Don't stop to type. Hit record and talk — Bobert captures what you saw, what you heard, and what you're thinking.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔔</div>
+      <h3>Follow-Up Reminders</h3>
+      <p>Set a reminder before you leave the curb. Tomorrow morning, next week — Bobert pings you back at the right time.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📋</div>
+      <h3>Leads Dashboard</h3>
+      <p>Every opportunity in one list. Filter, sort, and track the ones that are moving — and the ones still waiting.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Built for Speed</h3>
+      <p>Open → Capture → Save → Go. The whole flow takes under 10 seconds. Because you're already back on the road.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- VIDEO -->
+<div class="video-section">
+  <div style="max-width:1100px; margin: 0 auto;">
+    <div class="section-label" style="text-align:center;">See It In Action</div>
+    <h2 class="section-title">Watch the capture flow.</h2>
+    <div class="video-wrap">
+      <div class="video-placeholder">
+        <div class="play-btn">▶</div>
+        <div class="video-caption">Bobert demo — coming soon</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<section>
+  <div class="section-label">Who It's For</div>
+  <h2 class="section-title">If you work in the field,<br>this is for you.</h2>
+  <p class="section-sub">Bobert was built for anyone who drives a territory and hunts for opportunity on the road.</p>
+
+  <div class="features-grid" style="margin-top:48px;">
+    <div class="feature-card">
+      <div class="feature-icon">🏠</div>
+      <h3>Real Estate</h3>
+      <p>Catch FSBOs, expired listings, and distressed properties before they hit the MLS.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔨</div>
+      <h3>Construction &amp; Trades</h3>
+      <p>Log job sites, competitor trucks, permit signs, and material delivery opportunities.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🌿</div>
+      <h3>Landscaping &amp; Exterior</h3>
+      <p>Flag neglected lawns, new builds, and commercial properties actively being maintained.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Field Sales</h3>
+      <p>Track businesses, signage, and foot traffic patterns across your territory as you drive it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BETA SIGNUP -->
+<div class="signup-section" id="beta">
+  <div class="signup-inner">
+    <div class="section-label">Private Beta</div>
+    <h2 class="section-title">Get early access.</h2>
+    <p class="section-sub">
+      We're rolling out to a small group of field professionals first. Drop your email — we'll reach out when your spot is ready.
+    </p>
+    <form class="email-form" onsubmit="handleSignup(event)">
+      <input class="email-input" type="email" placeholder="your@email.com" required />
+      <button class="btn-primary" type="submit">Request Access</button>
+    </form>
+    <p class="form-note">No spam. No pitch deck. Just early access when we're ready for you.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-brand" href="#">
+    <div class="b-mark" style="width:24px;height:24px;font-size:13px;border-radius:6px;">B</div>
+    <span style="font-size:15px;font-weight:800;color:var(--white);">bobert<span style="color:var(--red);">.ai</span></span>
+  </a>
+  <div class="footer-links">
+    <a href="#how">How It Works</a>
+    <a href="#features">Features</a>
+    <a href="#beta">Beta</a>
+    <a href="mailto:hello@bobert.ai">Contact</a>
+  </div>
+  <span>© 2026 Bobert. All rights reserved.</span>
+</footer>
+
+<script>
+  function handleSignup(e) {
+    e.preventDefault();
+    const input = e.target.querySelector('input');
+    const btn = e.target.querySelector('button');
+    btn.textContent = '✓ You\'re on the list';
+    btn.style.background = '#16a34a';
+    input.disabled = true;
+    btn.disabled = true;
+  }
+</script>
+
+</body>
+</html>
