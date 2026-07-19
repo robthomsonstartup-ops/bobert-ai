@@ -14,16 +14,20 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black:   #0A0A0A;
-      --surface: #141414;
-      --card:    #1A1A1A;
-      --border:  #2A2A2A;
-      --red:     #DC2626;
-      --red-dim: #B91C1C;
-      --red-glow:rgba(220,38,38,0.18);
-      --white:   #FFFFFF;
-      --muted:   #888888;
-      --light:   #CCCCCC;
+      --black:      #0A0A0A;
+      --surface:    #1F2937;
+      --card:       #1F2937;
+      --border:     #E5E7EB;
+      --border-sub: rgba(229,231,235,0.12);
+      --red:        #DC2626;
+      --red-dim:    #B91C1C;
+      --red-glow:   rgba(220,38,38,0.15);
+      --white:      #FFFFFF;
+      --gray-mid:   #374151;
+      --gray:       #6B7280;
+      --muted:      #6B7280;
+      --light:      #F9FAFB;
+      --red-bg:     #FEF2F2;
     }
 
     html { scroll-behavior: smooth; }
@@ -31,7 +35,7 @@
     body {
       background: var(--black);
       color: var(--white);
-      font-family: 'Inter', -apple-system, sans-serif;
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
     }
@@ -42,9 +46,9 @@
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px;
       height: 64px;
-      background: rgba(10,10,10,0.85);
+      background: rgba(10,10,10,0.88);
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-sub);
     }
 
     .nav-brand {
@@ -53,14 +57,11 @@
     }
 
     .b-mark {
-      width: 32px; height: 32px;
-      background: var(--red);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px; font-weight: 900; color: var(--white);
-      letter-spacing: -1px;
+      width: 34px; height: 34px;
       flex-shrink: 0;
+      display: block;
     }
+    .b-mark svg { width: 100%; height: 100%; display: block; }
 
     .brand-name {
       font-size: 18px; font-weight: 800;
@@ -182,7 +183,7 @@
     .phone-frame {
       width: 280px;
       background: var(--card);
-      border: 2px solid var(--border);
+      border: 2px solid var(--border-sub);
       border-radius: 44px;
       padding: 14px;
       box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
@@ -207,7 +208,7 @@
     .app-header {
       background: var(--surface);
       padding: 14px 16px 10px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border-sub);
     }
 
     .app-title {
@@ -217,11 +218,10 @@
 
     .app-b {
       width: 22px; height: 22px;
-      background: var(--red);
-      border-radius: 5px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px; font-weight: 900; color: white;
+      flex-shrink: 0;
+      display: block;
     }
+    .app-b svg { width: 100%; height: 100%; display: block; }
 
     .app-name { font-size: 15px; font-weight: 800; }
 
@@ -290,7 +290,7 @@
     .app-tabs {
       background: var(--surface);
       display: flex;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border-sub);
       padding: 8px 0 10px;
     }
 
@@ -305,8 +305,8 @@
     /* ─── STATS BAR ─── */
     .stats {
       background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-top: 1px solid var(--border-sub);
+      border-bottom: 1px solid var(--border-sub);
       padding: 40px 24px;
       display: flex; justify-content: center; gap: 0;
       flex-wrap: wrap;
@@ -316,7 +316,7 @@
       flex: 1; min-width: 160px;
       text-align: center;
       padding: 20px;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--border-sub);
     }
     .stat:last-child { border-right: none; }
 
@@ -367,7 +367,7 @@
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 2px;
       margin-top: 56px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-sub);
       border-radius: 16px;
       overflow: hidden;
     }
@@ -408,7 +408,7 @@
 
     .feature-card {
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-sub);
       border-radius: 16px;
       padding: 32px;
       transition: border-color 0.2s;
@@ -447,7 +447,7 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 24px 80px rgba(0,0,0,0.5);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-sub);
     }
 
     .video-wrap iframe {
@@ -462,8 +462,8 @@
     /* ─── BETA SIGNUP ─── */
     .signup-section {
       background: var(--surface);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      border-top: 1px solid var(--border-sub);
+      border-bottom: 1px solid var(--border-sub);
     }
 
     .signup-inner {
@@ -488,7 +488,7 @@
     .email-input {
       flex: 1; min-width: 200px;
       background: var(--card);
-      border: 1px solid var(--border);
+      border: 1px solid var(--border-sub);
       border-radius: 10px;
       padding: 14px 18px;
       font-size: 15px; color: var(--white);
@@ -508,7 +508,7 @@
       padding: 48px 40px;
       display: flex; align-items: center; justify-content: space-between;
       flex-wrap: wrap; gap: 16px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border-sub);
       color: var(--muted);
       font-size: 13px;
     }
@@ -548,7 +548,7 @@
 <!-- NAV -->
 <nav>
   <a class="nav-brand" href="#">
-    <div class="b-mark">B</div>
+    <div class="b-mark"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#0A0A0A"/><path d="M24,50 L24,24 L50,24" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M150,24 L176,24 L176,50" stroke="#DC2626" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M24,150 L24,176 L50,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M176,150 L176,176 L150,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path fill-rule="evenodd" fill="white" d="M52,44 L148,44 L148,98 L128,98 L128,108 L148,108 L148,138 L126,156 L52,156 Z M74,64 L128,64 L128,92 L74,92 Z M74,112 L126,112 L126,136 L74,136 Z"/></svg></div>
     <span class="brand-name">bobert<span class="brand-tld">.ai</span></span>
   </a>
   <a class="nav-cta" href="#beta">Join the Beta</a>
@@ -579,7 +579,7 @@
       <div class="phone-screen">
         <div class="app-header">
           <div class="app-title">
-            <div class="app-b">B</div>
+            <div class="app-b"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#0A0A0A"/><path d="M24,50 L24,24 L50,24" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M150,24 L176,24 L176,50" stroke="#DC2626" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M24,150 L24,176 L50,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M176,150 L176,176 L150,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path fill-rule="evenodd" fill="white" d="M52,44 L148,44 L148,98 L128,98 L128,108 L148,108 L148,138 L126,156 L52,156 Z M74,64 L128,64 L128,92 L74,92 Z M74,112 L126,112 L126,136 L74,136 Z"/></svg></div>
             <span class="app-name">Bobert</span>
           </div>
           <div class="app-tagline">See what <span>others</span> drive past.</div>
@@ -765,7 +765,7 @@
 <!-- FOOTER -->
 <footer>
   <a class="footer-brand" href="#">
-    <div class="b-mark" style="width:24px;height:24px;font-size:13px;border-radius:6px;">B</div>
+    <div class="b-mark" style="width:28px;height:28px;"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="#0A0A0A"/><path d="M24,50 L24,24 L50,24" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M150,24 L176,24 L176,50" stroke="#DC2626" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M24,150 L24,176 L50,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path d="M176,150 L176,176 L150,176" stroke="#FFFFFF" stroke-width="7" fill="none" stroke-linecap="square"/><path fill-rule="evenodd" fill="white" d="M52,44 L148,44 L148,98 L128,98 L128,108 L148,108 L148,138 L126,156 L52,156 Z M74,64 L128,64 L128,92 L74,92 Z M74,112 L126,112 L126,136 L74,136 Z"/></svg></div>
     <span style="font-size:15px;font-weight:800;color:var(--white);">bobert<span style="color:var(--red);">.ai</span></span>
   </a>
   <div class="footer-links">
