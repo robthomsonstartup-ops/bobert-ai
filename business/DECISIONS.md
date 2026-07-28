@@ -108,4 +108,26 @@ This file is the single source of truth for locked decisions. Once logged here, 
 
 ---
 
+## DECISION 011 — Horizontal Wordmark Lockup
+**Locked:** July 27, 2026
+
+**Decision:** The horizontal lockup (Corner Signal mark + "Bobert" in Inter ExtraBold 800) ships as two pre-rendered transparent PNGs. Site and collateral use the image — never typed text alongside the mark.
+
+**Approved assets:**
+
+| File | Contents | Use |
+|---|---|---|
+| `assets/bobert-wordmark-white.png` | White mark + white text, transparent bg, red corner #DC2626 | Dark backgrounds — nav, footer, email header, dark one-pager |
+| `assets/bobert-wordmark-dark.png` | Dark mark + #1A1A1A text, transparent bg, red corner #DC2626 | Light backgrounds — one-pager body, LinkedIn, social, print |
+
+Both exported at 2400×600 (2× retina of 1200×300).
+
+**Construction:** mark at 220px on a 300px canvas, 30px left pad, 44px gap, text at 200px Inter 800, vertically centered on cap-height.
+
+**Rationale:** The prior wordmark PNGs in `/assets/` shipped with solid non-transparent backgrounds (light gray and near-white), making them unusable on the dark site. The nav worked around this by pairing `bobert-mark-dark.png` with typed HTML text and a blend mode — which rendered the mark nearly invisible on dark and put the red corner at risk.
+
+**Prohibited:** Any CSS filter that alters logo color — specifically `filter: brightness(0) invert(1)` and `mix-blend-mode`. Both destroy the red corner (red → black → white). The correct variant already carries native white or dark pixels plus the red corner. Pick the right file; do not filter.
+
+---
+
 *Add new decisions below with date and rationale.*
