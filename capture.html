@@ -13,124 +13,220 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --black: #0A0A0A;
-      --red:   #DC2626;
-      --white: #FFFFFF;
-      --gray:  #6B7280;
-      --card:  #1A1A1A;
+      --black:  #0A0A0A;
+      --red:    #DC2626;
+      --white:  #FFFFFF;
+      --gray:   #6B7280;
+      --card:   #111111;
+      --card2:  #1A1A1A;
       --border: rgba(255,255,255,0.1);
+      --green:  #22C55E;
+      --amber:  #F59E0B;
     }
     body {
       font-family: -apple-system, 'Inter', sans-serif;
       background: var(--black);
       color: var(--white);
       min-height: 100vh;
-      padding-bottom: calc(32px + env(safe-area-inset-bottom));
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
     }
+
+    /* Header */
     header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px;
+      padding: 14px 18px;
       border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; background: var(--black); z-index: 10;
+      position: sticky; top: 0; background: var(--black); z-index: 20;
     }
     .logo-mark { height: 34px; width: 34px; border-radius: 7px; }
     header h1 { font-size: 17px; font-weight: 700; }
     .nav-link { color: var(--gray); font-size: 14px; text-decoration: none; }
-    .nav-link:hover { color: var(--white); }
-    main { padding: 20px; max-width: 480px; margin: 0 auto; }
-    section { margin-bottom: 24px; }
-    .field-label {
+
+    main { padding: 18px; max-width: 520px; margin: 0 auto; }
+    section { margin-bottom: 20px; }
+    .lbl {
       display: block; font-size: 11px; font-weight: 700;
       color: var(--gray); text-transform: uppercase;
       letter-spacing: 1px; margin-bottom: 8px;
     }
 
-    /* Photo */
-    .photo-area {
-      position: relative; border-radius: 12px; overflow: hidden;
-      border: 2px dashed var(--border); height: 220px;
+    /* Photo area */
+    .photo-zone {
+      position: relative; border-radius: 14px; overflow: hidden;
+      border: 2px dashed var(--border); min-height: 220px;
       display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      cursor: pointer; transition: border-color 0.2s;
+      align-items: center; justify-content: center; cursor: pointer;
+      transition: border-color 0.2s; background: var(--card);
     }
-    .photo-area:hover { border-color: var(--red); }
-    .photo-area input[type=file] {
-      position: absolute; inset: 0; opacity: 0; cursor: pointer;
-      width: 100%; height: 100%;
+    .photo-zone.has-photo { border-color: transparent; }
+    .photo-zone:not(.has-photo):hover { border-color: var(--red); }
+    .photo-zone input[type=file] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2;
     }
-    .photo-preview {
+    .photo-zone img.preview {
       position: absolute; inset: 0; width: 100%; height: 100%;
       object-fit: cover; display: none;
     }
-    .photo-placeholder { text-align: center; pointer-events: none; }
-    .photo-placeholder .cam { font-size: 40px; margin-bottom: 10px; }
-    .photo-placeholder p { color: var(--gray); font-size: 14px; line-height: 1.5; }
-    .photo-placeholder strong { color: var(--red); }
+    .photo-zone.has-photo img.preview { display: block; }
+    .photo-ph { text-align: center; pointer-events: none; z-index: 1; padding: 20px; }
+    .photo-ph .cam { font-size: 44px; margin-bottom: 12px; }
+    .photo-ph p { color: var(--gray); font-size: 14px; line-height: 1.6; }
+    .photo-ph strong { color: var(--red); }
+    .photo-zone.has-photo .photo-ph { display: none; }
+    /* Retake overlay */
+    .retake-btn {
+      display: none; position: absolute; bottom: 10px; right: 10px; z-index: 3;
+      background: rgba(0,0,0,0.7); color: var(--white); border: none;
+      border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit;
+    }
+    .photo-zone.has-photo .retake-btn { display: block; }
 
     /* GPS */
     .gps-row {
-      display: flex; align-items: center; gap: 10px;
+      display: flex; align-items: flex-start; gap: 10px;
       background: var(--card); border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px;
     }
     .gps-dot {
       width: 9px; height: 9px; border-radius: 50%;
-      background: var(--gray); flex-shrink: 0;
-      transition: background 0.3s;
+      background: var(--gray); flex-shrink: 0; margin-top: 4px;
     }
-    .gps-row.locating .gps-dot { background: #F59E0B; animation: blink 1s infinite; }
-    .gps-row.located  .gps-dot { background: #22C55E; }
+    .gps-row.locating .gps-dot { background: var(--amber); animation: pulse 1s infinite; }
+    .gps-row.located  .gps-dot { background: var(--green); }
     .gps-row.gps-err  .gps-dot { background: var(--red); }
-    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
-    .gps-text { font-size: 13px; color: var(--gray); line-height: 1.4; }
+    @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.25} }
+    .gps-text { font-size: 13px; color: var(--gray); line-height: 1.5; }
     .gps-row.located .gps-text { color: var(--white); }
 
-    /* Textarea */
+    /* Note */
     textarea {
       width: 100%; background: var(--card); border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px;
       font-size: 15px; color: var(--white); font-family: inherit;
-      resize: vertical; min-height: 100px; outline: none;
+      resize: vertical; min-height: 90px; outline: none;
       transition: border-color 0.2s;
     }
     textarea:focus { border-color: var(--red); }
     textarea::placeholder { color: var(--gray); }
 
-    /* Voice */
-    .voice-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
-    .record-btn {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 16px; background: var(--card);
-      border: 1px solid var(--border); border-radius: 8px;
-      color: var(--white); font-size: 14px; font-weight: 600;
-      cursor: pointer; font-family: inherit; transition: all 0.15s;
-    }
-    .record-btn:hover { border-color: var(--red); }
-    .record-btn.recording { background: var(--red); border-color: var(--red); }
-    .rec-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--red); }
-    .record-btn.recording .rec-dot { background: var(--white); animation: blink 0.8s infinite; }
-    .voice-hint { font-size: 13px; color: var(--gray); }
-    audio { width: 100%; height: 40px; margin-top: 10px; opacity: 0.85; }
-
-    /* Date */
+    /* Follow-up */
     input[type=date] {
       width: 100%; background: var(--card); border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px;
       font-size: 15px; color: var(--white); font-family: inherit;
-      outline: none; transition: border-color 0.2s; -webkit-appearance: none;
+      outline: none; -webkit-appearance: none;
+      transition: border-color 0.2s;
     }
     input[type=date]:focus { border-color: var(--red); }
     input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
 
+    /* Analyze button */
+    .analyze-btn {
+      width: 100%; padding: 15px; background: var(--red); color: var(--white);
+      border: none; border-radius: 12px; font-size: 16px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+    }
+    .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .analyze-btn:not(:disabled):hover { opacity: 0.85; }
+
+    /* Analyzing state */
+    .analyzing-overlay {
+      display: none; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px; text-align: center; margin-top: 0;
+    }
+    .analyzing-overlay.show { display: block; }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--border);
+      border-top-color: var(--red); border-radius: 50%;
+      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .analyzing-step { font-size: 14px; color: var(--gray); }
+
+    /* Intel Card */
+    .intel-card {
+      display: none; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 20px;
+    }
+    .intel-card.show { display: block; }
+    .intel-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      background: rgba(220,38,38,0.08);
+    }
+    .intel-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: var(--red);
+      letter-spacing: 0.5px;
+    }
+    .intel-body { padding: 16px; }
+    .intel-section { margin-bottom: 16px; }
+    .intel-section:last-child { margin-bottom: 0; }
+    .intel-section-title {
+      font-size: 10px; font-weight: 700; color: var(--gray);
+      text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+    }
+    .intel-text { font-size: 14px; line-height: 1.6; color: var(--white); }
+    .intel-subtext { font-size: 13px; color: var(--gray); line-height: 1.5; margin-top: 3px; }
+    .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .intel-box {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .intel-box-label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+    .intel-box-value { font-size: 13px; font-weight: 600; line-height: 1.4; }
+    .routing-note {
+      background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 8px; padding: 12px; margin-bottom: 10px;
+    }
+    .routing-note p { font-size: 13px; line-height: 1.6; }
+    .outreach-path {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px; margin-bottom: 8px;
+    }
+    .outreach-path:last-child { margin-bottom: 0; }
+    .path-label { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+    .path-text  { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .missing-box {
+      background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .missing-box p { font-size: 13px; color: #FCD34D; line-height: 1.5; }
+
+    /* Contacts */
+    .contacts-section {
+      display: none; background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 20px;
+    }
+    .contacts-section.show { display: block; }
+    .contacts-header { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .contacts-header h3 { font-size: 13px; font-weight: 700; }
+    .contact-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 12px 16px; border-bottom: 1px solid var(--border); gap: 12px;
+    }
+    .contact-row:last-child { border-bottom: none; }
+    .contact-info { flex: 1; }
+    .contact-name  { font-size: 14px; font-weight: 600; }
+    .contact-title { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .contact-company { font-size: 12px; color: var(--gray); }
+    .contact-links { display: flex; gap: 8px; flex-shrink: 0; }
+    .contact-link {
+      font-size: 12px; padding: 4px 8px; border-radius: 6px;
+      background: var(--card2); color: var(--white); text-decoration: none;
+      border: 1px solid var(--border);
+    }
+
     /* Save */
     .save-btn {
-      width: 100%; padding: 16px; background: var(--red);
-      color: var(--white); border: none; border-radius: 12px;
-      font-size: 16px; font-weight: 700; cursor: pointer;
-      font-family: inherit; transition: opacity 0.15s; margin-top: 4px;
+      width: 100%; padding: 16px; background: var(--red); color: var(--white);
+      border: none; border-radius: 12px; font-size: 16px; font-weight: 700;
+      cursor: pointer; font-family: inherit; transition: opacity 0.15s;
     }
     .save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
     .save-btn:not(:disabled):hover { opacity: 0.85; }
+    .save-btn.secondary { background: var(--card); border: 1px solid var(--border); }
 
     /* Success */
     .success {
@@ -143,8 +239,8 @@
     .success h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
     .success p { color: var(--gray); font-size: 15px; margin-bottom: 32px; line-height: 1.6; }
     .btn-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
-    .btn-red  { display:block; padding:14px; background:var(--red); color:var(--white); text-decoration:none; border-radius:10px; font-weight:700; font-size:15px; }
-    .btn-dark { display:block; padding:14px; background:var(--card); color:var(--white); text-decoration:none; border-radius:10px; font-weight:600; font-size:15px; border:1px solid var(--border); }
+    .btn-red  { display:block; padding:14px; background:var(--red); color:var(--white); text-decoration:none; border-radius:10px; font-weight:700; }
+    .btn-dark { display:block; padding:14px; background:var(--card); color:var(--white); text-decoration:none; border-radius:10px; font-weight:600; border:1px solid var(--border); }
   </style>
 </head>
 <body>
@@ -157,56 +253,87 @@
 
 <main>
 
+  <!-- PHOTO -->
   <section>
-    <span class="field-label">Photo</span>
-    <div class="photo-area" id="photoArea">
+    <span class="lbl">Photo</span>
+    <div class="photo-zone" id="photoZone">
       <input type="file" accept="image/*" capture="environment" id="photoInput" />
-      <img class="photo-preview" id="photoPreview" alt="Preview" />
-      <div class="photo-placeholder" id="photoPlaceholder">
+      <img class="preview" id="photoPreview" alt="" />
+      <div class="photo-ph">
         <div class="cam">📷</div>
-        <p>Tap to <strong>take photo</strong><br>or choose from library</p>
+        <p>Tap to <strong>take a photo</strong> of the sign,<br>job site, or building</p>
       </div>
+      <button class="retake-btn" type="button" id="retakeBtn">↩ Retake</button>
     </div>
   </section>
 
+  <!-- GPS -->
   <section>
-    <span class="field-label">Location</span>
+    <span class="lbl">Location</span>
     <div class="gps-row locating" id="gpsRow">
       <div class="gps-dot"></div>
       <span class="gps-text" id="gpsText">Getting your location…</span>
     </div>
   </section>
 
+  <!-- NOTE -->
   <section>
-    <span class="field-label">Note</span>
-    <textarea id="noteInput" placeholder="What did you see? Who did you talk to? What's the opportunity?" rows="4"></textarea>
+    <span class="lbl">Note <span style="color:var(--gray);font-weight:400;text-transform:none;font-size:11px;">(optional — add context for the intel engine)</span></span>
+    <textarea id="noteInput" placeholder="What did you see? Any company names, project details, or contacts you noticed…" rows="3"></textarea>
   </section>
 
-  <section id="voiceSection">
-    <span class="field-label">Voice Note <span style="color:var(--gray);font-weight:400;text-transform:none;font-size:11px;">(optional)</span></span>
-    <div class="voice-controls">
-      <button class="record-btn" id="recordBtn" type="button">
-        <div class="rec-dot"></div>
-        Record
-      </button>
-      <span class="voice-hint" id="voiceHint">Tap to record</span>
-    </div>
-    <audio id="audioPlayback" controls style="display:none;"></audio>
-  </section>
-
+  <!-- FOLLOW-UP -->
   <section>
-    <span class="field-label">Follow-up Date</span>
+    <span class="lbl">Follow-up Date</span>
     <input type="date" id="followUpDate" />
   </section>
 
-  <button class="save-btn" id="saveBtn">Save Opportunity</button>
+  <!-- ANALYZE -->
+  <section>
+    <button class="analyze-btn" id="analyzeBtn">⚡ Analyze &amp; Generate Intel</button>
+  </section>
+
+  <!-- ANALYZING STATE -->
+  <section>
+    <div class="analyzing-overlay" id="analyzingBox">
+      <div class="spinner"></div>
+      <p class="analyzing-step" id="analyzingStep">Reading the sign…</p>
+    </div>
+  </section>
+
+  <!-- INTEL CARD -->
+  <div class="intel-card" id="intelCard">
+    <div class="intel-header">
+      <div class="intel-badge">⚡ Intel Card</div>
+      <span style="font-size:12px;color:var(--gray);" id="intelTimestamp"></span>
+    </div>
+    <div class="intel-body" id="intelBody"></div>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="contacts-section" id="contactsSection">
+    <div class="contacts-header">
+      <h3>📋 Key Contacts</h3>
+    </div>
+    <div id="contactsList"></div>
+  </div>
+
+  <!-- SAVE -->
+  <section id="saveSection" style="display:none;">
+    <button class="save-btn" id="saveBtn">Save Opportunity</button>
+  </section>
+
+  <!-- SAVE WITHOUT INTEL -->
+  <section id="saveWithoutSection">
+    <button class="save-btn secondary" id="saveWithoutBtn">Save without intel</button>
+  </section>
 
 </main>
 
 <div class="success" id="successScreen">
   <div class="success-icon">✅</div>
   <h2>Saved.</h2>
-  <p id="successMsg">Your opportunity is saved.<br>You can find it in My List.</p>
+  <p id="successMsg">Opportunity saved to your list.</p>
   <div class="btn-stack">
     <a class="btn-red" href="/leads">View My List</a>
     <a class="btn-dark" href="/capture">Capture Another</a>
@@ -214,22 +341,24 @@
 </div>
 
 <script>
-// ── IndexedDB ─────────────────────────────────────────────
-const DB_NAME = 'bobert-db', STORE = 'opportunities';
+// ── State ──────────────────────────────────────────────────
+let photoBase64 = null;
+let gpsData     = null;
+let intelResult = null;
 
+// ── IndexedDB ──────────────────────────────────────────────
+const DB_NAME = 'bobert-db', STORE = 'opportunities';
 function openDB() {
   return new Promise((res, rej) => {
     const r = indexedDB.open(DB_NAME, 1);
     r.onupgradeneeded = e => {
-      const db = e.target.result;
-      if (!db.objectStoreNames.contains(STORE))
-        db.createObjectStore(STORE, { keyPath: 'id' });
+      if (!e.target.result.objectStoreNames.contains(STORE))
+        e.target.result.createObjectStore(STORE, { keyPath: 'id' });
     };
     r.onsuccess = e => res(e.target.result);
     r.onerror   = e => rej(e.target.error);
   });
 }
-
 async function saveOpp(opp) {
   const db = await openDB();
   return new Promise((res, rej) => {
@@ -240,174 +369,343 @@ async function saveOpp(opp) {
   });
 }
 
-// ── GPS ───────────────────────────────────────────────────
-let gpsData = null;
+// ── GPS ────────────────────────────────────────────────────
 const gpsRow  = document.getElementById('gpsRow');
 const gpsText = document.getElementById('gpsText');
 
-function setGPSState(state, text) {
+function setGPS(state, text) {
   gpsRow.className = 'gps-row ' + state;
   gpsText.textContent = text;
 }
 
 function fetchGPS() {
-  if (!navigator.geolocation) { setGPSState('gps-err', 'GPS not available on this device'); return; }
-  navigator.geolocation.getCurrentPosition(async pos => {
-    const { latitude: lat, longitude: lng, accuracy } = pos.coords;
-    gpsData = { lat, lng, accuracy };
-    setGPSState('locating', 'Resolving address…');
-    try {
-      const r  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`, { headers: { 'Accept-Language': 'en' } });
-      const d  = await r.json();
-      const label = d.display_name || `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-      gpsData.label = label;
-      const short = label.length > 70 ? label.slice(0, 70) + '…' : label;
-      setGPSState('located', short);
-    } catch {
-      gpsData.label = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-      setGPSState('located', gpsData.label);
-    }
-  }, () => {
-    setGPSState('gps-err', 'Location unavailable — opportunity will save without it');
-  }, { enableHighAccuracy: true, timeout: 12000 });
+  if (!navigator.geolocation) { setGPS('gps-err', 'GPS not available'); return; }
+  navigator.geolocation.getCurrentPosition(pos => {
+    gpsData = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy };
+    setGPS('located', `📍 ${gpsData.lat.toFixed(5)}, ${gpsData.lng.toFixed(5)} — resolving…`);
+    // Reverse geocode via API (server handles it)
+    setGPS('located', `Lat ${gpsData.lat.toFixed(4)}, Lng ${gpsData.lng.toFixed(4)}`);
+  }, () => setGPS('gps-err', 'Location unavailable — opportunity will save without GPS'));
 }
-
 fetchGPS();
 
-// ── Photo ─────────────────────────────────────────────────
-let photoBase64 = null;
+// ── Photo ──────────────────────────────────────────────────
 const photoInput   = document.getElementById('photoInput');
+const photoZone    = document.getElementById('photoZone');
 const photoPreview = document.getElementById('photoPreview');
-const photoPlaceholder = document.getElementById('photoPlaceholder');
+const retakeBtn    = document.getElementById('retakeBtn');
 
 photoInput.addEventListener('change', e => {
   const file = e.target.files[0];
   if (!file) return;
-  // Compress via canvas before storing
-  const img = new Image();
-  const url = URL.createObjectURL(file);
+  const img = new Image(), url = URL.createObjectURL(file);
   img.onload = () => {
-    const MAX = 1200;
+    const MAX = 1400;
     let w = img.width, h = img.height;
     if (w > MAX) { h = Math.round(h * MAX / w); w = MAX; }
     if (h > MAX) { w = Math.round(w * MAX / h); h = MAX; }
-    const canvas = document.createElement('canvas');
-    canvas.width = w; canvas.height = h;
-    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-    photoBase64 = canvas.toDataURL('image/jpeg', 0.75);
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    photoBase64 = c.toDataURL('image/jpeg', 0.8);
     photoPreview.src = photoBase64;
-    photoPreview.style.display = 'block';
-    photoPlaceholder.style.display = 'none';
+    photoZone.classList.add('has-photo');
     URL.revokeObjectURL(url);
   };
   img.src = url;
 });
 
-// ── Voice Note ────────────────────────────────────────────
-let mediaRecorder = null, audioChunks = [], audioBlob = null, isRecording = false;
-const recordBtn    = document.getElementById('recordBtn');
-const voiceHint    = document.getElementById('voiceHint');
-const audioPlayback= document.getElementById('audioPlayback');
+retakeBtn.addEventListener('click', e => {
+  e.stopPropagation();
+  photoBase64 = null;
+  photoPreview.src = '';
+  photoZone.classList.remove('has-photo');
+  photoInput.value = '';
+  // Reset intel
+  resetIntel();
+});
 
-if (!navigator.mediaDevices || !window.MediaRecorder) {
-  document.getElementById('voiceSection').style.display = 'none';
-} else {
-  recordBtn.addEventListener('click', async () => {
-    if (!isRecording) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        audioChunks = [];
-        mediaRecorder = new MediaRecorder(stream);
-        mediaRecorder.ondataavailable = e => { if (e.data.size) audioChunks.push(e.data); };
-        mediaRecorder.onstop = () => {
-          audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-          audioPlayback.src = URL.createObjectURL(audioBlob);
-          audioPlayback.style.display = 'block';
-          stream.getTracks().forEach(t => t.stop());
-        };
-        mediaRecorder.start();
-        isRecording = true;
-        recordBtn.classList.add('recording');
-        recordBtn.lastChild.textContent = ' Stop';
-        voiceHint.textContent = 'Recording…';
-      } catch {
-        voiceHint.textContent = 'Microphone access denied';
-      }
-    } else {
-      mediaRecorder.stop();
-      isRecording = false;
-      recordBtn.classList.remove('recording');
-      recordBtn.lastChild.textContent = ' Re-record';
-      voiceHint.textContent = 'Tap to re-record';
-    }
-  });
+function resetIntel() {
+  intelResult = null;
+  document.getElementById('intelCard').classList.remove('show');
+  document.getElementById('contactsSection').classList.remove('show');
+  document.getElementById('saveSection').style.display = 'none';
+  document.getElementById('analyzingBox').classList.remove('show');
 }
 
-// ── Save ──────────────────────────────────────────────────
-const saveBtn      = document.getElementById('saveBtn');
-const successScreen= document.getElementById('successScreen');
-const successMsg   = document.getElementById('successMsg');
+// ── Analyze ────────────────────────────────────────────────
+const analyzeBtn    = document.getElementById('analyzeBtn');
+const analyzingBox  = document.getElementById('analyzingBox');
+const analyzingStep = document.getElementById('analyzingStep');
 
-saveBtn.addEventListener('click', async () => {
-  saveBtn.disabled = true;
-  saveBtn.textContent = 'Saving…';
+const steps = [
+  'Reading the sign…',
+  'Searching for project intel…',
+  'Synthesizing intel card…',
+  'Finding key contacts…',
+];
+let stepTimer;
 
-  let audioBase64 = null;
-  if (audioBlob) {
-    audioBase64 = await new Promise(res => {
-      const reader = new FileReader();
-      reader.onload = e => res(e.target.result);
-      reader.readAsDataURL(audioBlob);
-    });
+function startStepAnimation() {
+  let i = 0;
+  analyzingStep.textContent = steps[0];
+  stepTimer = setInterval(() => {
+    i = (i + 1) % steps.length;
+    analyzingStep.textContent = steps[i];
+  }, 2200);
+}
+
+analyzeBtn.addEventListener('click', async () => {
+  if (!photoBase64 && !gpsData && !document.getElementById('noteInput').value.trim()) {
+    alert('Take a photo or add a note to generate intel.');
+    return;
   }
 
+  analyzeBtn.disabled = true;
+  analyzeBtn.textContent = 'Analyzing…';
+  analyzingBox.classList.add('show');
+  document.getElementById('saveWithoutSection').style.display = 'none';
+  startStepAnimation();
+  resetIntel();
+
+  try {
+    const res = await fetch('/api/capture-intel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        photo: photoBase64,
+        lat:   gpsData?.lat,
+        lng:   gpsData?.lng,
+        note:  document.getElementById('noteInput').value.trim(),
+      }),
+    });
+
+    const data = await res.json();
+    clearInterval(stepTimer);
+    analyzingBox.classList.remove('show');
+
+    if (!res.ok || data.error) throw new Error(data.error || 'Intel generation failed');
+
+    intelResult = data;
+
+    // Update GPS display with resolved address
+    if (data.location?.address) {
+      setGPS('located', data.location.address);
+      gpsData = { ...gpsData, label: data.location.address };
+    }
+
+    renderIntelCard(data.intel);
+    renderContacts(data.contacts || []);
+
+    document.getElementById('saveSection').style.display = 'block';
+    document.getElementById('saveWithoutSection').style.display = 'none';
+
+  } catch (err) {
+    clearInterval(stepTimer);
+    analyzingBox.classList.remove('show');
+    analyzingStep.textContent = 'Could not generate intel — ' + err.message;
+    analyzingBox.classList.add('show');
+    analyzingBox.querySelector('.spinner').style.display = 'none';
+    document.getElementById('saveWithoutSection').style.display = 'block';
+  }
+
+  analyzeBtn.disabled = false;
+  analyzeBtn.textContent = '⚡ Re-analyze';
+});
+
+// ── Render Intel Card ──────────────────────────────────────
+function safe(val) { return val ? String(val).replace(/</g,'&lt;') : null; }
+
+function renderIntelCard(intel) {
+  if (!intel) return;
+  const card = document.getElementById('intelCard');
+  const body = document.getElementById('intelBody');
+  document.getElementById('intelTimestamp').textContent = new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+
+  let html = '';
+
+  // Project overview
+  if (intel.projectScope) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">Project</div>
+      <div class="intel-text">${safe(intel.projectName) || ''}</div>
+      <div class="intel-subtext">${safe(intel.projectScope)}</div>
+    </div>`;
+  }
+
+  // Quick facts grid
+  const facts = [];
+  if (intel.location)          facts.push(['Location', intel.location]);
+  if (intel.squareFootage)     facts.push(['Size', intel.squareFootage]);
+  if (intel.deliveryTimeline)  facts.push(['Delivery', intel.deliveryTimeline]);
+  if (intel.developer?.name)   facts.push(['Developer', intel.developer.name]);
+  if (intel.gc?.name)          facts.push(['GC', intel.gc.name]);
+  if (intel.leasingAgent?.company) facts.push(['Leasing', intel.leasingAgent.company]);
+
+  if (facts.length > 0) {
+    html += `<div class="intel-section"><div class="intel-grid">`;
+    facts.forEach(([label, val]) => {
+      html += `<div class="intel-box"><div class="intel-box-label">${label}</div><div class="intel-box-value">${safe(val)}</div></div>`;
+    });
+    html += `</div></div>`;
+  }
+
+  // Lighting opportunity
+  if (intel.lightingOpportunity) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">💡 Lighting Opportunity</div>
+      <div class="intel-text">${safe(intel.lightingOpportunity)}</div>
+    </div>`;
+  }
+
+  // Routing note
+  if (intel.routingNote) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">Routing</div>
+      <div class="routing-note"><p>${safe(intel.routingNote)}</p></div>
+    </div>`;
+  }
+
+  // Developer detail
+  if (intel.developer?.background || intel.developer?.nationalAccountPotential) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">Developer</div>
+      <div class="intel-text">${safe(intel.developer.name)}</div>
+      ${intel.developer.background ? `<div class="intel-subtext">${safe(intel.developer.background)}</div>` : ''}
+      ${intel.developer.nationalAccountPotential ? `<div style="margin-top:6px;font-size:11px;font-weight:700;color:var(--green);">✦ National Account Potential</div>` : ''}
+    </div>`;
+  }
+
+  // GC detail
+  if (intel.gc?.name || intel.gc?.routingNote) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">General Contractor</div>
+      ${intel.gc.name ? `<div class="intel-text">${safe(intel.gc.name)}</div>` : ''}
+      ${intel.gc.background ? `<div class="intel-subtext">${safe(intel.gc.background)}</div>` : ''}
+      ${intel.gc.routingNote ? `<div class="intel-subtext" style="margin-top:6px;">→ ${safe(intel.gc.routingNote)}</div>` : ''}
+    </div>`;
+  }
+
+  // Key people
+  if (intel.keyPeople?.length > 0) {
+    html += `<div class="intel-section"><div class="intel-section-title">Key People</div>`;
+    intel.keyPeople.forEach(p => {
+      html += `<div class="intel-box" style="margin-bottom:8px;">
+        <div class="intel-box-value">${safe(p.name)}</div>
+        <div class="intel-box-label" style="margin-top:3px;">${safe(p.title)} · ${safe(p.company)}</div>
+        ${p.angle ? `<div class="intel-subtext" style="margin-top:6px;font-size:12px;">${safe(p.angle)}</div>` : ''}
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Outreach paths
+  if (intel.outreachPaths?.length > 0) {
+    html += `<div class="intel-section"><div class="intel-section-title">Outreach Paths</div>`;
+    intel.outreachPaths.forEach(path => {
+      html += `<div class="outreach-path">
+        <div class="path-label">${safe(path.label)}</div>
+        <div class="path-text">${safe(path.approach)}</div>
+      </div>`;
+    });
+    html += `</div>`;
+  }
+
+  // Missing info
+  if (intel.missingInfo) {
+    html += `<div class="intel-section">
+      <div class="intel-section-title">Still Needed</div>
+      <div class="missing-box"><p>⚠ ${safe(intel.missingInfo)}</p></div>
+    </div>`;
+  }
+
+  body.innerHTML = html;
+  card.classList.add('show');
+}
+
+// ── Render Contacts ────────────────────────────────────────
+function renderContacts(contacts) {
+  if (!contacts || contacts.length === 0) return;
+  const section = document.getElementById('contactsSection');
+  const list    = document.getElementById('contactsList');
+  list.innerHTML = '';
+  contacts.forEach(c => {
+    const links = [
+      c.email    ? `<a class="contact-link" href="mailto:${c.email}">Email</a>` : '',
+      c.phone    ? `<a class="contact-link" href="tel:${c.phone}">Call</a>` : '',
+      c.linkedin ? `<a class="contact-link" href="${c.linkedin}" target="_blank">LinkedIn</a>` : '',
+    ].filter(Boolean).join('');
+    list.innerHTML += `<div class="contact-row">
+      <div class="contact-info">
+        <div class="contact-name">${safe(c.name)}</div>
+        ${c.title   ? `<div class="contact-title">${safe(c.title)}</div>` : ''}
+        ${c.company ? `<div class="contact-company">${safe(c.company)}</div>` : ''}
+      </div>
+      ${links ? `<div class="contact-links">${links}</div>` : ''}
+    </div>`;
+  });
+  section.classList.add('show');
+}
+
+// ── Save ───────────────────────────────────────────────────
+async function doSave(withIntel) {
   const followUp = document.getElementById('followUpDate').value;
   const note     = document.getElementById('noteInput').value.trim();
 
   const opp = {
-    id:          Date.now().toString(),
-    createdAt:   new Date().toISOString(),
-    photo:       photoBase64,
-    location:    gpsData || null,
+    id:           Date.now().toString(),
+    createdAt:    new Date().toISOString(),
+    photo:        photoBase64,
+    location:     gpsData || null,
     note,
-    audio:       audioBase64,
     followUpDate: followUp || null,
+    intel:        withIntel ? intelResult?.intel    : null,
+    contacts:     withIntel ? (intelResult?.contacts || []) : [],
+    ocr:          withIntel ? intelResult?.ocr       : null,
   };
 
-  try {
-    await saveOpp(opp);
+  await saveOpp(opp);
 
-    // Request notification permission for reminder
-    if (followUp && 'Notification' in window && Notification.permission !== 'denied') {
-      const perm = Notification.permission === 'granted'
-        ? 'granted'
-        : await Notification.requestPermission();
-      if (perm === 'granted') {
-        const delay = new Date(followUp + 'T09:00:00').getTime() - Date.now();
-        if (delay > 0 && delay < 86400000 * 7) { // Only schedule if within 7 days
-          setTimeout(() => {
-            new Notification('Bobert — Follow-up today', {
-              body: note ? note.slice(0, 100) : 'Time to follow up on your opportunity.',
-              icon: '/assets/icon.png',
-            });
-          }, delay);
-        }
+  if (followUp && 'Notification' in window && Notification.permission !== 'denied') {
+    const perm = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+    if (perm === 'granted') {
+      const delay = new Date(followUp + 'T09:00:00').getTime() - Date.now();
+      if (delay > 0 && delay < 86400000 * 7) {
+        setTimeout(() => new Notification('Bobert — Follow-up today', {
+          body: opp.intel?.projectName || note?.slice(0,80) || 'Time to follow up.',
+          icon: '/assets/icon.png',
+        }), delay);
       }
     }
+  }
 
-    const dateStr = followUp
-      ? new Date(followUp + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
-      : null;
-    successMsg.innerHTML = `Your opportunity is saved.<br>${dateStr ? `Follow-up reminder set for <strong>${dateStr}</strong>.` : 'Find it in My List.'}`;
-    successScreen.classList.add('show');
-  } catch (err) {
-    alert('Save failed — ' + err.message);
-    saveBtn.disabled = false;
-    saveBtn.textContent = 'Save Opportunity';
+  const dateStr = followUp
+    ? new Date(followUp + 'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric'})
+    : null;
+  document.getElementById('successMsg').innerHTML =
+    `Opportunity saved${withIntel ? ' with intel card' : ''}.<br>${dateStr ? `Follow-up set for <strong>${dateStr}</strong>.` : ''}`;
+  document.getElementById('successScreen').classList.add('show');
+}
+
+document.getElementById('saveBtn').addEventListener('click', async () => {
+  document.getElementById('saveBtn').disabled = true;
+  document.getElementById('saveBtn').textContent = 'Saving…';
+  try { await doSave(true); } catch(e) {
+    alert('Save failed: ' + e.message);
+    document.getElementById('saveBtn').disabled = false;
+    document.getElementById('saveBtn').textContent = 'Save Opportunity';
   }
 });
 
-// ── Service Worker ────────────────────────────────────────
+document.getElementById('saveWithoutBtn').addEventListener('click', async () => {
+  document.getElementById('saveWithoutBtn').disabled = true;
+  try { await doSave(false); } catch(e) {
+    alert('Save failed: ' + e.message);
+    document.getElementById('saveWithoutBtn').disabled = false;
+  }
+});
+
+// ── Service Worker ─────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
