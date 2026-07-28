@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Upgrade — Bobert</title>
+  <meta name="description" content="Start your 30-day free trial. No charge until your trial ends." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #0A0A0A;
+      --red:    #DC2626;
+      --white:  #FFFFFF;
+      --gray:   #6B7280;
+      --card:   #1F2937;
+      --border: rgba(229,231,235,0.12);
+    }
+    body {
+      font-family: -apple-system, 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 60px 24px;
+    }
+    .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 48px; }
+    h1 { font-size: clamp(28px, 4vw, 40px); font-weight: 800; letter-spacing: -1px; text-align: center; margin-bottom: 8px; }
+    .sub { color: var(--gray); font-size: 16px; text-align: center; margin-bottom: 48px; }
+    .sub strong { color: var(--white); }
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      width: 100%;
+      max-width: 960px;
+    }
+    .plan {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .plan.featured {
+      border-color: var(--red);
+      position: relative;
+    }
+    .plan.featured::before {
+      content: 'Most Popular';
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      padding: 3px 12px;
+      border-radius: 99px;
+      white-space: nowrap;
+    }
+    .plan-name { font-size: 13px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 1px; }
+    .plan-price { font-size: 36px; font-weight: 800; letter-spacing: -1px; line-height: 1; }
+    .plan-price span { font-size: 14px; font-weight: 400; color: var(--gray); }
+    .plan-desc { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .plan-btn {
+      margin-top: auto;
+      padding: 13px 20px;
+      border-radius: 8px;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      background: var(--red);
+      color: var(--white);
+    }
+    .plan-btn:hover { opacity: 0.85; }
+    .plan-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .trial-note {
+      margin-top: 36px;
+      font-size: 13px;
+      color: var(--gray);
+      text-align: center;
+    }
+    .error { color: #f87171; font-size: 13px; margin-top: 8px; display: none; }
+  </style>
+</head>
+<body>
+  <div class="logo">Bobert</div>
+  <h1>Start your free trial</h1>
+  <p class="sub"><strong>30 days free.</strong> No charge until your trial ends. Cancel anytime.</p>
+
+  <div class="plans">
+
+    <div class="plan">
+      <div class="plan-name">Solo</div>
+      <div class="plan-price">$59<span>/mo after trial</span></div>
+      <div class="plan-desc">1 user. Full capture workflow, AI intel, contact enrichment.</div>
+      <button class="plan-btn" onclick="startCheckout('solo', this)">Start Free Trial</button>
+      <div class="error"></div>
+    </div>
+
+    <div class="plan featured">
+      <div class="plan-name">Professional</div>
+      <div class="plan-price">$119<span>/mo after trial</span></div>
+      <div class="plan-desc">Up to 3 users. Everything in Solo plus team sharing and priority support.</div>
+      <button class="plan-btn" onclick="startCheckout('professional', this)">Start Free Trial</button>
+      <div class="error"></div>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Team</div>
+      <div class="plan-price">$349<span>/mo after trial</span></div>
+      <div class="plan-desc">Up to 10 users. Full team dashboard, usage reporting, dedicated onboarding.</div>
+      <button class="plan-btn" onclick="startCheckout('team', this)">Start Free Trial</button>
+      <div class="error"></div>
+    </div>
+
+    <div class="plan">
+      <div class="plan-name">Enterprise</div>
+      <div class="plan-price">$1,500<span>/mo after trial</span></div>
+      <div class="plan-desc">Unlimited users. White-label, API access, SLA, custom integrations.</div>
+      <button class="plan-btn" onclick="startCheckout('enterprise', this)">Start Free Trial</button>
+      <div class="error"></div>
+    </div>
+
+  </div>
+
+  <p class="trial-note">All plans include a 30-day free trial. Credit card required to hold your spot — you won't be charged during the trial.</p>
+
+  <script>
+    async function startCheckout(plan, btn) {
+      const card = btn.closest('.plan');
+      const errorEl = card.querySelector('.error');
+      btn.disabled = true;
+      btn.textContent = 'Loading...';
+      errorEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ plan }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok || !data.url) {
+          throw new Error(data.error || 'Could not start checkout. Try again.');
+        }
+
+        // Redirect to Stripe-hosted Checkout
+        window.location.href = data.url;
+      } catch (err) {
+        errorEl.textContent = err.message;
+        errorEl.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Start Free Trial';
+      }
+    }
+  </script>
+</body>
+</html>

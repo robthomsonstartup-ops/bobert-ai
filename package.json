@@ -1,0 +1,8 @@
+{
+  "name": "bobert-ai",
+  "version": "1.0.0",
+  "description": "Bobert — Field Intelligence Platform",
+  "dependencies": {
+    "stripe": "^14.0.0"
+  }
+}
