@@ -201,3 +201,48 @@ outside cash or upfront spend.
 
 **Status:** Locked. Finance's v1.1 model and all future recommendations
 should be framed around self-funded revenue generation, not capital asks.
+
+
+---
+
+## Decision 012 — No Discretionary Spend Until Beta Proves Revenue
+**Date:** 2026-07-27
+**Owner:** Rob (BD)
+
+Rob confirmed: no money committed up front. This supersedes the pending
+$5,000 starting cash assumption and the $3,000 contractor contingency —
+neither is approved right now.
+
+**Rule going forward:** No new spend of any kind (contractor, ads, tools,
+paid channels) until the beta demonstrates real revenue. Hiring/contractor
+spend remains strictly triggered by MRR and support load, never pre-funded.
+Finance should model the base case on $0 starting capital and revise
+upward only if/when revenue creates room.
+
+**Status:** Locked. Finance to rebuild v1.1 model on this assumption.
+
+---
+
+## Decision 013 — Revenue-First Mandate for Finance
+**Date:** 2026-07-27
+**Owner:** Rob (BD)
+
+Finance's job is not to ask for capital — it's to find the path to
+self-funded growth. If the model shows a minimum revenue threshold is
+needed (e.g. the $2,697 max cash gap), that threshold becomes Finance's
+target to hit through paid beta conversions, not something bridged with
+outside cash or upfront spend.
+
+**Directive:**
+- Finance identifies the fastest realistic path to paid conversions that
+  closes any modeled gap organically.
+- Any revenue generated is reinvested directly into the product
+  (development, infra, support) — not treated as founder draw or banked.
+- Post-beta, Finance's primary output shifts from "what do we need" to
+  "how do we generate enough revenue to fund the next phase ourselves."
+- This does not relax the Stripe-live gate or the Aug 10–12 checkpoint
+  framework — it sharpens the reason those checkpoints exist: paid
+  conversions are the funding mechanism, not a nice-to-have metric.
+
+**Status:** Locked. Finance's v1.1 model and all future recommendations
+should be framed around self-funded revenue generation, not capital asks.
