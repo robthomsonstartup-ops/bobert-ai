@@ -21,7 +21,7 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 - November 2026 — pushes first EBITDA-positive month to January 2027
 - Later — Finance re-models on request
 
-**Your call:**
+**Your call:** ANSWERED (2026-07-28) — tracked via the live Aug 10-12 checkpoint framework, further gated by Decision 016: Stripe live mode (and therefore any real paid launch) does not activate until the /capture MVP ships. October remains base case; September only if beta signals AND /capture are both ready.
 
 ---
 
@@ -36,7 +36,7 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 - Adjust starting capital — Finance re-models
 - Adjust minimum buffer — Finance re-models
 
-**Your call:**
+**Your call:** ANSWERED (2026-07-28) — $0 starting capital, $0 minimum buffer. Per Decision 013 (no upfront spend) and Decision 014 (revenue-first mandate). Nothing is funded ahead of revenue.
 
 ---
 
@@ -54,10 +54,10 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 | Enterprise | $1,500/mo | Custom |
 
 **Your call (confirm or adjust each):**
-- Solo: $______/mo
-- Professional: $______/mo
-- Team: $______/mo
-- Enterprise: $______/mo or custom
+- Solo: $59/mo — CONFIRMED, live in Stripe (sandbox)
+- Professional: $119/mo — CONFIRMED, live in Stripe (sandbox)
+- Team: $349/mo — CONFIRMED, live in Stripe (sandbox)
+- Enterprise: $1,500/mo — CONFIRMED, live in Stripe (sandbox)
 
 ---
 
@@ -76,9 +76,7 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 **BD recommendation:** Default to direct web billing (Stripe) for beta and commercial launch. App Store billing adds no value for B2B field sales reps — they will pay on a website. Revisit App Store billing only if consumer adoption becomes a factor.
 
 **Your call:**
-- [ ] Direct web billing (Stripe) — recommended
-- [ ] App Store billing
-- [ ] Hybrid
+- [x] Direct web billing (Stripe) — ANSWERED (2026-07-28), CONFIRMED and BUILT. Checkout live at bobert.ai/upgrade, 4 tiers, 30-day trial, webhook active, tested end to end in sandbox. Per Decision 015, will go live on Rob's personal bank account (LLC deferred to post-revenue) once Decision 016's gate (/capture MVP) clears.
 
 ---
 
@@ -96,8 +94,7 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 **BD recommendation:** No annual plans until you have 30+ paying customers and know churn. Premature annual discounts lock in under-priced contracts before you understand the value.
 
 **Your call:**
-- [ ] No annual plans at launch — recommended
-- [ ] Annual plans at ______% discount
+- [x] No annual plans at launch — ANSWERED (2026-07-28), CONFIRMED. Monthly only through beta and early commercial launch. Revisit once 30+ paying customers and churn data exist.
 
 ---
 
@@ -115,8 +112,7 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 - Open — evaluate case by case
 
 **Your call:**
-- [ ] No trade show spending in 2026 — recommended
-- [ ] Other: ______
+- [x] No trade show spending in 2026 — ANSWERED (2026-07-28), CONFIRMED. Consistent with Decision 013/014 — no discretionary spend until beta proves revenue.
 
 ---
 
@@ -124,12 +120,12 @@ Finance has delivered `Bobert_Projected_Budget_PnL_v1.0.xlsx` with a strong proj
 
 | Decision | Status |
 |---|---|
-| A — Paid launch month | Pending Rob |
-| B — Starting capital + buffer | Pending Rob |
-| C — Exact prices per tier | Pending Rob |
-| D — Web vs. App Store billing | Pending Rob |
-| E — Annual plans | Pending Rob |
-| F — Trade show policy | Pending Rob |
+| A — Paid launch month | ANSWERED (2026-07-28) — Aug 10-12 checkpoint + Decision 016 gate |
+| B — Starting capital + buffer | ANSWERED (2026-07-28) — $0 / $0 |
+| C — Exact prices per tier | ANSWERED (2026-07-28) — $59 / $119 / $349 / $1,500 |
+| D — Web vs. App Store billing | ANSWERED (2026-07-28) — direct web billing (Stripe), built, pending live activation |
+| E — Annual plans | ANSWERED (2026-07-28) — none at launch |
+| F — Trade show policy | ANSWERED (2026-07-28) — none in 2026 |
 
 Once these are returned to BD, Finance will lock the model and the P&L becomes the operating plan for Year 1.
 

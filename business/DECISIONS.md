@@ -298,3 +298,23 @@ right at launch, plus real trust damage to early signups.
 
 **Status:** Locked. Supersedes the immediate "flip Stripe to live now"
 instruction issued earlier July 28 — that is paused pending /capture.
+
+
+---
+
+## Decision 017 — Founder Decisions A-F Closed (Original Memo)
+**Date:** 2026-07-28
+**Owner:** Rob (BD)
+
+`finance/FOUNDER-DECISIONS-JULY20.md` is now formally closed — all six items
+answered directly in that memo, not just referenced elsewhere:
+
+- **A:** Tracked via Aug 10-12 checkpoint, further gated by Decision 016.
+- **B:** $0 starting capital / $0 buffer (Decision 013).
+- **C:** Solo $59, Professional $119, Team $349, Enterprise $1,500 — confirmed, live in Stripe.
+- **D:** Direct web billing (Stripe), built, activation pending Decision 016 gate.
+- **E:** No annual plans at launch.
+- **F:** No trade show spending in 2026.
+
+**Status:** Locked. No Founder decisions remain pending against the original
+July 20 memo.
