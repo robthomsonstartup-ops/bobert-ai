@@ -222,3 +222,79 @@ sooner given this sequencing.
 **Status:** Locked. Supersedes the "LLC blocks Stripe live" sequencing in
 FINANCE-STATUS-JULY28.md Section 6.1 — Stripe live no longer waits on the
 LLC.
+
+> **⚠️ SUPERSEDED IN PART BY DECISION 016 (July 28).** The LLC no longer
+> blocks Stripe live — that part of 015 stands. But Stripe must remain in
+> sandbox/test mode until a working product exists. **Do not flip to live
+> mode.** See DECISION 016 below before acting on this decision.
+
+---
+
+## Decision 016 — Stripe Stays in Test Mode Until a Real Product Exists
+**Date:** 2026-07-28
+**Owner:** Rob (Founder/CEO)
+**Recorded by:** Marketing session — Rob issued this verbally in the Dev
+direction of July 28; it was cited as already locked but had not been
+written to this file. Captured here so it is enforceable.
+
+**Decision:** Stripe remains in **sandbox/test mode**. Do not connect live
+keys, do not flip to live mode, do not collect real card details — until
+the `/capture` MVP works end-to-end.
+
+**Why:** `bobert.ai/upgrade` is live and collecting real credit card
+details for a 30-day trial, promising *"Full capture workflow, AI intel,
+contact enrichment."* There is no product behind the paywall:
+
+- `/capture` does not exist
+- The homepage phone mockup is a static image, not a working app
+- Nothing a trial user could actually use ships today
+
+Charging for a trial of software that does not exist is not a sequencing
+problem to be optimized. It stops now.
+
+**Gate to reopen:** `/capture` works end-to-end per the Phase 1 workflow —
+photo, GPS, note, save, list, reminder. Dev reports what is built and
+tested. Only then does the live-mode sequence in DECISION 015 resume.
+
+**Relationship to DECISION 015:** 015 remains correct that LLC formation
+does not block Stripe live. 016 adds a second, earlier gate: **product
+readiness**. Both must clear. 015's step 1 is suspended until then.
+
+**Marketing consequence:** `/upgrade` copy currently promises features that
+will not exist in the MVP. Copy must be reconciled with actual MVP scope
+before live mode — see open item in `business/MARKETING-TO-BD-JULY27.md`
+regarding the capture-vs-enrichment product definition.
+
+**Status:** Locked.
+
+
+---
+
+## Decision 016 — Hold Stripe Live Until /capture MVP Ships
+**Date:** 2026-07-28
+**Owner:** Rob (BD)
+
+**Decision:** Do not flip Stripe to live mode yet. bobert.ai/upgrade is
+live and collecting real credit card info for a 30-day trial promising
+"Full capture workflow, AI intel, contact enrichment" — but /capture (the
+actual app: photo, GPS, voice note, save) does not exist. The homepage
+phone mockup is a static image, not a working product.
+
+**Rationale:** Charging real cards after a 30-day trial for a product
+that doesn't exist yet risks chargebacks on a brand-new Stripe account
+right at launch, plus real trust damage to early signups.
+
+**Sequence:**
+1. Dev builds the /capture MVP first — minimum: photo, GPS, voice note,
+   save. This is the actual product the trial promises.
+2. Beta signups continue via the existing Brevo flow (bobert.ai hero
+   form) — no charge, no trial start, just waitlist/early-access capture.
+3. Stripe goes live (per Decision 015 — personal account, LLC deferred)
+   only once /capture is functional enough that a 30-day trial has
+   something real behind it.
+4. /upgrade page copy should not promise features that don't exist yet
+   until they're built — Marketing/Dev to revisit copy alongside the
+   /capture build.
+
+**Status:** Locked. Supersedes the immediate "flip Stripe to live now"
+instruction issued earlier July 28 — that is paused pending /capture.
