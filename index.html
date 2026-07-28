@@ -1292,7 +1292,7 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-brand" href="#" aria-label="Bobert home"><img src="assets/bobert-mark-dark.png" alt="Bobert" style="height:36px; display:block; filter:brightness(0) invert(1);" /><span class="nav-wordmark">Bobert</span></a>
+  <a class="nav-brand" href="#" aria-label="Bobert home"><img src="assets/bobert-mark-dark.png" alt="Bobert" style="height:36px; display:block; mix-blend-mode: screen;" /><span class="nav-wordmark">Bobert</span></a>
   <a class="nav-cta" href="#beta">Join the Beta</a>
 </nav>
 
@@ -1484,7 +1484,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <a class="footer-brand" href="#"><img src="assets/bobert-mark-dark.png" alt="Bobert" style="height:26px; display:block; filter:brightness(0) invert(1);" /><span class="footer-wordmark">Bobert</span></a>
+  <a class="footer-brand" href="#"><img src="assets/bobert-mark-dark.png" alt="Bobert" style="height:26px; display:block; mix-blend-mode: screen;" /><span class="footer-wordmark">Bobert</span></a>
   <div class="footer-links">
     <a href="#how">How It Works</a>
     <a href="#features">Features</a>
@@ -1495,14 +1495,30 @@
 </footer>
 
 <script>
-  function handleSignup(e) {
+  async function handleSignup(e) {
     e.preventDefault();
-    var btn = e.target.querySelector('button');
-    var inp = e.target.querySelector('input');
-    btn.textContent = '\u2713 You\'re on the list';
-    btn.style.background = '#16a34a';
-    inp.disabled = true;
+    const btn = e.target.querySelector('button');
+    const inp = e.target.querySelector('input');
+    btn.textContent = 'Sending...';
     btn.disabled = true;
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({email: inp.value})
+      });
+      if (res.ok) {
+        btn.textContent = '✓ You\'re on the list';
+        btn.style.background = '#16a34a';
+        inp.disabled = true;
+      } else {
+        btn.textContent = 'Try again';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
   }
 </script>
 
