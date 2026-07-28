@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>My Leads — Bobert</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Bobert" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A;
+      --red:   #DC2626;
+      --white: #FFFFFF;
+      --gray:  #6B7280;
+      --card:  #1A1A1A;
+      --border: rgba(255,255,255,0.1);
+    }
+    body {
+      font-family: -apple-system, 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      padding-bottom: calc(32px + env(safe-area-inset-bottom));
+    }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--black); z-index: 10;
+    }
+    .logo-mark { height: 34px; width: 34px; border-radius: 7px; }
+    header h1 { font-size: 17px; font-weight: 700; }
+    .capture-btn {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px; background: var(--red);
+      color: var(--white); text-decoration: none;
+      border-radius: 8px; font-size: 14px; font-weight: 700;
+    }
+
+    main { padding: 16px 20px; max-width: 480px; margin: 0 auto; }
+
+    .count { font-size: 12px; color: var(--gray); margin-bottom: 16px; }
+
+    /* Empty state */
+    .empty {
+      display: flex; flex-direction: column; align-items: center;
+      justify-content: center; text-align: center;
+      padding: 80px 20px;
+    }
+    .empty .icon { font-size: 48px; margin-bottom: 16px; }
+    .empty h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .empty p { color: var(--gray); font-size: 14px; line-height: 1.6; margin-bottom: 28px; }
+    .empty a {
+      padding: 13px 24px; background: var(--red); color: var(--white);
+      text-decoration: none; border-radius: 10px; font-weight: 700; font-size: 15px;
+    }
+
+    /* Lead cards */
+    .lead-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; margin-bottom: 14px; overflow: hidden;
+    }
+    .lead-card.has-followup { border-color: rgba(220,38,38,0.4); }
+
+    .card-top { display: flex; gap: 0; }
+    .card-photo {
+      width: 100px; min-height: 100px; flex-shrink: 0;
+      object-fit: cover; background: #111;
+    }
+    .card-photo-placeholder {
+      width: 100px; min-height: 100px; flex-shrink: 0;
+      background: #111; display: flex; align-items: center;
+      justify-content: center; font-size: 28px; color: var(--gray);
+    }
+    .card-body { padding: 12px 14px; flex: 1; min-width: 0; }
+    .card-date { font-size: 11px; color: var(--gray); margin-bottom: 6px; }
+    .card-note {
+      font-size: 14px; line-height: 1.5; margin-bottom: 6px;
+      display: -webkit-box; -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .card-note.empty-note { color: var(--gray); font-style: italic; }
+    .card-location {
+      font-size: 11px; color: var(--gray); display: flex; align-items: flex-start; gap: 4px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    .card-footer {
+      padding: 10px 14px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+    }
+    .followup-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 99px;
+      font-size: 11px; font-weight: 700;
+    }
+    .followup-badge.upcoming { background: rgba(220,38,38,0.15); color: #f87171; }
+    .followup-badge.future   { background: rgba(255,255,255,0.07); color: var(--gray); }
+    .followup-badge.today    { background: var(--red); color: var(--white); }
+
+    .card-actions { display: flex; gap: 8px; margin-left: auto; }
+    .audio-btn, .delete-btn {
+      background: none; border: none; cursor: pointer;
+      color: var(--gray); font-size: 16px; padding: 4px 6px;
+      border-radius: 6px; font-family: inherit;
+      transition: color 0.15s;
+    }
+    .audio-btn:hover { color: var(--white); }
+    .delete-btn:hover { color: #f87171; }
+
+    audio.inline-audio {
+      width: 100%; height: 36px; margin-top: 8px;
+      display: none; opacity: 0.8;
+    }
+    audio.inline-audio.visible { display: block; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo-mark" src="/assets/icon.png" alt="Bobert" />
+  <h1>My List</h1>
+  <a class="capture-btn" href="/capture">+ Capture</a>
+</header>
+
+<main id="main">
+  <div class="empty" id="emptyState" style="display:none;">
+    <div class="icon">🎯</div>
+    <h2>No opportunities yet.</h2>
+    <p>Every deal starts with a capture.<br>Tap below to log your first one.</p>
+    <a href="/capture">Capture an Opportunity</a>
+  </div>
+  <p class="count" id="countLine" style="display:none;"></p>
+  <div id="leadsList"></div>
+</main>
+
+<script>
+const DB_NAME = 'bobert-db', STORE = 'opportunities';
+
+function openDB() {
+  return new Promise((res, rej) => {
+    const r = indexedDB.open(DB_NAME, 1);
+    r.onupgradeneeded = e => {
+      const db = e.target.result;
+      if (!db.objectStoreNames.contains(STORE))
+        db.createObjectStore(STORE, { keyPath: 'id' });
+    };
+    r.onsuccess = e => res(e.target.result);
+    r.onerror   = e => rej(e.target.error);
+  });
+}
+
+async function getAll() {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readonly');
+    const req = tx.objectStore(STORE).getAll();
+    req.onsuccess = e => res(e.target.result);
+    req.onerror   = e => rej(e.target.error);
+  });
+}
+
+async function deleteOpp(id) {
+  const db = await openDB();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, 'readwrite');
+    tx.objectStore(STORE).delete(id);
+    tx.oncomplete = res;
+    tx.onerror = e => rej(e.target.error);
+  });
+}
+
+function formatDate(iso) {
+  return new Date(iso).toLocaleDateString('en-US', {
+    month: 'short', day: 'numeric', year: 'numeric',
+    hour: 'numeric', minute: '2-digit'
+  });
+}
+
+function followupBadge(dateStr) {
+  if (!dateStr) return '';
+  const today    = new Date(); today.setHours(0,0,0,0);
+  const followUp = new Date(dateStr + 'T00:00:00');
+  const diff     = Math.ceil((followUp - today) / 86400000);
+  let cls = 'future', label;
+  if (diff < 0)  { cls = 'upcoming'; label = `Follow-up: ${Math.abs(diff)}d overdue`; }
+  else if (diff === 0) { cls = 'today';    label = 'Follow-up: Today'; }
+  else if (diff <= 7)  { cls = 'upcoming'; label = `Follow-up in ${diff}d`; }
+  else {
+    label = `Follow-up: ${new Date(dateStr + 'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+  }
+  return `<span class="followup-badge ${cls}">● ${label}</span>`;
+}
+
+function renderCard(opp) {
+  const card = document.createElement('div');
+  card.className = 'lead-card' + (opp.followUpDate ? ' has-followup' : '');
+  card.dataset.id = opp.id;
+
+  const photoHTML = opp.photo
+    ? `<img class="card-photo" src="${opp.photo}" alt="Photo" />`
+    : `<div class="card-photo-placeholder">📍</div>`;
+
+  const locHTML = opp.location?.label
+    ? `<div class="card-location">📍 ${opp.location.label.length > 60 ? opp.location.label.slice(0,60)+'…' : opp.location.label}</div>`
+    : '';
+
+  const noteHTML = opp.note
+    ? `<div class="card-note">${opp.note.replace(/</g,'&lt;')}</div>`
+    : `<div class="card-note empty-note">No note</div>`;
+
+  const audioBtn = opp.audio ? `<button class="audio-btn" title="Play voice note">🎙️</button>` : '';
+  const audioEl  = opp.audio ? `<audio class="inline-audio" controls src="${opp.audio}"></audio>` : '';
+
+  card.innerHTML = `
+    <div class="card-top">
+      ${photoHTML}
+      <div class="card-body">
+        <div class="card-date">${formatDate(opp.createdAt)}</div>
+        ${noteHTML}
+        ${locHTML}
+      </div>
+    </div>
+    <div class="card-footer">
+      ${followupBadge(opp.followUpDate)}
+      <div class="card-actions">
+        ${audioBtn}
+        <button class="delete-btn" title="Delete">🗑</button>
+      </div>
+    </div>
+    ${audioEl}
+  `;
+
+  // Audio toggle
+  if (opp.audio) {
+    card.querySelector('.audio-btn').addEventListener('click', () => {
+      const audio = card.querySelector('.inline-audio');
+      audio.classList.toggle('visible');
+      if (audio.classList.contains('visible')) audio.play();
+    });
+  }
+
+  // Delete
+  card.querySelector('.delete-btn').addEventListener('click', async () => {
+    if (!confirm('Delete this opportunity?')) return;
+    await deleteOpp(opp.id);
+    card.remove();
+    const remaining = document.querySelectorAll('.lead-card').length;
+    if (remaining === 0) showEmpty();
+    else document.getElementById('countLine').textContent = `${remaining} opportunit${remaining === 1 ? 'y' : 'ies'}`;
+  });
+
+  return card;
+}
+
+function showEmpty() {
+  document.getElementById('emptyState').style.display = 'flex';
+  document.getElementById('countLine').style.display = 'none';
+}
+
+async function init() {
+  const opps = await getAll();
+  opps.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
+
+  if (opps.length === 0) { showEmpty(); return; }
+
+  const countLine = document.getElementById('countLine');
+  countLine.style.display = 'block';
+  countLine.textContent = `${opps.length} opportunit${opps.length === 1 ? 'y' : 'ies'}`;
+
+  const list = document.getElementById('leadsList');
+  opps.forEach(opp => list.appendChild(renderCard(opp)));
+}
+
+init();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
