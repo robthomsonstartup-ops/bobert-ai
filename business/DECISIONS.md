@@ -130,4 +130,74 @@ Both exported at 2400×600 (2× retina of 1200×300).
 
 ---
 
+## DECISION 012 — Android Adaptive Icon Geometry
+**Locked:** July 27, 2026
+
+**Decision:** In the Android adaptive icon, the Corner Signal mark occupies **43.2% of the 1024×1024 canvas**, centered.
+
+**Rationale:** Android composites a transparent foreground over a background layer, then applies an OEM mask — circle (Pixel/stock), squircle (Samsung), or rounded square. The mask crops to a 72dp viewport of the 108dp canvas, and only a **66dp centered circle** is guaranteed visible on every device.
+
+The Corner Signal mark is a **square** frame, so its four capture-frame corners sit at the diagonal extremes — the worst case under a circular mask. For a square of side S to fit inside the 66dp safe circle: S × √2 ≤ 66, so S ≤ 46.7dp = **43.2%** of canvas.
+
+Larger sizes were tested and rejected:
+
+| Size | Diagonal | Result under Pixel circle mask |
+|---|---|---|
+| 55% | 84.0dp | Frame corners and red corner tip clipped |
+| 50% | 76.4dp | Frame corners clipped |
+| **43.2%** | **66.0dp** | **All four corners and red corner intact** |
+
+DECISION 010 states the mark must not be cropped. 55% and 50% crop it on Pixel devices, so 43.2% is the only compliant option.
+
+**Consequence:** The mark reads smaller than a typical app icon that fills its tile. This is accepted. Increasing visual weight would require an icon-specific lockup, which is a change to DECISION 010 and must be decided separately — not adjusted silently in an asset export.
+
+**Also locked:** Logo red is normalized to exactly **#DC2626** in all generated assets. Source file `bobert-mark-white.png` carries drifted red (~#E41D1E) and must not be used as a generation source. Use `bobert-mark-dark.png`, recoloring ink #1A1A1A → #FFFFFF as needed.
+
+---
+
 *Add new decisions below with date and rationale.*
+
+
+---
+
+## Decision 012 — No Discretionary Spend Until Beta Proves Revenue
+**Date:** 2026-07-27
+**Owner:** Rob (BD)
+
+Rob confirmed: no money committed up front. This supersedes the pending
+$5,000 starting cash assumption and the $3,000 contractor contingency —
+neither is approved right now.
+
+**Rule going forward:** No new spend of any kind (contractor, ads, tools,
+paid channels) until the beta demonstrates real revenue. Hiring/contractor
+spend remains strictly triggered by MRR and support load, never pre-funded.
+Finance should model the base case on $0 starting capital and revise
+upward only if/when revenue creates room.
+
+**Status:** Locked. Finance to rebuild v1.1 model on this assumption.
+
+---
+
+## Decision 013 — Revenue-First Mandate for Finance
+**Date:** 2026-07-27
+**Owner:** Rob (BD)
+
+Finance's job is not to ask for capital — it's to find the path to
+self-funded growth. If the model shows a minimum revenue threshold is
+needed (e.g. the $2,697 max cash gap), that threshold becomes Finance's
+target to hit through paid beta conversions, not something bridged with
+outside cash or upfront spend.
+
+**Directive:**
+- Finance identifies the fastest realistic path to paid conversions that
+  closes any modeled gap organically.
+- Any revenue generated is reinvested directly into the product
+  (development, infra, support) — not treated as founder draw or banked.
+- Post-beta, Finance's primary output shifts from "what do we need" to
+  "how do we generate enough revenue to fund the next phase ourselves."
+- This does not relax the Stripe-live gate or the Aug 10–12 checkpoint
+  framework — it sharpens the reason those checkpoints exist: paid
+  conversions are the funding mechanism, not a nice-to-have metric.
+
+**Status:** Locked. Finance's v1.1 model and all future recommendations
+should be framed around self-funded revenue generation, not capital asks.

@@ -37,9 +37,9 @@ Three updates are approved and waiting on next model revision:
 
 | Item | Status |
 |---|---|
-| Starting cash: $5,000 | Working assumption — needs Rob confirmation |
-| Contractor contingency ~$3,000 | Pending Rob approval |
-| Paid launch month | October = base case; September possible if Dev confirms web readiness |
+| Starting cash | RESOLVED (2026-07-27) — $0. No money committed up front. See Decision 012. |
+| Contractor contingency ~$3,000 | RESOLVED (2026-07-27) — declined for now. No discretionary spend until beta proves revenue. See Decision 012. |
+| Paid launch month | October = base case; September possible if Dev confirms web readiness AND revenue self-funds any incremental cost |
 
 ---
 
