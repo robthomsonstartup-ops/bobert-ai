@@ -15,12 +15,8 @@
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
-// Disable Vercel's default body parser — Stripe needs the raw body to verify signature
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+// NOTE: Plain Vercel Node.js functions do NOT add a body parser by default,
+// so no config export is needed. We read the raw body directly from the stream.
 
 // Read raw body from the request stream
 function getRawBody(req) {
