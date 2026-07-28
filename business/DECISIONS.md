@@ -157,92 +157,68 @@ DECISION 010 states the mark must not be cropped. 55% and 50% crop it on Pixel d
 
 *Add new decisions below with date and rationale.*
 
-
 ---
 
-## Decision 012 — No Discretionary Spend Until Beta Proves Revenue
+## Decision 013 — No Discretionary Spend Until Beta Proves Revenue
 **Date:** 2026-07-27
 **Owner:** Rob (BD)
 
-Rob confirmed: no money committed up front. This supersedes the pending
+Rob confirmed: no money committed up front. This superseded the pending
 $5,000 starting cash assumption and the $3,000 contractor contingency —
-neither is approved right now.
+neither is approved.
 
-**Rule going forward:** No new spend of any kind (contractor, ads, tools,
-paid channels) until the beta demonstrates real revenue. Hiring/contractor
-spend remains strictly triggered by MRR and support load, never pre-funded.
-Finance should model the base case on $0 starting capital and revise
-upward only if/when revenue creates room.
+**Rule:** No new spend of any kind (contractor, ads, tools, paid channels)
+until the beta demonstrates real revenue. Hiring/contractor spend remains
+strictly triggered by MRR and support load, never pre-funded. Finance
+models the base case on $0 starting capital.
 
-**Status:** Locked. Finance to rebuild v1.1 model on this assumption.
+**Status:** Locked.
 
 ---
 
-## Decision 013 — Revenue-First Mandate for Finance
+## Decision 014 — Revenue-First Mandate for Finance
 **Date:** 2026-07-27
 **Owner:** Rob (BD)
 
 Finance's job is not to ask for capital — it's to find the path to
 self-funded growth. If the model shows a minimum revenue threshold is
-needed (e.g. the $2,697 max cash gap), that threshold becomes Finance's
-target to hit through paid beta conversions, not something bridged with
-outside cash or upfront spend.
+needed, that threshold is Finance's target to hit through paid beta
+conversions, not something bridged with outside cash or upfront spend.
 
-**Directive:**
-- Finance identifies the fastest realistic path to paid conversions that
-  closes any modeled gap organically.
-- Any revenue generated is reinvested directly into the product
-  (development, infra, support) — not treated as founder draw or banked.
-- Post-beta, Finance's primary output shifts from "what do we need" to
-  "how do we generate enough revenue to fund the next phase ourselves."
-- This does not relax the Stripe-live gate or the Aug 10–12 checkpoint
-  framework — it sharpens the reason those checkpoints exist: paid
-  conversions are the funding mechanism, not a nice-to-have metric.
+**Directive:** Finance identifies the fastest realistic path to paid
+conversions that closes any modeled gap organically. Revenue generated is
+reinvested directly into the product — not banked, not drawn.
 
-**Status:** Locked. Finance's v1.1 model and all future recommendations
-should be framed around self-funded revenue generation, not capital asks.
-
+**Status:** Locked.
 
 ---
 
-## Decision 012 — No Discretionary Spend Until Beta Proves Revenue
-**Date:** 2026-07-27
+## Decision 015 — Stripe Goes Live on Rob's Personal Account (Bootstrap Sequence)
+**Date:** 2026-07-28
 **Owner:** Rob (BD)
 
-Rob confirmed: no money committed up front. This supersedes the pending
-$5,000 starting cash assumption and the $3,000 contractor contingency —
-neither is approved right now.
+**Decision:** Do not wait on LLC formation to start collecting revenue.
+Stripe is connected to live mode under Rob's personal bank account /
+sole-proprietor status now. Once a handful of paid subscriptions come
+through, that revenue funds the Indiana LLC filing (~$100) and EIN.
 
-**Rule going forward:** No new spend of any kind (contractor, ads, tools,
-paid channels) until the beta demonstrates real revenue. Hiring/contractor
-spend remains strictly triggered by MRR and support load, never pre-funded.
-Finance should model the base case on $0 starting capital and revise
-upward only if/when revenue creates room.
+**Sequence:**
+1. Stripe live mode connected to Rob's personal bank account — unblocks
+   real payment collection immediately, no LLC wait.
+2. First paid subscriptions collected as a sole proprietor.
+3. Revenue funds LLC filing + EIN once a few subs land.
+4. Stripe account business type/EIN updated to the LLC once formed —
+   Stripe generally supports this as an account update rather than a new
+   account, preserving transaction history.
 
-**Status:** Locked. Finance to rebuild v1.1 model on this assumption.
+**Known tradeoff (not legal/financial advice — confirm with a CPA/attorney
+before material revenue):** Revenue collected before the LLC exists is
+sole-proprietor income — no liability separation yet, and it reports on
+Rob's personal taxes until the LLC is formed and any tax election is made.
+Finance's existing guidance to engage a CPA before revenue exceeds
+$1,000/mo (see FINANCE-STATUS-JULY28.md) still applies and now matters
+sooner given this sequencing.
 
----
-
-## Decision 013 — Revenue-First Mandate for Finance
-**Date:** 2026-07-27
-**Owner:** Rob (BD)
-
-Finance's job is not to ask for capital — it's to find the path to
-self-funded growth. If the model shows a minimum revenue threshold is
-needed (e.g. the $2,697 max cash gap), that threshold becomes Finance's
-target to hit through paid beta conversions, not something bridged with
-outside cash or upfront spend.
-
-**Directive:**
-- Finance identifies the fastest realistic path to paid conversions that
-  closes any modeled gap organically.
-- Any revenue generated is reinvested directly into the product
-  (development, infra, support) — not treated as founder draw or banked.
-- Post-beta, Finance's primary output shifts from "what do we need" to
-  "how do we generate enough revenue to fund the next phase ourselves."
-- This does not relax the Stripe-live gate or the Aug 10–12 checkpoint
-  framework — it sharpens the reason those checkpoints exist: paid
-  conversions are the funding mechanism, not a nice-to-have metric.
-
-**Status:** Locked. Finance's v1.1 model and all future recommendations
-should be framed around self-funded revenue generation, not capital asks.
+**Status:** Locked. Supersedes the "LLC blocks Stripe live" sequencing in
+FINANCE-STATUS-JULY28.md Section 6.1 — Stripe live no longer waits on the
+LLC.

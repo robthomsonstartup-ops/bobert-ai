@@ -50,10 +50,10 @@ Finance completed a full session on July 27–28. All Founder Decisions A–F ar
 | End-to-end sandbox test | ✅ Complete |
 | Pricing page | ✅ Live |
 | Brand colors / logo | ✅ Per DECISION 009 |
-| Email capture form (beta signups) | ⚠️ Live but not yet wired to backend |
-| Stripe live mode | 🔴 Blocked — requires business bank account |
-| Business bank account | 🔴 Pending LLC formation |
-| LLC formation | 🔴 Not yet started — highest-priority operational task |
+| Email capture form (beta signups) | ✅ Live and wired to Brevo (/api/subscribe.js) — confirmed with a real test contact in Brevo Contacts, July 27 |
+| Stripe live mode | 🟡 In progress — connecting to Rob's personal bank account per Decision 015, no longer blocked on LLC |
+| Business bank account | N/A for now — using personal account until revenue funds LLC (Decision 015) |
+| LLC formation | 🔴 Deferred — to be filed from first subscription revenue, not before (Decision 015) |
 | Email signup backend / drip sequence | 🔴 Not yet built |
 
 ---
