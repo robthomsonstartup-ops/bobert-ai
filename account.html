@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Account — Bobert</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Bobert" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A;
+      --red:   #DC2626;
+      --white: #FFFFFF;
+      --gray:  #6B7280;
+      --card:  #1A1A1A;
+      --border: rgba(255,255,255,0.1);
+      --nav-h: calc(64px + env(safe-area-inset-bottom));
+    }
+    body {
+      font-family: -apple-system, 'Inter', sans-serif;
+      background: var(--black); color: var(--white);
+      min-height: 100vh;
+      padding-bottom: var(--nav-h);
+    }
+
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      padding-top: calc(14px + env(safe-area-inset-top));
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--black); z-index: 10;
+    }
+    .logo-mark { height: 32px; width: 32px; border-radius: 7px; }
+    header h1 { font-size: 16px; font-weight: 700; }
+    .beta-pill {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      background: rgba(220,38,38,0.15); color: var(--red);
+      padding: 3px 8px; border-radius: 99px;
+    }
+
+    main { padding: 24px 20px; max-width: 480px; margin: 0 auto; }
+
+    /* Beta member card */
+    .member-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .member-avatar {
+      width: 56px; height: 56px; border-radius: 14px; flex-shrink: 0;
+      background: rgba(220,38,38,0.15); border: 2px solid rgba(220,38,38,0.3);
+      display: flex; align-items: center; justify-content: center; font-size: 24px;
+    }
+    .member-info h2 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .member-badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 11px; font-weight: 700;
+      background: rgba(220,38,38,0.12); color: var(--red);
+      padding: 3px 9px; border-radius: 99px;
+    }
+
+    /* Stats row */
+    .stats-row {
+      display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px; margin-bottom: 24px;
+    }
+    .stat-box {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px 12px; text-align: center;
+    }
+    .stat-number { font-size: 24px; font-weight: 800; color: var(--white); }
+    .stat-label  { font-size: 10px; color: var(--gray); margin-top: 3px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    /* Section */
+    .section-title {
+      font-size: 10px; font-weight: 700; color: var(--gray);
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px;
+    }
+    .menu-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 14px; overflow: hidden; margin-bottom: 20px;
+    }
+    .menu-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      text-decoration: none; color: var(--white);
+    }
+    .menu-row:last-child { border-bottom: none; }
+    .menu-row-left { display: flex; align-items: center; gap: 12px; }
+    .menu-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: rgba(255,255,255,0.06); display: flex;
+      align-items: center; justify-content: center; font-size: 15px;
+    }
+    .menu-label { font-size: 14px; font-weight: 500; }
+    .menu-sub   { font-size: 12px; color: var(--gray); margin-top: 1px; }
+    .menu-arrow { color: var(--gray); font-size: 14px; }
+    .menu-tag {
+      font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 99px;
+      background: rgba(220,38,38,0.12); color: var(--red);
+    }
+
+    /* Beta note */
+    .beta-note {
+      background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.15);
+      border-radius: 14px; padding: 16px 18px; margin-bottom: 20px;
+    }
+    .beta-note h3 { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+    .beta-note p  { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6; }
+
+    /* Bottom Nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-around;
+      padding-top: 10px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      text-decoration: none; flex: 1;
+      color: var(--gray); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.03em; padding: 0 8px; transition: color 0.15s;
+    }
+    .nav-item.active { color: var(--white); }
+    .nav-item svg { width: 24px; height: 24px; }
+    .nav-item.capture-tab { position: relative; top: -10px; }
+    .capture-circle {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--red); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(220,38,38,0.45);
+    }
+    .capture-circle svg { width: 26px; height: 26px; color: var(--white); }
+    .nav-item.capture-tab span { color: var(--red); font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo-mark" src="/assets/icon.png" alt="Bobert" />
+  <h1>Account</h1>
+  <span class="beta-pill">BETA</span>
+</header>
+
+<main>
+
+  <div class="member-card">
+    <div class="member-avatar">⚡</div>
+    <div class="member-info">
+      <h2>Beta Member</h2>
+      <span class="member-badge">● Active</span>
+    </div>
+  </div>
+
+  <div class="stats-row" id="statsRow">
+    <div class="stat-box">
+      <div class="stat-number" id="statCaptures">—</div>
+      <div class="stat-label">Captures</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number" id="statIntel">—</div>
+      <div class="stat-label">Intel Cards</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-number" id="statFollowup">—</div>
+      <div class="stat-label">Follow-ups</div>
+    </div>
+  </div>
+
+  <div class="beta-note">
+    <h3>You're in beta.</h3>
+    <p>Full access, no charge. Help us get the intel right — your feedback shapes what ships next.</p>
+  </div>
+
+  <div class="section-title">App</div>
+  <div class="menu-card">
+    <a class="menu-row" href="/capture">
+      <div class="menu-row-left">
+        <div class="menu-icon">📷</div>
+        <div>
+          <div class="menu-label">New Capture</div>
+          <div class="menu-sub">Photo a job site for instant intel</div>
+        </div>
+      </div>
+      <span class="menu-arrow">›</span>
+    </a>
+    <a class="menu-row" href="/leads">
+      <div class="menu-row-left">
+        <div class="menu-icon">📋</div>
+        <div>
+          <div class="menu-label">My List</div>
+          <div class="menu-sub">View saved opportunities</div>
+        </div>
+      </div>
+      <span class="menu-arrow">›</span>
+    </a>
+  </div>
+
+  <div class="section-title">Coming Soon</div>
+  <div class="menu-card">
+    <div class="menu-row" style="opacity:0.5;cursor:default;">
+      <div class="menu-row-left">
+        <div class="menu-icon">📤</div>
+        <div>
+          <div class="menu-label">Export Leads</div>
+          <div class="menu-sub">CSV, email, or CRM push</div>
+        </div>
+      </div>
+      <span class="menu-tag">Soon</span>
+    </div>
+    <div class="menu-row" style="opacity:0.5;cursor:default;">
+      <div class="menu-row-left">
+        <div class="menu-icon">🔔</div>
+        <div>
+          <div class="menu-label">Notifications</div>
+          <div class="menu-sub">Follow-up reminders</div>
+        </div>
+      </div>
+      <span class="menu-tag">Soon</span>
+    </div>
+    <div class="menu-row" style="opacity:0.5;cursor:default;">
+      <div class="menu-row-left">
+        <div class="menu-icon">👥</div>
+        <div>
+          <div class="menu-label">Team Sharing</div>
+          <div class="menu-sub">Share intel with your team</div>
+        </div>
+      </div>
+      <span class="menu-tag">Soon</span>
+    </div>
+  </div>
+
+</main>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="/leads">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+    </svg>
+    <span>My List</span>
+  </a>
+  <a class="nav-item capture-tab" href="/capture">
+    <div class="capture-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </div>
+    <span>Capture</span>
+  </a>
+  <a class="nav-item active" href="/account">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+    <span>Account</span>
+  </a>
+</nav>
+
+<script>
+// Load stats from IndexedDB
+const DB_NAME = 'bobert-db', STORE = 'opportunities';
+function openDB() {
+  return new Promise((res,rej) => {
+    const r = indexedDB.open(DB_NAME, 1);
+    r.onupgradeneeded = e => {
+      if (!e.target.result.objectStoreNames.contains(STORE))
+        e.target.result.createObjectStore(STORE, { keyPath: 'id' });
+    };
+    r.onsuccess = e => res(e.target.result);
+    r.onerror   = e => rej(e.target.error);
+  });
+}
+async function loadStats() {
+  try {
+    const db = await openDB();
+    const opps = await new Promise((res,rej) => {
+      const tx = db.transaction(STORE,'readonly');
+      const req = tx.objectStore(STORE).getAll();
+      req.onsuccess = e => res(e.target.result);
+      req.onerror   = e => rej(e.target.error);
+    });
+    document.getElementById('statCaptures').textContent = opps.length;
+    document.getElementById('statIntel').textContent    = opps.filter(o=>o.intel).length;
+    document.getElementById('statFollowup').textContent = opps.filter(o=>o.followUpDate).length;
+  } catch(e) { /* silent */ }
+}
+loadStats();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+}
+</script>
+</body>
+</html>

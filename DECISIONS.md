@@ -4,6 +4,15 @@ Architecture and product decisions, with rationale. Add new decisions at the top
 
 ---
 
+## DECISION 019 — 2026-07-28 — Beta first; free trial gating deferred to launch
+
+**Decision:** Run a closed beta with the web PWA before enabling the free trial → subscription flow. Beta users get free access — no paywall, no trial timer. Stripe stays in sandbox/test mode during beta. After beta feedback is collected and the product is validated, flip to: free trial (30 days) → paid subscription.
+**Rationale:** Charging before the product is proven creates friction and chargeback risk. Beta is the validation step — get real reps using it, collect feedback, then monetize.
+**Native app:** Hold as an option post-beta. Evaluate based on beta user behavior (how often they use it on mobile web vs. requesting a native install).
+**Trigger to enable billing:** Beta feedback positive, contact enrichment accuracy validated, unit economics confirmed by Finance (per Decision 018).
+
+---
+
 ## DECISION 010 — 2026-07-11 — Visual System: Hippie High Contrast (LOCKED)
 
 **Decision:** Marketing design handoff supersedes DECISION 009 primary/background values. New "Hippie High Contrast" palette is the single source of truth across all UI surfaces.

@@ -22,44 +22,50 @@
       --border: rgba(255,255,255,0.1);
       --green:  #22C55E;
       --amber:  #F59E0B;
+      --nav-h:  calc(64px + env(safe-area-inset-bottom));
     }
     body {
       font-family: -apple-system, 'Inter', sans-serif;
       background: var(--black);
       color: var(--white);
       min-height: 100vh;
-      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+      padding-bottom: var(--nav-h);
     }
 
-    /* Header */
+    /* ── Header ── */
     header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 18px;
+      padding: 14px 18px calc(14px + env(safe-area-inset-top));
+      padding-top: calc(14px + env(safe-area-inset-top));
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0; background: var(--black); z-index: 20;
     }
-    .logo-mark { height: 34px; width: 34px; border-radius: 7px; }
-    header h1 { font-size: 17px; font-weight: 700; }
-    .nav-link { color: var(--gray); font-size: 14px; text-decoration: none; }
+    .logo-mark { height: 32px; width: 32px; border-radius: 7px; }
+    header h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .beta-pill {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      background: rgba(220,38,38,0.15); color: var(--red);
+      padding: 3px 8px; border-radius: 99px;
+    }
 
     main { padding: 18px; max-width: 520px; margin: 0 auto; }
     section { margin-bottom: 20px; }
     .lbl {
-      display: block; font-size: 11px; font-weight: 700;
+      display: block; font-size: 10px; font-weight: 700;
       color: var(--gray); text-transform: uppercase;
       letter-spacing: 1px; margin-bottom: 8px;
     }
 
-    /* Photo area */
+    /* ── Photo zone ── */
     .photo-zone {
-      position: relative; border-radius: 14px; overflow: hidden;
-      border: 2px dashed var(--border); min-height: 220px;
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 2px dashed rgba(255,255,255,0.15); min-height: 260px;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center; cursor: pointer;
       transition: border-color 0.2s; background: var(--card);
     }
     .photo-zone.has-photo { border-color: transparent; }
-    .photo-zone:not(.has-photo):hover { border-color: var(--red); }
+    .photo-zone:not(.has-photo):active { border-color: var(--red); }
     .photo-zone input[type=file] {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; z-index: 2;
     }
@@ -68,83 +74,87 @@
       object-fit: cover; display: none;
     }
     .photo-zone.has-photo img.preview { display: block; }
-    .photo-ph { text-align: center; pointer-events: none; z-index: 1; padding: 20px; }
-    .photo-ph .cam { font-size: 44px; margin-bottom: 12px; }
-    .photo-ph p { color: var(--gray); font-size: 14px; line-height: 1.6; }
-    .photo-ph strong { color: var(--red); }
+    .photo-ph { text-align: center; pointer-events: none; z-index: 1; padding: 24px; }
+    .photo-ph .cam-icon {
+      width: 72px; height: 72px; border-radius: 50%;
+      background: rgba(220,38,38,0.12); border: 2px solid rgba(220,38,38,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 30px; margin: 0 auto 16px;
+    }
+    .photo-ph h2 { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .photo-ph p { color: var(--gray); font-size: 13px; line-height: 1.6; }
     .photo-zone.has-photo .photo-ph { display: none; }
-    /* Retake overlay */
     .retake-btn {
-      display: none; position: absolute; bottom: 10px; right: 10px; z-index: 3;
-      background: rgba(0,0,0,0.7); color: var(--white); border: none;
-      border-radius: 8px; padding: 7px 12px; font-size: 13px; font-weight: 600;
-      cursor: pointer; font-family: inherit;
+      display: none; position: absolute; bottom: 12px; right: 12px; z-index: 3;
+      background: rgba(0,0,0,0.75); color: var(--white); border: none;
+      border-radius: 8px; padding: 7px 13px; font-size: 13px; font-weight: 600;
+      cursor: pointer; font-family: inherit; backdrop-filter: blur(4px);
     }
     .photo-zone.has-photo .retake-btn { display: block; }
 
-    /* GPS */
+    /* ── GPS ── */
     .gps-row {
       display: flex; align-items: flex-start; gap: 10px;
       background: var(--card); border: 1px solid var(--border);
       border-radius: 10px; padding: 12px 14px;
     }
     .gps-dot {
-      width: 9px; height: 9px; border-radius: 50%;
-      background: var(--gray); flex-shrink: 0; margin-top: 4px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gray); flex-shrink: 0; margin-top: 5px;
     }
     .gps-row.locating .gps-dot { background: var(--amber); animation: pulse 1s infinite; }
     .gps-row.located  .gps-dot { background: var(--green); }
     .gps-row.gps-err  .gps-dot { background: var(--red); }
     @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.25} }
     .gps-text { font-size: 13px; color: var(--gray); line-height: 1.5; }
-    .gps-row.located .gps-text { color: var(--white); }
+    .gps-row.located .gps-text { color: rgba(255,255,255,0.85); }
 
-    /* Note */
+    /* ── Note ── */
     textarea {
       width: 100%; background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 12px 14px;
+      border-radius: 10px; padding: 13px 14px;
       font-size: 15px; color: var(--white); font-family: inherit;
-      resize: vertical; min-height: 90px; outline: none;
-      transition: border-color 0.2s;
+      resize: vertical; min-height: 88px; outline: none;
+      transition: border-color 0.2s; line-height: 1.5;
     }
-    textarea:focus { border-color: var(--red); }
+    textarea:focus { border-color: rgba(220,38,38,0.5); }
     textarea::placeholder { color: var(--gray); }
 
-    /* Follow-up */
+    /* ── Follow-up ── */
     input[type=date] {
       width: 100%; background: var(--card); border: 1px solid var(--border);
-      border-radius: 10px; padding: 12px 14px;
+      border-radius: 10px; padding: 13px 14px;
       font-size: 15px; color: var(--white); font-family: inherit;
-      outline: none; -webkit-appearance: none;
-      transition: border-color 0.2s;
+      outline: none; -webkit-appearance: none; transition: border-color 0.2s;
     }
-    input[type=date]:focus { border-color: var(--red); }
-    input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.6; }
+    input[type=date]:focus { border-color: rgba(220,38,38,0.5); }
+    input[type=date]::-webkit-calendar-picker-indicator { filter: invert(1); opacity: 0.5; }
 
-    /* Analyze button */
+    /* ── Analyze button ── */
     .analyze-btn {
-      width: 100%; padding: 15px; background: var(--red); color: var(--white);
+      width: 100%; padding: 16px; background: var(--red); color: var(--white);
       border: none; border-radius: 12px; font-size: 16px; font-weight: 700;
       cursor: pointer; font-family: inherit; transition: opacity 0.15s;
+      letter-spacing: -0.2px;
     }
     .analyze-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .analyze-btn:not(:disabled):hover { opacity: 0.85; }
+    .analyze-btn:not(:disabled):active { opacity: 0.82; }
 
-    /* Analyzing state */
+    /* ── Analyzing state ── */
     .analyzing-overlay {
       display: none; background: var(--card); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px; text-align: center; margin-top: 0;
+      border-radius: 14px; padding: 28px 24px; text-align: center;
     }
     .analyzing-overlay.show { display: block; }
     .spinner {
-      width: 36px; height: 36px; border: 3px solid var(--border);
+      width: 32px; height: 32px; border: 3px solid var(--border);
       border-top-color: var(--red); border-radius: 50%;
-      animation: spin 0.8s linear infinite; margin: 0 auto 16px;
+      animation: spin 0.75s linear infinite; margin: 0 auto 14px;
     }
     @keyframes spin { to { transform: rotate(360deg); } }
     .analyzing-step { font-size: 14px; color: var(--gray); }
 
-    /* Intel Card */
+    /* ── Intel Card ── */
     .intel-card {
       display: none; background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden; margin-bottom: 20px;
@@ -152,13 +162,12 @@
     .intel-card.show { display: block; }
     .intel-header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 16px; border-bottom: 1px solid var(--border);
-      background: rgba(220,38,38,0.08);
+      padding: 13px 16px; border-bottom: 1px solid var(--border);
+      background: rgba(220,38,38,0.07);
     }
     .intel-badge {
       display: flex; align-items: center; gap: 8px;
-      font-size: 13px; font-weight: 700; color: var(--red);
-      letter-spacing: 0.5px;
+      font-size: 12px; font-weight: 700; color: var(--red); letter-spacing: 0.5px;
     }
     .intel-body { padding: 16px; }
     .intel-section { margin-bottom: 16px; }
@@ -167,9 +176,9 @@
       font-size: 10px; font-weight: 700; color: var(--gray);
       text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
     }
-    .intel-text { font-size: 14px; line-height: 1.6; color: var(--white); }
+    .intel-text { font-size: 14px; line-height: 1.6; }
     .intel-subtext { font-size: 13px; color: var(--gray); line-height: 1.5; margin-top: 3px; }
-    .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .intel-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .intel-box {
       background: var(--card2); border: 1px solid var(--border);
       border-radius: 8px; padding: 10px 12px;
@@ -177,8 +186,8 @@
     .intel-box-label { font-size: 10px; color: var(--gray); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
     .intel-box-value { font-size: 13px; font-weight: 600; line-height: 1.4; }
     .routing-note {
-      background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.2);
-      border-radius: 8px; padding: 12px; margin-bottom: 10px;
+      background: rgba(220,38,38,0.06); border: 1px solid rgba(220,38,38,0.18);
+      border-radius: 8px; padding: 12px;
     }
     .routing-note p { font-size: 13px; line-height: 1.6; }
     .outreach-path {
@@ -186,21 +195,24 @@
       border-radius: 8px; padding: 12px; margin-bottom: 8px;
     }
     .outreach-path:last-child { margin-bottom: 0; }
-    .path-label { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
+    .path-label { font-size: 11px; font-weight: 700; color: var(--red); margin-bottom: 4px; }
     .path-text  { font-size: 13px; color: var(--gray); line-height: 1.5; }
     .missing-box {
-      background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.25);
+      background: rgba(245,158,11,0.07); border: 1px solid rgba(245,158,11,0.2);
       border-radius: 8px; padding: 10px 12px;
     }
     .missing-box p { font-size: 13px; color: #FCD34D; line-height: 1.5; }
 
-    /* Contacts */
+    /* ── Contacts ── */
     .contacts-section {
       display: none; background: var(--card); border: 1px solid var(--border);
       border-radius: 14px; overflow: hidden; margin-bottom: 20px;
     }
     .contacts-section.show { display: block; }
-    .contacts-header { padding: 12px 16px; border-bottom: 1px solid var(--border); }
+    .contacts-header {
+      padding: 12px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
     .contacts-header h3 { font-size: 13px; font-weight: 700; }
     .contact-row {
       display: flex; align-items: flex-start; justify-content: space-between;
@@ -211,57 +223,88 @@
     .contact-name  { font-size: 14px; font-weight: 600; }
     .contact-title { font-size: 12px; color: var(--gray); margin-top: 2px; }
     .contact-company { font-size: 12px; color: var(--gray); }
-    .contact-links { display: flex; gap: 8px; flex-shrink: 0; }
+    .contact-links { display: flex; gap: 6px; flex-shrink: 0; flex-wrap: wrap; justify-content: flex-end; }
     .contact-link {
-      font-size: 12px; padding: 4px 8px; border-radius: 6px;
+      font-size: 12px; padding: 5px 10px; border-radius: 6px;
       background: var(--card2); color: var(--white); text-decoration: none;
-      border: 1px solid var(--border);
+      border: 1px solid var(--border); white-space: nowrap;
     }
+    .contact-link:active { opacity: 0.7; }
 
-    /* Save */
+    /* ── Save ── */
     .save-btn {
       width: 100%; padding: 16px; background: var(--red); color: var(--white);
       border: none; border-radius: 12px; font-size: 16px; font-weight: 700;
       cursor: pointer; font-family: inherit; transition: opacity 0.15s;
     }
     .save-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .save-btn:not(:disabled):hover { opacity: 0.85; }
-    .save-btn.secondary { background: var(--card); border: 1px solid var(--border); }
+    .save-btn:active { opacity: 0.82; }
+    .save-btn.secondary {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--gray); font-size: 14px;
+    }
 
-    /* Success */
+    /* ── Success screen ── */
     .success {
       display: none; position: fixed; inset: 0; background: var(--black);
       flex-direction: column; align-items: center; justify-content: center;
       text-align: center; padding: 40px; z-index: 50;
     }
     .success.show { display: flex; }
-    .success-icon { font-size: 64px; margin-bottom: 24px; }
-    .success h2 { font-size: 28px; font-weight: 800; margin-bottom: 8px; }
+    .success-icon { font-size: 60px; margin-bottom: 20px; }
+    .success h2 { font-size: 26px; font-weight: 800; margin-bottom: 8px; }
     .success p { color: var(--gray); font-size: 15px; margin-bottom: 32px; line-height: 1.6; }
-    .btn-stack { display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 300px; }
-    .btn-red  { display:block; padding:14px; background:var(--red); color:var(--white); text-decoration:none; border-radius:10px; font-weight:700; }
-    .btn-dark { display:block; padding:14px; background:var(--card); color:var(--white); text-decoration:none; border-radius:10px; font-weight:600; border:1px solid var(--border); }
+    .btn-stack { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 300px; }
+    .btn-red  { display:block; padding:15px; background:var(--red); color:var(--white); text-decoration:none; border-radius:12px; font-weight:700; font-size:15px; }
+    .btn-dark { display:block; padding:15px; background:var(--card); color:var(--white); text-decoration:none; border-radius:12px; font-weight:600; border:1px solid var(--border); font-size:15px; }
+
+    /* ── Bottom Nav ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
+      background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-around;
+      padding-top: 10px;
+      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      text-decoration: none; flex: 1;
+      color: var(--gray); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.03em; padding: 0 8px;
+      transition: color 0.15s;
+    }
+    .nav-item.active { color: var(--white); }
+    .nav-item svg { width: 24px; height: 24px; }
+    .nav-item.capture-tab { position: relative; top: -10px; }
+    .capture-circle {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--red); display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(220,38,38,0.45);
+    }
+    .capture-circle svg { width: 26px; height: 26px; color: var(--white); }
+    .nav-item.capture-tab span { color: var(--red); font-weight: 700; }
   </style>
 </head>
 <body>
 
 <header>
   <img class="logo-mark" src="/assets/icon.png" alt="Bobert" />
-  <h1>New Opportunity</h1>
-  <a class="nav-link" href="/leads">My List →</a>
+  <h1>New Capture</h1>
+  <span class="beta-pill">BETA</span>
 </header>
 
 <main>
 
   <!-- PHOTO -->
   <section>
-    <span class="lbl">Photo</span>
     <div class="photo-zone" id="photoZone">
       <input type="file" accept="image/*" capture="environment" id="photoInput" />
       <img class="preview" id="photoPreview" alt="" />
       <div class="photo-ph">
-        <div class="cam">📷</div>
-        <p>Tap to <strong>take a photo</strong> of the sign,<br>job site, or building</p>
+        <div class="cam-icon">📷</div>
+        <h2>Photograph the site</h2>
+        <p>Job sign, building, or project board.<br>The clearer the sign, the better the intel.</p>
       </div>
       <button class="retake-btn" type="button" id="retakeBtn">↩ Retake</button>
     </div>
@@ -278,8 +321,8 @@
 
   <!-- NOTE -->
   <section>
-    <span class="lbl">Note <span style="color:var(--gray);font-weight:400;text-transform:none;font-size:11px;">(optional — add context for the intel engine)</span></span>
-    <textarea id="noteInput" placeholder="What did you see? Any company names, project details, or contacts you noticed…" rows="3"></textarea>
+    <span class="lbl">Note <span style="font-weight:400;text-transform:none;letter-spacing:0">(optional)</span></span>
+    <textarea id="noteInput" placeholder="Company names, contacts, project details you spotted…" rows="3"></textarea>
   </section>
 
   <!-- FOLLOW-UP -->
@@ -304,8 +347,8 @@
   <!-- INTEL CARD -->
   <div class="intel-card" id="intelCard">
     <div class="intel-header">
-      <div class="intel-badge">⚡ Intel Card</div>
-      <span style="font-size:12px;color:var(--gray);" id="intelTimestamp"></span>
+      <div class="intel-badge">⚡ Field Intel</div>
+      <span style="font-size:11px;color:var(--gray);" id="intelTimestamp"></span>
     </div>
     <div class="intel-body" id="intelBody"></div>
   </div>
@@ -313,12 +356,12 @@
   <!-- CONTACTS -->
   <div class="contacts-section" id="contactsSection">
     <div class="contacts-header">
-      <h3>📋 Key Contacts</h3>
+      <h3>Key Contacts</h3>
     </div>
     <div id="contactsList"></div>
   </div>
 
-  <!-- SAVE -->
+  <!-- SAVE WITH INTEL -->
   <section id="saveSection" style="display:none;">
     <button class="save-btn" id="saveBtn">Save Opportunity</button>
   </section>
@@ -330,6 +373,7 @@
 
 </main>
 
+<!-- SUCCESS SCREEN -->
 <div class="success" id="successScreen">
   <div class="success-icon">✅</div>
   <h2>Saved.</h2>
@@ -340,13 +384,39 @@
   </div>
 </div>
 
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a class="nav-item" href="/leads">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+      <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+    </svg>
+    <span>My List</span>
+  </a>
+  <a class="nav-item capture-tab active" href="/capture">
+    <div class="capture-circle">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </div>
+    <span>Capture</span>
+  </a>
+  <a class="nav-item" href="/account">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+      <circle cx="12" cy="7" r="4"/>
+    </svg>
+    <span>Account</span>
+  </a>
+</nav>
+
 <script>
-// ── State ──────────────────────────────────────────────────
 let photoBase64 = null;
 let gpsData     = null;
 let intelResult = null;
 
-// ── IndexedDB ──────────────────────────────────────────────
+// ── IndexedDB ──
 const DB_NAME = 'bobert-db', STORE = 'opportunities';
 function openDB() {
   return new Promise((res, rej) => {
@@ -369,27 +439,23 @@ async function saveOpp(opp) {
   });
 }
 
-// ── GPS ────────────────────────────────────────────────────
+// ── GPS ──
 const gpsRow  = document.getElementById('gpsRow');
 const gpsText = document.getElementById('gpsText');
-
 function setGPS(state, text) {
   gpsRow.className = 'gps-row ' + state;
   gpsText.textContent = text;
 }
-
 function fetchGPS() {
-  if (!navigator.geolocation) { setGPS('gps-err', 'GPS not available'); return; }
+  if (!navigator.geolocation) { setGPS('gps-err', 'GPS not available on this device'); return; }
   navigator.geolocation.getCurrentPosition(pos => {
     gpsData = { lat: pos.coords.latitude, lng: pos.coords.longitude, accuracy: pos.coords.accuracy };
-    setGPS('located', `📍 ${gpsData.lat.toFixed(5)}, ${gpsData.lng.toFixed(5)} — resolving…`);
-    // Reverse geocode via API (server handles it)
     setGPS('located', `Lat ${gpsData.lat.toFixed(4)}, Lng ${gpsData.lng.toFixed(4)}`);
-  }, () => setGPS('gps-err', 'Location unavailable — opportunity will save without GPS'));
+  }, () => setGPS('gps-err', 'Location unavailable — will save without GPS'));
 }
 fetchGPS();
 
-// ── Photo ──────────────────────────────────────────────────
+// ── Photo ──
 const photoInput   = document.getElementById('photoInput');
 const photoZone    = document.getElementById('photoZone');
 const photoPreview = document.getElementById('photoPreview');
@@ -421,7 +487,6 @@ retakeBtn.addEventListener('click', e => {
   photoPreview.src = '';
   photoZone.classList.remove('has-photo');
   photoInput.value = '';
-  // Reset intel
   resetIntel();
 });
 
@@ -433,7 +498,7 @@ function resetIntel() {
   document.getElementById('analyzingBox').classList.remove('show');
 }
 
-// ── Analyze ────────────────────────────────────────────────
+// ── Analyze ──
 const analyzeBtn    = document.getElementById('analyzeBtn');
 const analyzingBox  = document.getElementById('analyzingBox');
 const analyzingStep = document.getElementById('analyzingStep');
@@ -460,7 +525,6 @@ analyzeBtn.addEventListener('click', async () => {
     alert('Take a photo or add a note to generate intel.');
     return;
   }
-
   analyzeBtn.disabled = true;
   analyzeBtn.textContent = 'Analyzing…';
   analyzingBox.classList.add('show');
@@ -479,27 +543,19 @@ analyzeBtn.addEventListener('click', async () => {
         note:  document.getElementById('noteInput').value.trim(),
       }),
     });
-
     const data = await res.json();
     clearInterval(stepTimer);
     analyzingBox.classList.remove('show');
-
     if (!res.ok || data.error) throw new Error(data.error || 'Intel generation failed');
-
     intelResult = data;
-
-    // Update GPS display with resolved address
     if (data.location?.address) {
       setGPS('located', data.location.address);
       gpsData = { ...gpsData, label: data.location.address };
     }
-
     renderIntelCard(data.intel);
     renderContacts(data.contacts || []);
-
     document.getElementById('saveSection').style.display = 'block';
     document.getElementById('saveWithoutSection').style.display = 'none';
-
   } catch (err) {
     clearInterval(stepTimer);
     analyzingBox.classList.remove('show');
@@ -513,7 +569,7 @@ analyzeBtn.addEventListener('click', async () => {
   analyzeBtn.textContent = '⚡ Re-analyze';
 });
 
-// ── Render Intel Card ──────────────────────────────────────
+// ── Render Intel Card ──
 function safe(val) { return val ? String(val).replace(/</g,'&lt;') : null; }
 
 function renderIntelCard(intel) {
@@ -521,10 +577,8 @@ function renderIntelCard(intel) {
   const card = document.getElementById('intelCard');
   const body = document.getElementById('intelBody');
   document.getElementById('intelTimestamp').textContent = new Date().toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
-
   let html = '';
 
-  // Project overview
   if (intel.projectScope) {
     html += `<div class="intel-section">
       <div class="intel-section-title">Project</div>
@@ -533,15 +587,13 @@ function renderIntelCard(intel) {
     </div>`;
   }
 
-  // Quick facts grid
   const facts = [];
-  if (intel.location)          facts.push(['Location', intel.location]);
-  if (intel.squareFootage)     facts.push(['Size', intel.squareFootage]);
-  if (intel.deliveryTimeline)  facts.push(['Delivery', intel.deliveryTimeline]);
-  if (intel.developer?.name)   facts.push(['Developer', intel.developer.name]);
-  if (intel.gc?.name)          facts.push(['GC', intel.gc.name]);
+  if (intel.location)              facts.push(['Location', intel.location]);
+  if (intel.squareFootage)         facts.push(['Size', intel.squareFootage]);
+  if (intel.deliveryTimeline)      facts.push(['Delivery', intel.deliveryTimeline]);
+  if (intel.developer?.name)       facts.push(['Developer', intel.developer.name]);
+  if (intel.gc?.name)              facts.push(['GC', intel.gc.name]);
   if (intel.leasingAgent?.company) facts.push(['Leasing', intel.leasingAgent.company]);
-
   if (facts.length > 0) {
     html += `<div class="intel-section"><div class="intel-grid">`;
     facts.forEach(([label, val]) => {
@@ -550,7 +602,6 @@ function renderIntelCard(intel) {
     html += `</div></div>`;
   }
 
-  // Lighting opportunity
   if (intel.lightingOpportunity) {
     html += `<div class="intel-section">
       <div class="intel-section-title">💡 Lighting Opportunity</div>
@@ -558,7 +609,6 @@ function renderIntelCard(intel) {
     </div>`;
   }
 
-  // Routing note
   if (intel.routingNote) {
     html += `<div class="intel-section">
       <div class="intel-section-title">Routing</div>
@@ -566,7 +616,6 @@ function renderIntelCard(intel) {
     </div>`;
   }
 
-  // Developer detail
   if (intel.developer?.background || intel.developer?.nationalAccountPotential) {
     html += `<div class="intel-section">
       <div class="intel-section-title">Developer</div>
@@ -576,7 +625,6 @@ function renderIntelCard(intel) {
     </div>`;
   }
 
-  // GC detail
   if (intel.gc?.name || intel.gc?.routingNote) {
     html += `<div class="intel-section">
       <div class="intel-section-title">General Contractor</div>
@@ -586,7 +634,6 @@ function renderIntelCard(intel) {
     </div>`;
   }
 
-  // Key people
   if (intel.keyPeople?.length > 0) {
     html += `<div class="intel-section"><div class="intel-section-title">Key People</div>`;
     intel.keyPeople.forEach(p => {
@@ -599,7 +646,6 @@ function renderIntelCard(intel) {
     html += `</div>`;
   }
 
-  // Outreach paths
   if (intel.outreachPaths?.length > 0) {
     html += `<div class="intel-section"><div class="intel-section-title">Outreach Paths</div>`;
     intel.outreachPaths.forEach(path => {
@@ -611,7 +657,6 @@ function renderIntelCard(intel) {
     html += `</div>`;
   }
 
-  // Missing info
   if (intel.missingInfo) {
     html += `<div class="intel-section">
       <div class="intel-section-title">Still Needed</div>
@@ -623,7 +668,7 @@ function renderIntelCard(intel) {
   card.classList.add('show');
 }
 
-// ── Render Contacts ────────────────────────────────────────
+// ── Render Contacts ──
 function renderContacts(contacts) {
   if (!contacts || contacts.length === 0) return;
   const section = document.getElementById('contactsSection');
@@ -631,9 +676,9 @@ function renderContacts(contacts) {
   list.innerHTML = '';
   contacts.forEach(c => {
     const links = [
-      c.email    ? `<a class="contact-link" href="mailto:${c.email}">Email</a>` : '',
-      c.phone    ? `<a class="contact-link" href="tel:${c.phone}">Call</a>` : '',
-      c.linkedin ? `<a class="contact-link" href="${c.linkedin}" target="_blank">LinkedIn</a>` : '',
+      c.email    ? `<a class="contact-link" href="mailto:${c.email}">✉ Email</a>` : '',
+      c.phone    ? `<a class="contact-link" href="tel:${c.phone}">📞 Call</a>` : '',
+      c.linkedin ? `<a class="contact-link" href="${c.linkedin}" target="_blank" rel="noopener">in</a>` : '',
     ].filter(Boolean).join('');
     list.innerHTML += `<div class="contact-row">
       <div class="contact-info">
@@ -647,11 +692,10 @@ function renderContacts(contacts) {
   section.classList.add('show');
 }
 
-// ── Save ───────────────────────────────────────────────────
+// ── Save ──
 async function doSave(withIntel) {
   const followUp = document.getElementById('followUpDate').value;
   const note     = document.getElementById('noteInput').value.trim();
-
   const opp = {
     id:           Date.now().toString(),
     createdAt:    new Date().toISOString(),
@@ -663,7 +707,6 @@ async function doSave(withIntel) {
     contacts:     withIntel ? (intelResult?.contacts || []) : [],
     ocr:          withIntel ? intelResult?.ocr       : null,
   };
-
   await saveOpp(opp);
 
   if (followUp && 'Notification' in window && Notification.permission !== 'denied') {
@@ -688,24 +731,19 @@ async function doSave(withIntel) {
 }
 
 document.getElementById('saveBtn').addEventListener('click', async () => {
-  document.getElementById('saveBtn').disabled = true;
-  document.getElementById('saveBtn').textContent = 'Saving…';
-  try { await doSave(true); } catch(e) {
-    alert('Save failed: ' + e.message);
-    document.getElementById('saveBtn').disabled = false;
-    document.getElementById('saveBtn').textContent = 'Save Opportunity';
-  }
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true; btn.textContent = 'Saving…';
+  try { await doSave(true); }
+  catch(e) { alert('Save failed: ' + e.message); btn.disabled = false; btn.textContent = 'Save Opportunity'; }
 });
 
 document.getElementById('saveWithoutBtn').addEventListener('click', async () => {
-  document.getElementById('saveWithoutBtn').disabled = true;
-  try { await doSave(false); } catch(e) {
-    alert('Save failed: ' + e.message);
-    document.getElementById('saveWithoutBtn').disabled = false;
-  }
+  const btn = document.getElementById('saveWithoutBtn');
+  btn.disabled = true;
+  try { await doSave(false); }
+  catch(e) { alert('Save failed: ' + e.message); btn.disabled = false; }
 });
 
-// ── Service Worker ─────────────────────────────────────────
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(() => {});
 }
