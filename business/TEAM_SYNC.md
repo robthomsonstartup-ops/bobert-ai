@@ -64,6 +64,8 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 | Beachhead scope | Construction-project ecosystem, not a fixed trade list; live beachhead = lighting/electrical (Rob's own vertical); Real Estate and Landscaping explicitly excluded | 021 |
 | Operating principle | "How do we be better every day?" — internal principle, footer + `/changelog` only, not a tagline, not homepage hero | 022 |
 | Pricing (fixed) | Solo $59 / Pro $119 / Team $349 / Enterprise $1,500/mo — supersedes 005's range language, trial terms unchanged | 023 |
+| `/changelog` ownership | Marketing owns content — translates Dev's technical commits into plain, user-facing language. Cadence: triggered by any user-visible ship, not on a fixed schedule. | 024 |
+| Beta access architecture | **Corrected July 30.** Both FI and PI are personal + colleague-testing phase right now — not open public beta for either. One live domain (bobert.ai) throughout: homepage is a general overview/portal for the Bobert system, linking out to each tool. No separate staging site — current build scales up in place to a public-launch-ready state once feedback lands, then opens for business signups. Both `/capture` (FI) and `/intake` (PI) get a lightweight passcode/invite gate — not full auth, just enough that only people Rob shares the link with can get in. Neither tool is open to the general public yet. | 025 |
 
 ---
 
@@ -91,10 +93,7 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 - ✅ PI `/intake` live and tested — extraction, checklist, deal draft, Copy/Print/Email/Save
 - ✅ Founder Decisions A-F closed (017); Decisions 019/020 reconciled into the ledger and deduplicated (`fb46536`)
 - ✅ Git lock incident (stale `HEAD.lock`/`ORIG_HEAD.lock`) resolved July 29 — two sessions writing to TEAM_SYNC.md around the same time meant BD's own push clobbered Finance's just-landed update. Reconciled, nothing lost.
-- ⚠️ **Second occurrence, July 30:** BD's own Decisions 021-023 push briefly reverted PI Dev's real, shipped status (`0473b34`) by building from a stale local copy. Caught by verifying `main` directly, fixed with a targeted edit. **Standing fix: `git log`/fetch `main` immediately before building any TEAM_SYNC.md edit, every time.**
-- ⚠️ **Third occurrence, July 30:** Dev (FI)'s commit `7337723` claimed six site-implementation items shipped that verifiably were not live in the code, plus overwrote the ledger with a stale independent fork of TEAM_SYNC.md. Restored the real ledger; re-verified FI's actual progress independently afterward (see Dev (FI) section) rather than trusting either the false claim or assuming nothing shipped.
-- ✅ Re-verification (July 30) found real progress: nav link, stats fix, and 7th feature card are genuinely live — confirmed independently, credit given where due.
-- ✅ **Diagnostic question resolved the pattern (July 30).** FI Dev's Cowork sandbox has no browser/network access — every "shipped" report meant "the push succeeded," not "verified live." Once BD independently re-checked the actual live site, the large majority of today's v2.0 build was confirmed genuinely real and high-quality (see Dev (FI) section). One isolated gap remains on `index.html` specifically. Lesson: ask what a status claim is actually based on before assuming either fabrication or full trust.
+- ⚠️ **July 30 incident history (condensed).** Three TEAM_SYNC accuracy issues hit in one day: (1) BD's own Decisions 021-023 push briefly reverted PI Dev's real status by building from a stale local copy; (2) Dev (FI) commit `7337723` claimed six items shipped that weren't, plus overwrote the ledger with a stale fork; (3) subsequent FI Dev reports claimed more than was actually live. Root cause on FI Dev's end: their Cowork sandbox has no browser/network access, so "shipped" meant "push succeeded," not "verified live" — surfaced by asking directly rather than guessing. **Resolved July 30 — full v2.0 site build independently verified live and correct** (see Dev (FI) section). Standing fixes that stay permanent: fetch `main` before any TEAM_SYNC edit; verify status claims against the live artifact, not the report.
 - 🔲 LLC formation — deferred until first paid subscriptions land (015)
 - 🔲 Aug 10-12 checkpoint — tracking signups/run-rate/Stripe-live/auth/cost-per-brief toward Sep vs Oct launch
 
@@ -127,12 +126,13 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 - ✅ Apollo wired into `/api/capture-intel` for contact enrichment (free tier, per Decision 020)
 - ✅ **Site implementation, partial — independently verified live on bobert.ai (July 30):** nav "Open Bobert" link, simplified stats row (`<10s` / `GPS` / `1 photo`), 7th "Project Intel Card" feature, and 2 of 7 brand-check.py fixes all confirmed genuinely shipped.
 - ✅ **Diagnostic resolved — root cause found, most of v2.0 confirmed genuinely shipped (July 30).** FI Dev has no browser/network access (Cowork sandbox writes scripts to a separate folder, Rob runs them against the real repo and pastes terminal output back) — "shipped" meant "git push succeeded," not "verified live." After BD independently re-checked the live site directly: **manifest.json fix, `/upgrade` reframe, `/changelog` page, "Who It's For" rewrite, hero subhead, safe-use hero line, and nav link are all genuinely live and correct.** Real, high-quality work — commit `a210ade`'s status claims were accurate for these items, unlike the earlier `7337723` incident.
-- 🔲 **One isolated gap: `index.html` missing 4 sections its own CSS expects.** Thesis section (§4), FI/PI "Two Ways Bobert Works" (§5), "Built in the Open" homepage teaser (§10), and footer additions (operating principle, safe-use line, `/changelog` link) — CSS rules exist in the stylesheet (confirmed via commit `ed4194e`), but no matching HTML renders on the live page. Every other page shipped correctly; this looks like a contained bug specific to `index.html`'s body. See `PROMPT-DEV-FI-JULY30-INDEX-GAP.md`.
+- ✅ **Gap closed — full v2.0 site build confirmed complete and live (commit `32895fb`).** The four missing `index.html` sections (thesis §4, FI/PI "Two Ways Bobert Works" §5, "Built in the Open" teaser §10, footer additions §12) are now independently verified live on bobert.ai — fetched directly, all four render correctly and match SITE-PLAN v2.0 copy exactly, including PI's card correctly showing no CTA/"In development." Root cause per FI Dev: a guard check in their build script was matching CSS comments instead of HTML content, fixed by switching to HTML-specific anchors. **Full SITE-PLAN-JULY30.md v2.0 build is done.**
 - ✅ Favicon/apple-touch-icon added across capture/leads/account/intake/success/upgrade per changelog — reduces brand-check violations; page-by-page logo-image swap (icon.png → wordmark) not yet independently re-verified by BD.
 - ✅ Safe-use copy placement #1 (persistent "Park first" banner on `capture.html`) — live per changelog, first of six planned placements.
 - 🔲 **Blocking Finance:** confirm whether Apollo (current) or PDL (Finance's recommendation) is the vendor going forward — see `PROMPT-DEV-FI-JULY29.md`
 - 🔲 Contact enrichment accuracy — intel card currently speculates instead of verifying.
 - 🔲 Stripe live-mode flip — blocked on Decision 016 gate.
+- 🔲 **New: lightweight passcode/invite gate on `/capture`, `/leads`, `/account`** per Decision 025 (corrected). FI is currently open to anyone who finds the domain — no gate exists despite "closed beta" intent. Same minimal approach as PI's gate: single shared passcode or invite token, no full auth system, no sessions/DB needed. See `PROMPT-DEV-FI-JULY30-ACCESS-GATE.md`.
 
 **Full consolidated task list:** `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI site prompts (`PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md`, `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`). Work from the V2 file.
 
@@ -141,6 +141,7 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
 - ✅ **PI UI build-out — parallel extraction + inline editing shipped (commit `0473b34`)** — parallel source extraction (`Promise.all` across OCR/PDF/URL) and inline field editing (Edit/Done toggle on Project Info, Quote Checklist, Deal Draft cards with `contenteditable` + `saveEdit`/`cycleChecklist`).
 - ✅ **Speed-to-structured-output shipped (commit `0473b34`)** — multi-source ingestion now parallel: all attachments extract simultaneously in one pass before AI synthesis. Goal (zero manual re-entry) met for the multi-attachment case.
+- 🔲 **New: lightweight passcode/invite gate on `/intake`** per Decision 025 — PI stays personal-use only, but Rob needs to be able to share the real link without it being publicly discoverable or crawlable. Not a full auth system — a single shared passcode or invite-token check is enough. See `PROMPT-DEV-PI-JULY30-ACCESS-GATE.md`.
 - 🔲 Remaining UI polish — visual refinements, input flow, brand consistency (next sprint, awaiting go-ahead)
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
@@ -159,8 +160,7 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 | Sep vs Oct launch decision | Aug 10-12 checkpoint results | Rob, Aug 10-12 |
 | Marketing Gates 5 & 6 | Contact-enrichment accuracy resolving (copy can't be finalized against a half-true claim) | Dev (FI) |
 | Safe-use copy live on site | Dev implementation, placement #1 first | Dev (FI) |
-| `/changelog` content | Owner/cadence decision | BD/Marketing |
-| Thesis framing final sign-off | Rob reacting to the live built version | Rob |
+| Thesis framing final sign-off | Page is now live — Rob's explicit reaction/approval to the built "Opportunity gets lost twice" copy not yet captured | Rob |
 
 ---
 

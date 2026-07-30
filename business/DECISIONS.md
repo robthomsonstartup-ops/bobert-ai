@@ -480,3 +480,16 @@ it does not change what's live, since the live site and Stripe already use these
 Marketing owns /changelog content — translating Dev's technical commits into
 plain, user-facing language per Decision 022's "falsifiable proof" requirement.
 Cadence is triggered by any user-visible ship, not a fixed schedule.
+
+## Decision 025 — Beta Access Architecture: Single Domain, Both Tools Gated
+**Date:** July 30, 2026
+**Status:** Locked
+
+bobert.ai remains the single live domain — no separate staging/beta site.
+Both FI and PI are personal + colleague-testing phase right now, not open
+public beta for either. Homepage is a general overview/portal for the Bobert
+system, linking out to each tool. Goal: scale the current build up in place
+to a public-launch-ready state once feedback lands, then open for business
+signups. Both /capture (FI) and /intake (PI) get a lightweight passcode/
+invite gate — not full auth, just enough that only people Rob shares the
+link with can get in.
