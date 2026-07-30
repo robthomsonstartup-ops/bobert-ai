@@ -122,21 +122,32 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 - 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — still blocked on positioning until Decision 021's beachhead correction lands on the live site.
 
 ### Development (FI)
-- ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
-- ✅ Apollo wired into `/api/capture-intel` for contact enrichment (free tier, per Decision 020)
-- ✅ **Site implementation, partial — independently verified live on bobert.ai (July 30):** nav "Open Bobert" link, simplified stats row (`<10s` / `GPS` / `1 photo`), 7th "Project Intel Card" feature, and 2 of 7 brand-check.py fixes all confirmed genuinely shipped.
-- 🔲 **Manifest.json regression — urgent, new.** Maskable icon now points at `/assets/icon.png`, outside Android's safe zone — clips the brand mark, violates Decision 012. Point at `/assets/adaptive-icon.png` instead. See `PROMPT-DEV-FI-JULY30-SITE-V2.md`.
-- 🔲 **`/upgrade` reframe still not shipped** — live page still shows "Start Free Trial" CTAs and "Credit card required to hold your spot," contradicting `/account`'s beta framing.
-- 🔲 **"Who It's For" section violates Decision 021** — live homepage still leads with Real Estate, includes Landscaping; both explicitly excluded from the beachhead.
-- 🔲 5 remaining brand-check.py violations (R1b/R3) — `capture`, `leads`, `account`, `intake`, `upgrade` still use `icon.png` as header logo; `upgrade.html`/`success.html` missing favicon.
-- 🔲 Safe-use copy placement #1 (persistent statement on `capture.html`) — highest priority per Marketing's spec.
-- 🔲 New sections from SITE-PLAN v2.0: thesis + FI/PI reveal (§4-5, build but not final), hero subhead, "Built in the Open" teaser (§10), footer additions, `/changelog` page shell.
-- 🔲 **Blocking Finance:** confirm whether Apollo (current) or PDL (Finance's recommendation) is the vendor going forward — see `PROMPT-DEV-FI-JULY29.md`
-- 🔲 Contact enrichment accuracy — intel card currently speculates instead of verifying.
-- 🔲 Stripe live-mode flip — blocked on Decision 016 gate.
-
-**Full consolidated task list:** `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI site prompts (`PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md`, `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`). Work from the V2 file.
-
+- ✅ bobert.ai live on Vercel
+- ✅ Stripe Checkout integrated — test mode (not active during beta, Decision 019)
+- ✅ Brevo email capture live on landing page
+- ✅ /capture — photo (Vision OCR), GPS, note, follow-up date, IndexedDB save
+- ✅ /api/capture-intel — Vision OCR → Tavily search → Groq synthesis → Apollo contacts
+- ✅ /leads — list view, tap-to-open intel drawer, delete
+- ✅ /account — beta member card, live stats, coming-soon roadmap
+- ✅ Bottom nav (My List / Capture / Account) — consistent across all pages
+- ✅ PWA: manifest.json + sw.js, Add to Home Screen capable
+- ✅ All 4 intel API keys live in Vercel
+- ✅ vercel.json: cleanUrls true
+- ✅ Landing page nav: "Open Bobert → /capture" live (July 30)
+- ✅ Landing page stats: "1 photo — everything else fills itself in" live (July 30)
+- ✅ Landing page features: "Your List" + 7th "Project Intel Card" live (July 30)
+- ✅ App headers: bobert-wordmark-white.png in capture/leads/account (July 30)
+- ✅ manifest.json: adaptive-icon.png for maskable, sizes 1024x1024, background_color #1A1A1A, platform description (July 30)
+- ✅ capture.html: persistent "Park first" safe-use banner — placement #1 (July 30)
+- ✅ Brand-check: favicon + apple-touch-icon links added to capture/leads/account/intake/success/upgrade (July 30)
+- ✅ upgrade.html: beta preview — no Stripe CTAs, "closed beta / free / no card," Planned tags, favicon (July 30)
+- ✅ index.html "Who It's For": Decision 021 compliant — Lighting & Electrical, Contractors & Subs, Manufacturers' Reps, Suppliers & Distributors (July 30)
+- 🟲 New sections 4/5/10 (thesis, FI+PI reveal, Built in the Open) — SITE-PLAN v2.0 specs ready, implement next
+- 🟲 Hero subhead revision — SITE-PLAN v2.0 §3 copy ready, implement next
+- 🟲 Footer additions (operating principle, safe-use statement, /changelog link)
+- 🟲 /changelog page shell — Marketing writes content
+- 🟲 Improve contact enrichment accuracy (see PROMPT-DEV-JULY28-CONTACT-ENRICHMENT.md)
+- 🟲 Stripe live mode flip — pending Finance sign-off + beta validation
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.

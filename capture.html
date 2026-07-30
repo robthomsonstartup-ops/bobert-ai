@@ -6,6 +6,8 @@
   <title>Capture — Bobert</title>
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="/assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Bobert" />
@@ -284,6 +286,21 @@
     }
     .capture-circle svg { width: 26px; height: 26px; color: var(--white); }
     .nav-item.capture-tab span { color: var(--red); font-weight: 700; }
+  
+    /* Safe-use banner */
+    .safe-use-banner {
+      background: rgba(220,38,38,0.08);
+      border-bottom: 1px solid rgba(220,38,38,0.15);
+      padding: 10px 20px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.01em;
+      position: sticky;
+      top: 57px;
+      z-index: 19;
+    }
   </style>
 </head>
 <body>
@@ -293,6 +310,7 @@
   <h1>New Capture</h1>
   <span class="beta-pill">BETA</span>
 </header>
+<div class="safe-use-banner">&#9888;&#xFE0F; Park first -- never capture while driving.</div>
 
 <main>
 

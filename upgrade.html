@@ -4,12 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Plans — Bobert</title>
-  <meta name="description" content="Bobert is free during beta. See what's coming when subscriptions launch." />
+  <meta name="description" content="Bobert is in closed beta — free access, no card, no trial clock." />
   <link rel="manifest" href="/manifest.json" />
   <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="/assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <link rel="apple-touch-icon" href="/assets/icon.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
@@ -17,41 +18,17 @@
       --gray: #6B7280; --card: #1A1A1A; --border: rgba(229,231,235,0.1);
       --nav-h: calc(64px + env(safe-area-inset-bottom));
     }
-    body {
-      font-family: -apple-system, 'Inter', sans-serif;
-      background: var(--black); color: var(--white);
-      min-height: 100vh; padding-bottom: var(--nav-h);
-    }
-    header {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px; padding-top: calc(14px + env(safe-area-inset-top));
-      border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; background: var(--black); z-index: 10;
-    }
+    body { font-family: -apple-system, 'Inter', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; padding-bottom: var(--nav-h); }
+    header { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; padding-top: calc(14px + env(safe-area-inset-top)); border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--black); z-index: 10; }
     .logo-wordmark { height: 22px; width: auto; }
     header h1 { font-size: 16px; font-weight: 700; }
-    .beta-pill {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
-      background: rgba(220,38,38,0.15); color: var(--red);
-      padding: 3px 8px; border-radius: 99px;
-    }
+    .beta-pill { font-size: 10px; font-weight: 700; letter-spacing: 0.05em; background: rgba(220,38,38,0.15); color: var(--red); padding: 3px 8px; border-radius: 99px; }
     main { padding: 32px 20px; max-width: 520px; margin: 0 auto; }
-    .beta-banner {
-      background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2);
-      border-radius: 16px; padding: 20px 22px; margin-bottom: 32px; text-align: center;
-    }
-    .beta-banner h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px; }
-    .beta-banner p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; }
-    .beta-banner .free-tag {
-      display: inline-block; margin-top: 12px;
-      background: rgba(220,38,38,0.15); color: var(--red);
-      font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
-      padding: 4px 12px; border-radius: 99px;
-    }
-    .section-label {
-      font-size: 10px; font-weight: 700; color: var(--gray);
-      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
-    }
+    .beta-banner { background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2); border-radius: 16px; padding: 24px; margin-bottom: 32px; text-align: center; }
+    .beta-banner h2 { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 8px; }
+    .beta-banner p { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; margin-bottom: 16px; }
+    .free-tag { display: inline-block; background: rgba(220,38,38,0.15); color: var(--red); font-size: 12px; font-weight: 700; letter-spacing: 0.05em; padding: 4px 14px; border-radius: 99px; }
+    .section-label { font-size: 10px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px; }
     .plans { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
     .plan { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; }
     .plan.featured { border-color: rgba(220,38,38,0.35); }
@@ -61,92 +38,56 @@
     .plan-price { font-size: 30px; font-weight: 800; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
     .plan-price span { font-size: 13px; font-weight: 400; color: var(--gray); }
     .plan-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
-    .plan-features { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
-    .plan-feature { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
-    .plan-feature .check { color: var(--red); font-size: 12px; flex-shrink: 0; }
-    .plan-feature .planned {
-      font-size: 10px; font-weight: 700; color: var(--gray);
-      background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; margin-left: 4px;
-    }
-    .notify-section {
-      background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 22px; text-align: center;
-    }
+    .plan-features { margin-top: 14px; display: flex; flex-direction: column; gap: 7px; }
+    .plan-feature { display: flex; align-items: baseline; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
+    .check { color: var(--red); font-size: 12px; flex-shrink: 0; }
+    .planned { font-size: 10px; font-weight: 700; color: var(--gray); background: rgba(255,255,255,0.07); padding: 1px 6px; border-radius: 4px; margin-left: 4px; }
+    .notify-section { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px; text-align: center; }
     .notify-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
-    .notify-section p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 16px; line-height: 1.5; }
+    .notify-section p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 18px; line-height: 1.5; }
     .notify-form { display: flex; gap: 8px; }
-    .notify-form input {
-      flex: 1; padding: 11px 14px; background: rgba(255,255,255,0.06);
-      border: 1px solid var(--border); border-radius: 8px;
-      color: var(--white); font-size: 14px; outline: none;
-    }
+    .notify-form input { flex: 1; padding: 11px 14px; background: rgba(255,255,255,0.06); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-size: 14px; outline: none; }
     .notify-form input::placeholder { color: var(--gray); }
     .notify-form input:focus { border-color: rgba(220,38,38,0.4); }
-    .notify-form button {
-      padding: 11px 18px; background: var(--red); color: var(--white);
-      border: none; border-radius: 8px; font-size: 14px; font-weight: 700;
-      cursor: pointer; white-space: nowrap; transition: opacity 0.15s;
-    }
+    .notify-form button { padding: 11px 20px; background: var(--red); color: var(--white); border: none; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: opacity 0.15s; }
     .notify-form button:hover { opacity: 0.85; }
-    .notify-confirm { display: none; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 10px; }
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
-      background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
-      border-top: 1px solid var(--border);
-      display: flex; align-items: flex-start; justify-content: space-around;
-      padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom));
-    }
-    .nav-item {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      text-decoration: none; flex: 1; color: var(--gray);
-      font-size: 10px; font-weight: 600; letter-spacing: 0.03em;
-      padding: 0 8px; transition: color 0.15s;
-    }
-    .nav-item.active { color: var(--white); }
+    .notify-confirm { display: none; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 12px; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 30; background: rgba(10,10,10,0.95); backdrop-filter: blur(12px); border-top: 1px solid var(--border); display: flex; align-items: flex-start; justify-content: space-around; padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom)); }
+    .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; flex: 1; color: var(--gray); font-size: 10px; font-weight: 600; letter-spacing: 0.03em; padding: 0 8px; transition: color 0.15s; }
     .nav-item svg { width: 24px; height: 24px; }
     .nav-item.capture-tab { position: relative; top: -10px; }
-    .capture-circle {
-      width: 52px; height: 52px; border-radius: 50%;
-      background: var(--red); display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 4px 16px rgba(220,38,38,0.45);
-    }
+    .capture-circle { width: 52px; height: 52px; border-radius: 50%; background: var(--red); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(220,38,38,0.45); }
     .capture-circle svg { width: 26px; height: 26px; color: var(--white); }
     .nav-item.capture-tab span { color: var(--red); font-weight: 700; }
   </style>
 </head>
 <body>
-
 <header>
   <img class="logo-wordmark" src="/assets/bobert-wordmark-white.png" alt="Bobert" />
   <h1>Plans</h1>
   <span class="beta-pill">BETA</span>
 </header>
-
 <main>
-
   <div class="beta-banner">
-    <h2>You're in beta. It's free.</h2>
-    <p>Full access to capture, intel, and your list — no charge during beta. Subscriptions launch after beta closes.</p>
+    <h2>Bobert is in closed beta.</h2>
+    <p>Free access. No card required. No trial clock running.<br>Subscriptions open after beta closes — we’ll notify you first.</p>
     <span class="free-tag">FREE DURING BETA</span>
   </div>
-
-  <div class="section-label">Coming after beta</div>
+  <div class="section-label">Pricing after beta</div>
   <div class="plans">
-
     <div class="plan">
       <div class="plan-header"><div class="plan-name">Solo</div></div>
       <div class="plan-price">$59<span>/mo</span></div>
-      <div class="plan-desc">One rep. Full capture workflow, AI intel card, contact enrichment, and Your List.</div>
+      <div class="plan-desc">One rep. Full capture workflow, AI intel card, contact enrichment, Your List.</div>
       <div class="plan-features">
-        <div class="plan-feature"><span class="check">✓</span> Photo capture + GPS tag</div>
-        <div class="plan-feature"><span class="check">✓</span> AI intel card per capture</div>
-        <div class="plan-feature"><span class="check">✓</span> Contact enrichment via Apollo</div>
-        <div class="plan-feature"><span class="check">✓</span> Your List — saved opportunities</div>
-        <div class="plan-feature"><span class="check">✓</span> Follow-up reminders <span class="planned">Planned</span></div>
-        <div class="plan-feature"><span class="check">✓</span> CRM export <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Photo capture + auto GPS tag</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> AI intel card per capture</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Contact enrichment (Apollo)</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Your List — saved opportunities</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Follow-up reminders <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> CRM export <span class="planned">Planned</span></div>
       </div>
     </div>
-
     <div class="plan featured">
       <div class="plan-header">
         <div class="plan-name">Professional</div>
@@ -155,78 +96,63 @@
       <div class="plan-price">$119<span>/mo</span></div>
       <div class="plan-desc">Up to 3 reps. Everything in Solo plus team sharing and priority support.</div>
       <div class="plan-features">
-        <div class="plan-feature"><span class="check">✓</span> Everything in Solo</div>
-        <div class="plan-feature"><span class="check">✓</span> Up to 3 users</div>
-        <div class="plan-feature"><span class="check">✓</span> Team sharing <span class="planned">Planned</span></div>
-        <div class="plan-feature"><span class="check">✓</span> Priority support</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Everything in Solo</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Up to 3 users</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Team sharing <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Priority support</div>
       </div>
     </div>
-
     <div class="plan">
       <div class="plan-header"><div class="plan-name">Team</div></div>
       <div class="plan-price">$349<span>/mo</span></div>
       <div class="plan-desc">Up to 10 reps. Full team dashboard, usage reporting, dedicated onboarding.</div>
       <div class="plan-features">
-        <div class="plan-feature"><span class="check">✓</span> Everything in Professional</div>
-        <div class="plan-feature"><span class="check">✓</span> Up to 10 users</div>
-        <div class="plan-feature"><span class="check">✓</span> Team dashboard <span class="planned">Planned</span></div>
-        <div class="plan-feature"><span class="check">✓</span> Dedicated onboarding</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Everything in Professional</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Up to 10 users</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Team dashboard <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Usage reporting <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Dedicated onboarding</div>
       </div>
     </div>
-
     <div class="plan">
       <div class="plan-header"><div class="plan-name">Enterprise</div></div>
       <div class="plan-price">$1,500<span>/mo</span></div>
       <div class="plan-desc">Unlimited users. White-label, API access, SLA, custom integrations.</div>
       <div class="plan-features">
-        <div class="plan-feature"><span class="check">✓</span> Everything in Team</div>
-        <div class="plan-feature"><span class="check">✓</span> Unlimited users</div>
-        <div class="plan-feature"><span class="check">✓</span> White-label <span class="planned">Planned</span></div>
-        <div class="plan-feature"><span class="check">✓</span> API access <span class="planned">Planned</span></div>
-        <div class="plan-feature"><span class="check">✓</span> Custom SLA</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Everything in Team</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Unlimited users</div>
+        <div class="plan-feature"><span class="check">&#10003;</span> White-label <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> API access <span class="planned">Planned</span></div>
+        <div class="plan-feature"><span class="check">&#10003;</span> Custom SLA <span class="planned">Planned</span></div>
       </div>
     </div>
-
   </div>
-
   <div class="notify-section">
     <h3>Get notified when subscriptions open</h3>
-    <p>We'll reach out before beta ends so you can choose your plan — no surprise charges.</p>
+    <p>We’ll reach out before beta closes so you can choose your plan. No surprise charges, no auto-billing.</p>
     <div class="notify-form">
       <input type="email" id="notifyEmail" placeholder="your@email.com" />
       <button onclick="submitNotify()">Notify me</button>
     </div>
-    <div class="notify-confirm" id="notifyConfirm">Got it — we'll reach out before beta closes.</div>
+    <div class="notify-confirm" id="notifyConfirm">Got it — we’ll reach out before beta closes.</div>
   </div>
-
 </main>
-
 <nav class="bottom-nav">
   <a class="nav-item" href="/leads">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
-      <rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     <span>My List</span>
   </a>
   <a class="nav-item capture-tab" href="/capture">
     <div class="capture-circle">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-        <circle cx="12" cy="13" r="4"/>
-      </svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
     </div>
     <span>Capture</span>
   </a>
   <a class="nav-item" href="/account">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     <span>Account</span>
   </a>
 </nav>
-
 <script>
 function submitNotify() {
   const email = document.getElementById('notifyEmail').value.trim();
@@ -237,9 +163,7 @@ function submitNotify() {
   document.getElementById('notifyConfirm').style.display = 'block';
   document.getElementById('notifyEmail').value = '';
 }
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/sw.js').catch(()=>{});
-}
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('/sw.js').catch(() => {}); }
 </script>
 </body>
 </html>
