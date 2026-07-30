@@ -76,6 +76,8 @@ See `business/DECISIONS.md` for full text — currently through **Decision 018**
 - ✅ v1.1 Revenue Mandate model built ($0 start, $0 contractor)
 - ✅ Founder Decisions A-F closed
 - ✅ Working file: `Bobert_Projected_Budget_PnL_v1.1_RevenueMandate.xlsx`
+- ✅ **Contact enrichment vendor cost model complete (July 29)** — answers the paid-enrichment question raised in the July 28 Dev contact-enrichment gap (FI's "Key People" section speculating instead of showing verified data). PDL (People Data Labs) recommended at $0.28/record over Apollo — Apollo has a TOS conflict with Bobert's use case, resolved by switching vendors. 1 contact/brief cap protects 77%+ gross margin on Solo tier. Add-on contact reveals priced at $1.25/contact (77.6% GM, matches subscription margin). File: `FINANCE-APOLLO-COST-JULY28.md`.
+- 🔲 **Blocking on Dev:** confirm the PDL vendor switch (not Apollo) before this can move to implementation — this is now a dependency for closing the FI contact-enrichment gap.
 - 🔲 PI monetization research — comparable products (ParSpec, PlanHub, BuildingConnected, Bluebeam, Procore) + directional pricing sketch — see PROMPT-FINANCE-JULY29-PI-MONETIZATION.md
 - 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev
 
