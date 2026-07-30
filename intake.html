@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Intake — Bobert</title>
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Bobert" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:  #0A0A0A;
+      --red:    #DC2626;
+      --white:  #FFFFFF;
+      --gray:   #6B7280;
+      --card:   #111111;
+      --card2:  #1A1A1A;
+      --border: rgba(255,255,255,0.1);
+      --green:  #22C55E;
+      --amber:  #F59E0B;
+      --teal:   #0A7C7B;
+      --nav-h:  calc(64px + env(safe-area-inset-bottom));
+    }
+    body {
+      font-family: -apple-system, 'Inter', sans-serif;
+      background: var(--black);
+      color: var(--white);
+      min-height: 100vh;
+      padding-bottom: var(--nav-h);
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      padding-top: calc(14px + env(safe-area-inset-top));
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--black); z-index: 20;
+    }
+    .logo-mark { height: 32px; width: 32px; border-radius: 7px; }
+    header h1 { font-size: 16px; font-weight: 700; letter-spacing: -0.3px; }
+    .beta-pill {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.05em;
+      background: rgba(220,38,38,0.15); color: var(--red);
+      padding: 3px 8px; border-radius: 99px;
+    }
+
+    /* ── Tab bar ── */
+    .tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+      background: var(--black); position: sticky;
+      top: calc(61px + env(safe-area-inset-top)); z-index: 19;
+    }
+    .tab {
+      flex: 1; padding: 12px 0; text-align: center;
+      font-size: 13px; font-weight: 600; color: var(--gray);
+      cursor: pointer; border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab.active { color: var(--white); border-bottom-color: var(--red); }
+
+    /* ── Main ── */
+    main { padding: 16px 18px; max-width: 520px; margin: 0 auto; }
+
+    /* ── New Intake panel ── */
+    #panel-new { display: block; }
+    #panel-saved { display: none; }
+
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--gray); text-transform: uppercase; margin-bottom: 8px;
+    }
+
+    textarea {
+      width: 100%; min-height: 180px; background: var(--card2);
+      border: 1px solid var(--border); border-radius: 12px;
+      color: var(--white); font-size: 14px; line-height: 1.5;
+      padding: 14px; resize: vertical; font-family: inherit;
+    }
+    textarea::placeholder { color: var(--gray); }
+    textarea:focus { outline: none; border-color: rgba(220,38,38,0.5); }
+
+    .char-count { font-size: 11px; color: var(--gray); text-align: right; margin-top: 4px; }
+
+    .btn-red {
+      display: block; width: 100%; padding: 15px;
+      background: var(--red); color: var(--white);
+      font-size: 15px; font-weight: 700; border: none;
+      border-radius: 12px; cursor: pointer; margin-top: 14px;
+      letter-spacing: -0.2px; transition: opacity 0.15s;
+    }
+    .btn-red:disabled { opacity: 0.45; cursor: not-allowed; }
+    .btn-dark {
+      display: block; width: 100%; padding: 13px;
+      background: var(--card2); color: var(--white);
+      font-size: 14px; font-weight: 600; border: 1px solid var(--border);
+      border-radius: 12px; cursor: pointer; margin-top: 10px;
+      transition: opacity 0.15s;
+    }
+    .btn-dark:hover { opacity: 0.8; }
+
+    /* ── Spinner ── */
+    .spinner-wrap {
+      display: none; flex-direction: column; align-items: center;
+      padding: 40px 0; gap: 14px;
+    }
+    .spinner-wrap.visible { display: flex; }
+    .spinner {
+      width: 36px; height: 36px; border: 3px solid var(--border);
+      border-top-color: var(--red); border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner-label { font-size: 13px; color: var(--gray); }
+
+    /* ── Result ── */
+    #result { display: none; margin-top: 20px; }
+
+    /* ── Flags row ── */
+    .flags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .flag {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 4px 10px; border-radius: 99px;
+    }
+    .flag.urgent  { background: rgba(220,38,38,0.2); color: #F87171; }
+    .flag.risk    { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .flag.new     { background: rgba(10,124,123,0.2); color: #2DD4BF; }
+    .flag.files   { background: rgba(107,114,128,0.2); color: #9CA3AF; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.07em;
+      color: var(--gray); text-transform: uppercase; margin-bottom: 12px;
+    }
+    .field-row {
+      display: flex; justify-content: space-between;
+      padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+      gap: 10px;
+    }
+    .field-row:last-child { border-bottom: none; }
+    .field-label { font-size: 12px; color: var(--gray); flex-shrink: 0; }
+    .field-value { font-size: 13px; font-weight: 500; text-align: right; word-break: break-word; }
+
+    /* ── Contacts ── */
+    .contact-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px; margin-bottom: 8px;
+    }
+    .contact-name { font-size: 14px; font-weight: 700; }
+    .contact-meta { font-size: 12px; color: var(--gray); margin-top: 2px; }
+    .contact-links { display: flex; gap: 10px; margin-top: 8px; }
+    .contact-link {
+      font-size: 12px; font-weight: 600; color: var(--red);
+      text-decoration: none;
+    }
+
+    /* ── Checklist ── */
+    .checklist { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .check-item {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--card); border-radius: 8px; padding: 8px 10px;
+    }
+    .check-dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+    .check-dot.present { background: var(--green); }
+    .check-dot.missing { background: var(--red); }
+    .check-dot.unknown { background: var(--gray); }
+    .check-label { font-size: 12px; line-height: 1.3; }
+
+    /* ── Missing items list ── */
+    .missing-list { display: flex; flex-direction: column; gap: 6px; }
+    .missing-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      background: var(--card); border-radius: 8px; padding: 10px 12px;
+    }
+    .missing-num {
+      font-size: 11px; font-weight: 700; color: var(--amber);
+      min-width: 18px; padding-top: 1px;
+    }
+    .missing-text { font-size: 13px; line-height: 1.4; }
+
+    /* ── Deal draft ── */
+    .deal-block {
+      background: rgba(10,124,123,0.1); border: 1px solid rgba(10,124,123,0.3);
+      border-radius: 12px; padding: 16px;
+    }
+    .deal-priority {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px; border-radius: 7px; font-size: 13px;
+      font-weight: 800; margin-bottom: 10px;
+    }
+    .deal-priority.A { background: rgba(220,38,38,0.2); color: #F87171; }
+    .deal-priority.B { background: rgba(245,158,11,0.2); color: var(--amber); }
+    .deal-priority.C { background: rgba(107,114,128,0.2); color: var(--gray); }
+
+    /* ── Box folders ── */
+    .folder-list { display: flex; flex-direction: column; gap: 6px; }
+    .folder-row {
+      background: var(--card); border-radius: 8px;
+      padding: 10px 12px;
+    }
+    .folder-name { font-size: 12px; font-weight: 700; color: var(--gray); margin-bottom: 4px; }
+    .folder-files { font-size: 12px; color: var(--white); line-height: 1.6; }
+    .folder-empty { font-size: 12px; color: rgba(107,114,128,0.5); font-style: italic; }
+
+    /* ── Note block ── */
+    .note-block {
+      background: var(--card); border-radius: 10px;
+      padding: 12px 14px; font-size: 13px; line-height: 1.6; color: #D1D5DB;
+    }
+
+    /* ── Handoff badge ── */
+    .handoff-badge {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.05em; padding: 4px 10px; border-radius: 6px;
+      background: rgba(255,255,255,0.08); color: var(--gray);
+      margin-top: 8px;
+    }
+
+    /* ── Action strip ── */
+    .action-strip {
+      display: flex; gap: 10px; margin-top: 16px; margin-bottom: 4px;
+    }
+    .action-strip button { flex: 1; }
+
+    /* ── Saved intakes ── */
+    .saved-count { font-size: 12px; color: var(--gray); margin-bottom: 14px; }
+    .intake-card {
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 12px; padding: 14px; margin-bottom: 10px;
+      cursor: pointer; transition: border-color 0.15s;
+    }
+    .intake-card:hover { border-color: rgba(220,38,38,0.4); }
+    .intake-card-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .intake-card-meta { font-size: 12px; color: var(--gray); }
+    .intake-card-priority {
+      float: right; font-size: 11px; font-weight: 700;
+      padding: 2px 8px; border-radius: 5px;
+    }
+    .intake-card-priority.A { background: rgba(220,38,38,0.15); color: #F87171; }
+    .intake-card-priority.B { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .intake-card-priority.C { background: rgba(107,114,128,0.15); color: var(--gray); }
+    .empty-state {
+      text-align: center; padding: 60px 20px; color: var(--gray);
+    }
+    .empty-state svg { opacity: 0.3; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; }
+
+    /* ── Bottom nav ── */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      height: var(--nav-h); padding-bottom: env(safe-area-inset-bottom);
+      background: var(--card); border-top: 1px solid var(--border);
+      display: flex; align-items: flex-start; justify-content: space-around;
+      z-index: 100;
+    }
+    .nav-item {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 3px; padding-top: 10px; text-decoration: none;
+      color: var(--gray); font-size: 10px; font-weight: 600;
+      letter-spacing: 0.03em; min-width: 60px;
+    }
+    .nav-item.active { color: var(--white); }
+    .nav-item svg { width: 24px; height: 24px; }
+    .nav-item.capture-tab { position: relative; top: -10px; }
+    .nav-item.capture-tab svg {
+      background: var(--red); border-radius: 14px;
+      padding: 8px; width: 44px; height: 44px;
+    }
+    .nav-item.capture-tab span { color: var(--red); font-weight: 700; }
+
+    /* ── Toast ── */
+    .toast {
+      position: fixed; bottom: calc(var(--nav-h) + 12px); left: 50%;
+      transform: translateX(-50%);
+      background: #1F2937; color: var(--white);
+      font-size: 13px; font-weight: 600; padding: 10px 20px;
+      border-radius: 99px; white-space: nowrap;
+      opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 200;
+    }
+    .toast.show { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img class="logo-mark" src="/assets/icon.png" alt="Bobert" />
+  <h1>Job Intake</h1>
+  <span class="beta-pill">BETA</span>
+</header>
+
+<div class="tabs">
+  <div class="tab active" id="tab-new" onclick="switchTab('new')">New Intake</div>
+  <div class="tab" id="tab-saved" onclick="switchTab('saved')">Saved (<span id="saved-count-tab">0</span>)</div>
+</div>
+
+<main>
+
+  <!-- ── New Intake panel ── -->
+  <div id="panel-new">
+    <p style="font-size:13px; color:var(--gray); margin-bottom:14px; line-height:1.5;">
+      Paste a bid invite email, RFP excerpt, or project notes. Bobert will extract contacts, check for missing files, and draft a deal record.
+    </p>
+
+    <div class="section-label">Bid Invite / Project Notes</div>
+    <textarea id="intake-text" placeholder="Paste bid invite email, RFP text, or project notes here…" oninput="onTextInput()"></textarea>
+    <div class="char-count"><span id="char-count">0</span> characters</div>
+
+    <button class="btn-red" id="process-btn" onclick="processIntake()" disabled>Process Intake</button>
+
+    <!-- Loading -->
+    <div class="spinner-wrap" id="spinner">
+      <div class="spinner"></div>
+      <div class="spinner-label">Extracting project data…</div>
+    </div>
+
+    <!-- Result -->
+    <div id="result">
+
+      <!-- Flags -->
+      <div class="flags" id="flags-row"></div>
+
+      <!-- Project Info -->
+      <div class="card" id="card-project">
+        <div class="card-title">Project / Deal Info</div>
+        <div id="project-fields"></div>
+      </div>
+
+      <!-- Contacts -->
+      <div class="card" id="card-contacts" style="display:none">
+        <div class="card-title">Contacts</div>
+        <div id="contacts-list"></div>
+      </div>
+
+      <!-- Quote Checklist -->
+      <div class="card">
+        <div class="card-title">Quote Checklist</div>
+        <div class="checklist" id="checklist"></div>
+      </div>
+
+      <!-- Missing Items -->
+      <div class="card" id="card-missing" style="display:none">
+        <div class="card-title">Missing Info / RFI List</div>
+        <div class="missing-list" id="missing-list"></div>
+      </div>
+
+      <!-- Deal Draft -->
+      <div class="card">
+        <div class="card-title">Deal Draft</div>
+        <div class="deal-block" id="deal-block"></div>
+      </div>
+
+      <!-- Box Folder Plan -->
+      <div class="card" id="card-box">
+        <div class="card-title">Box Folder Plan</div>
+        <div class="folder-list" id="folder-list"></div>
+      </div>
+
+      <!-- Handoff status -->
+      <div class="card" id="card-handoff">
+        <div class="card-title">Handoff Status</div>
+        <div id="handoff-status"></div>
+      </div>
+
+      <!-- Actions -->
+      <div class="action-strip">
+        <button class="btn-red" onclick="saveIntake()">Save Intake</button>
+        <button class="btn-dark" onclick="copyIntake()">Copy Summary</button>
+      </div>
+      <button class="btn-dark" onclick="resetForm()">New Intake</button>
+
+    </div><!-- /result -->
+  </div><!-- /panel-new -->
+
+  <!-- ── Saved Intakes panel ── -->
+  <div id="panel-saved">
+    <div class="saved-count" id="saved-meta"></div>
+    <div id="saved-list"></div>
+  </div>
+
+</main>
+
+<nav class="bottom-nav">
+  <a class="nav-item" href="/leads">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+    </svg>
+    <span>My List</span>
+  </a>
+  <a class="nav-item capture-tab" href="/capture">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+    </svg>
+    <span>Capture</span>
+  </a>
+  <a class="nav-item active" href="/intake">
+    <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round"
+        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+    </svg>
+    <span>Intake</span>
+  </a>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── IndexedDB ─────────────────────────────────────────────────────────────────
+const IDB_NAME = 'bobert-intakes', IDB_STORE = 'intakes', IDB_VER = 1;
+
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const r = indexedDB.open(IDB_NAME, IDB_VER);
+    r.onupgradeneeded = e => {
+      if (!e.target.result.objectStoreNames.contains(IDB_STORE))
+        e.target.result.createObjectStore(IDB_STORE, { keyPath: 'id' });
+    };
+    r.onsuccess = e => resolve(e.target.result);
+    r.onerror   = e => reject(e.target.error);
+  });
+}
+async function dbGetAll() {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx  = db.transaction(IDB_STORE, 'readonly');
+    const req = tx.objectStore(IDB_STORE).getAll();
+    req.onsuccess = e => resolve((e.target.result || []).sort((a,b) => b.savedAt - a.savedAt));
+    req.onerror   = e => reject(e.target.error);
+  });
+}
+async function dbPut(record) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).put(record);
+    tx.oncomplete = resolve;
+    tx.onerror    = e => reject(e.target.error);
+  });
+}
+async function dbDelete(id) {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(IDB_STORE, 'readwrite');
+    tx.objectStore(IDB_STORE).delete(id);
+    tx.oncomplete = resolve;
+    tx.onerror    = e => reject(e.target.error);
+  });
+}
+
+// ── State ─────────────────────────────────────────────────────────────────────
+let currentIntake = null;
+
+// ── UI helpers ────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+function switchTab(which) {
+  document.getElementById('panel-new').style.display   = which === 'new'   ? 'block' : 'none';
+  document.getElementById('panel-saved').style.display = which === 'saved' ? 'block' : 'none';
+  document.getElementById('tab-new').classList.toggle('active',   which === 'new');
+  document.getElementById('tab-saved').classList.toggle('active', which === 'saved');
+  if (which === 'saved') loadSaved();
+}
+function onTextInput() {
+  const v = document.getElementById('intake-text').value;
+  document.getElementById('char-count').textContent = v.length.toLocaleString();
+  document.getElementById('process-btn').disabled = v.trim().length < 30;
+}
+function val(v) { return v && v !== 'null' ? v : null; }
+
+// ── Process ───────────────────────────────────────────────────────────────────
+async function processIntake() {
+  const text = document.getElementById('intake-text').value.trim();
+  if (!text) return;
+
+  document.getElementById('process-btn').disabled = true;
+  document.getElementById('spinner').classList.add('visible');
+  document.getElementById('result').style.display = 'none';
+  currentIntake = null;
+
+  try {
+    const res  = await fetch('/api/intake', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    });
+    const data = await res.json();
+    if (!res.ok || data.error) throw new Error(data.error || 'Server error');
+
+    currentIntake = { ...data.intake, _rawText: text, _processedAt: data.processedAt };
+    renderResult(data.intake);
+
+  } catch (err) {
+    showToast('Error: ' + err.message);
+    document.getElementById('process-btn').disabled = false;
+  } finally {
+    document.getElementById('spinner').classList.remove('visible');
+  }
+}
+
+// ── Render result ─────────────────────────────────────────────────────────────
+function renderResult(d) {
+  // Flags
+  const flagsEl = document.getElementById('flags-row');
+  flagsEl.innerHTML = '';
+  if (d.flags?.urgent)              flagsEl.innerHTML += `<span class="flag urgent">⚡ URGENT${d.flags.urgent_reason ? ' — ' + d.flags.urgent_reason : ''}</span>`;
+  if (d.flags?.quote_risk)          flagsEl.innerHTML += `<span class="flag risk">⚠ Quote Risk${d.flags.quote_risk_reason ? ' — ' + d.flags.quote_risk_reason : ''}</span>`;
+  if (d.flags?.new_prospect)        flagsEl.innerHTML += `<span class="flag new">★ New Prospect</span>`;
+  if (d.flags?.files_download_needed) flagsEl.innerHTML += `<span class="flag files">↓ Files Needed</span>`;
+
+  // Project fields
+  const p = d.project || {};
+  const pFields = [
+    ['Project Name',    val(p.name)],
+    ['GC / Customer',   val(p.gc_customer)],
+    ['End Client',      val(p.end_client)],
+    ['Location',        val(p.location)],
+    ['Bid Due',         [val(p.bid_due_date), val(p.bid_due_time)].filter(Boolean).join(' · ')],
+    ['Job Walk',        val(p.job_walk_date)],
+    ['Trade Scope',     val(p.trade_codes)],
+    ['Bid Board',       val(p.bid_board)],
+    ['Bid Board Link',  val(p.bid_board_link) ? `<a style="color:var(--red)" href="${p.bid_board_link}" target="_blank">Open ↗</a>` : null],
+    ['Access Key',      val(p.access_key)],
+    ['Scope',           val(p.scope)],
+    ['Bid Status',      val(p.status)],
+  ].filter(([,v]) => v);
+
+  document.getElementById('project-fields').innerHTML = pFields.map(([l,v]) =>
+    `<div class="field-row"><span class="field-label">${l}</span><span class="field-value">${v}</span></div>`
+  ).join('');
+
+  // Contacts
+  const contacts = d.contacts || [];
+  const contactsCard = document.getElementById('card-contacts');
+  if (contacts.length > 0) {
+    contactsCard.style.display = 'block';
+    document.getElementById('contacts-list').innerHTML = contacts.map(c => `
+      <div class="contact-card">
+        <div class="contact-name">${esc(c.name || 'Unknown')}</div>
+        <div class="contact-meta">${[c.role, c.company].filter(Boolean).map(esc).join(' · ')}</div>
+        ${c.relationship ? `<div class="contact-meta" style="margin-top:3px;font-style:italic">${esc(c.relationship)}</div>` : ''}
+        <div class="contact-links">
+          ${c.email ? `<a class="contact-link" href="mailto:${esc(c.email)}">✉ Email</a>` : ''}
+          ${c.phone ? `<a class="contact-link" href="tel:${c.phone.replace(/\D/g,'')}">📞 Call</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+  } else {
+    contactsCard.style.display = 'none';
+  }
+
+  // Checklist
+  const ck = d.quote_checklist || {};
+  const checkLabels = {
+    lighting_drawings:        'Lighting Drawings',
+    electrical_drawings:      'Electrical Drawings',
+    fixture_schedule:         'Fixture Schedule',
+    lighting_specs:           'Lighting Specs',
+    controls_narrative:       'Controls Narrative',
+    controls_drawings:        'Controls Drawings',
+    bom:                      'BOM',
+    addenda:                  'Addenda',
+    alternates:               'Alternates',
+    substitution_requirements:'Sub Requirements',
+    approved_manufacturers:   'Approved MFRs',
+    bid_form:                 'Bid Form',
+    scope_notes:              'Scope Notes',
+    shipping_requirements:    'Shipping Req.',
+    phasing_requirements:     'Phasing/Lead Time',
+  };
+  document.getElementById('checklist').innerHTML = Object.entries(checkLabels).map(([k, label]) => {
+    const status = (ck[k] || 'unknown').toLowerCase().trim();
+    const dot = status.includes('present') ? 'present' : status.includes('missing') ? 'missing' : 'unknown';
+    return `<div class="check-item"><div class="check-dot ${dot}"></div><div class="check-label">${label}</div></div>`;
+  }).join('');
+
+  // Missing items
+  const missing = d.missing_items || [];
+  const missingCard = document.getElementById('card-missing');
+  if (missing.length > 0) {
+    missingCard.style.display = 'block';
+    document.getElementById('missing-list').innerHTML = missing.map((item, i) =>
+      `<div class="missing-item"><div class="missing-num">${i+1}</div><div class="missing-text">${esc(item)}</div></div>`
+    ).join('');
+  } else {
+    missingCard.style.display = 'none';
+  }
+
+  // Deal draft
+  const deal = d.deal || {};
+  const pri  = (deal.priority || 'C').trim();
+  document.getElementById('deal-block').innerHTML = `
+    <div class="deal-priority ${pri}">${pri}</div>
+    ${row('Deal Name',     val(deal.deal_name))}
+    ${row('Stage',         val(deal.stage))}
+    ${row('Next Action',   val(deal.next_action))}
+    ${row('Follow-up',     val(deal.follow_up_date))}
+    ${deal.internal_note ? `<div class="note-block" style="margin-top:10px">${esc(deal.internal_note)}</div>` : ''}
+  `;
+
+  // Box folders
+  const box = d.box_folders || {};
+  const folderNames = {
+    '01_bid_invite':          '01 Bid Invite',
+    '02_drawings':            '02 Drawings',
+    '03_fixture_schedule':    '03 Fixture Schedule',
+    '04_specs':               '04 Specs',
+    '05_controls':            '05 Controls',
+    '06_addenda':             '06 Addenda',
+    '07_vendor_quotes':       '07 Vendor Quotes',
+    '08_quote':               '08 Our Quote',
+    '09_customer_communication': '09 Customer Communication',
+    '10_award_handoff':       '10 Award / Handoff',
+  };
+  const boxHtml = Object.entries(folderNames).map(([k, label]) => {
+    const files = box[k] || [];
+    const filesHtml = files.length > 0
+      ? files.map(f => `• ${esc(f)}`).join('<br>')
+      : `<span class="folder-empty">Empty</span>`;
+    return `<div class="folder-row"><div class="folder-name">${label}</div><div class="folder-files">${filesHtml}</div></div>`;
+  }).join('');
+  document.getElementById('folder-list').innerHTML = boxHtml;
+
+  // Handoff status
+  const hs = val(d.flags?.handoff_status);
+  document.getElementById('handoff-status').innerHTML = hs
+    ? `<span class="handoff-badge">${esc(hs)}</span>`
+    : '<span class="handoff-badge">HubSpot-only intake</span>';
+  if (d.flags?.files_download_needed && d.flags?.files_download_note) {
+    document.getElementById('handoff-status').innerHTML +=
+      `<div class="note-block" style="margin-top:10px">📥 ${esc(d.flags.files_download_note)}</div>`;
+  }
+
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function row(label, value) {
+  if (!value) return '';
+  return `<div class="field-row"><span class="field-label">${label}</span><span class="field-value">${esc(value)}</span></div>`;
+}
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Save ──────────────────────────────────────────────────────────────────────
+async function saveIntake() {
+  if (!currentIntake) return;
+  const id      = 'intake-' + Date.now();
+  const name    = currentIntake.project?.name || currentIntake.deal?.deal_name || 'Untitled Intake';
+  const priority= (currentIntake.deal?.priority || 'C').trim();
+  const bidDate = currentIntake.project?.bid_due_date || null;
+
+  await dbPut({ id, savedAt: Date.now(), name, priority, bidDate, data: currentIntake });
+
+  const count = (await dbGetAll()).length;
+  document.getElementById('saved-count-tab').textContent = count;
+
+  showToast('Intake saved');
+  document.querySelector('.btn-red[onclick="saveIntake()"]').textContent = '✓ Saved';
+}
+
+// ── Copy summary ──────────────────────────────────────────────────────────────
+function copyIntake() {
+  if (!currentIntake) return;
+  const d   = currentIntake;
+  const p   = d.project || {};
+  const deal= d.deal    || {};
+  const lines = [
+    `JOB INTAKE — ${new Date().toLocaleDateString()}`,
+    ``,
+    `PROJECT: ${p.name || '—'}`,
+    `GC/Customer: ${p.gc_customer || '—'}`,
+    `Location: ${p.location || '—'}`,
+    `Bid Due: ${[p.bid_due_date, p.bid_due_time].filter(Boolean).join(' ') || '—'}`,
+    `Scope: ${p.scope || '—'}`,
+    ``,
+    `CONTACTS:`,
+    ...(d.contacts || []).map(c =>
+      `  ${c.name} — ${[c.role, c.company].filter(Boolean).join(', ')}${c.email ? ' | ' + c.email : ''}${c.phone ? ' | ' + c.phone : ''}`
+    ),
+    ``,
+    `MISSING / RFI:`,
+    ...(d.missing_items || []).map((m, i) => `  ${i+1}. ${m}`),
+    ``,
+    `DEAL:`,
+    `  Name: ${deal.deal_name || '—'}`,
+    `  Stage: ${deal.stage || '—'}`,
+    `  Priority: ${deal.priority || '—'}`,
+    `  Next Action: ${deal.next_action || '—'}`,
+    `  Follow-up: ${deal.follow_up_date || '—'}`,
+    deal.internal_note ? `\n  Note: ${deal.internal_note}` : '',
+  ].filter(l => l !== undefined);
+
+  navigator.clipboard.writeText(lines.join('\n'))
+    .then(() => showToast('Copied to clipboard'))
+    .catch(() => showToast('Copy failed — try selecting manually'));
+}
+
+// ── Reset ─────────────────────────────────────────────────────────────────────
+function resetForm() {
+  document.getElementById('intake-text').value = '';
+  document.getElementById('char-count').textContent = '0';
+  document.getElementById('process-btn').disabled = true;
+  document.getElementById('result').style.display = 'none';
+  document.getElementById('flags-row').innerHTML = '';
+  currentIntake = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('process-btn').textContent = 'Process Intake';
+}
+
+// ── Load saved ────────────────────────────────────────────────────────────────
+async function loadSaved() {
+  const items = await dbGetAll();
+  document.getElementById('saved-count-tab').textContent = items.length;
+  document.getElementById('saved-meta').textContent =
+    items.length === 0 ? 'No saved intakes yet.' : `${items.length} saved intake${items.length !== 1 ? 's' : ''}`;
+
+  if (items.length === 0) {
+    document.getElementById('saved-list').innerHTML = `
+      <div class="empty-state">
+        <svg width="40" height="40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+        </svg>
+        <p>No saved intakes yet.<br>Process a bid invite to get started.</p>
+      </div>`;
+    return;
+  }
+
+  document.getElementById('saved-list').innerHTML = items.map(item => {
+    const pri = (item.priority || 'C').trim();
+    const date = new Date(item.savedAt).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+    const bidStr = item.bidDate ? ` · Bid: ${item.bidDate}` : '';
+    return `
+      <div class="intake-card" onclick="openSaved('${item.id}')">
+        <span class="intake-card-priority ${pri}">${pri}</span>
+        <div class="intake-card-name">${esc(item.name)}</div>
+        <div class="intake-card-meta">Saved ${date}${bidStr}</div>
+      </div>`;
+  }).join('');
+}
+
+async function openSaved(id) {
+  const items = await dbGetAll();
+  const found = items.find(i => i.id === id);
+  if (!found) return;
+  currentIntake = found.data;
+  switchTab('new');
+  document.getElementById('intake-text').value = found.data._rawText || '';
+  document.getElementById('char-count').textContent = (found.data._rawText || '').length.toLocaleString();
+  renderResult(found.data);
+  document.querySelector('.btn-red[onclick="saveIntake()"]').textContent = '✓ Saved';
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+(async () => {
+  const items = await dbGetAll();
+  document.getElementById('saved-count-tab').textContent = items.length;
+})();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+</script>
+</body>
+</html>
