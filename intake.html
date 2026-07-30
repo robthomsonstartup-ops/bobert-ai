@@ -226,6 +226,78 @@
       margin-top: 8px;
     }
 
+    /* ── Sources panel ── */
+    .sources-panel {
+      margin-top: 16px; border: 1px solid var(--border);
+      border-radius: 12px; overflow: hidden;
+    }
+    .sources-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 14px; background: var(--card2); cursor: pointer;
+      user-select: none;
+    }
+    .sources-header-left { display: flex; align-items: center; gap: 8px; }
+    .sources-label { font-size: 12px; font-weight: 700; letter-spacing: 0.07em; color: var(--gray); text-transform: uppercase; }
+    .sources-badge {
+      font-size: 11px; font-weight: 700; background: var(--red);
+      color: var(--white); border-radius: 99px; padding: 1px 7px;
+      display: none;
+    }
+    .sources-badge.show { display: inline; }
+    .sources-chevron { font-size: 12px; color: var(--gray); transition: transform 0.2s; }
+    .sources-chevron.open { transform: rotate(180deg); }
+    .sources-body { display: none; padding: 12px 14px; background: var(--card); }
+    .sources-body.open { display: block; }
+
+    /* Drop zone */
+    .drop-zone {
+      border: 1.5px dashed rgba(255,255,255,0.2); border-radius: 10px;
+      padding: 20px; text-align: center; cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+      margin-bottom: 10px;
+    }
+    .drop-zone:hover, .drop-zone.drag-over {
+      border-color: var(--red); background: rgba(220,38,38,0.05);
+    }
+    .drop-zone input { display: none; }
+    .drop-zone-text { font-size: 13px; color: var(--gray); line-height: 1.5; }
+    .drop-zone-text strong { color: var(--white); }
+
+    /* URL row */
+    .url-row { display: flex; gap: 8px; margin-bottom: 10px; }
+    .url-input {
+      flex: 1; background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--white); font-size: 13px;
+      padding: 9px 12px; font-family: inherit;
+    }
+    .url-input::placeholder { color: var(--gray); }
+    .url-input:focus { outline: none; border-color: rgba(220,38,38,0.5); }
+    .btn-add-url {
+      background: var(--card2); border: 1px solid var(--border);
+      color: var(--white); font-size: 13px; font-weight: 600;
+      border-radius: 8px; padding: 9px 14px; cursor: pointer; white-space: nowrap;
+    }
+    .btn-add-url:hover { border-color: var(--red); }
+
+    /* Source chips */
+    .source-chips { display: flex; flex-direction: column; gap: 6px; }
+    .source-chip {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--card2); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 10px;
+    }
+    .source-chip-icon { font-size: 16px; flex-shrink: 0; }
+    .source-chip-name { font-size: 12px; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .source-chip-status { font-size: 11px; color: var(--gray); flex-shrink: 0; }
+    .source-chip-status.ok { color: #22C55E; }
+    .source-chip-status.err { color: var(--red); }
+    .source-chip-remove {
+      background: none; border: none; color: var(--gray);
+      cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1;
+      flex-shrink: 0;
+    }
+    .source-chip-remove:hover { color: var(--red); }
+
     /* ── Action strip ── */
     .action-strip {
       display: flex; gap: 10px; margin-top: 16px; margin-bottom: 4px;
@@ -322,6 +394,7 @@
       .flags { margin-bottom: 10px; }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
 </head>
 <body>
 
@@ -348,12 +421,50 @@
     <textarea id="intake-text" placeholder="Paste bid invite email, RFP text, or project notes here…" oninput="onTextInput()"></textarea>
     <div class="char-count"><span id="char-count">0</span> characters</div>
 
+    <!-- ── Sources panel ── -->
+    <div class="sources-panel">
+      <div class="sources-header" onclick="toggleSources()">
+        <div class="sources-header-left">
+          <span class="sources-label">Add Sources</span>
+          <span class="sources-badge" id="sources-badge">0</span>
+        </div>
+        <span class="sources-chevron" id="sources-chevron">▼</span>
+      </div>
+      <div class="sources-body" id="sources-body">
+        <p style="font-size:12px;color:var(--gray);margin-bottom:10px;">
+          Add screenshots, photos, PDFs, or links — extracted text is combined with your notes above before processing.
+        </p>
+
+        <!-- Drop zone -->
+        <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()"
+             ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)">
+          <input type="file" id="file-input" multiple accept="image/*,.pdf"
+                 onchange="onFilePick(event)" />
+          <div class="drop-zone-text">
+            <strong>Drop images or PDFs here</strong><br>
+            or tap to browse · also supports clipboard paste (⌘V)
+          </div>
+        </div>
+
+        <!-- URL input -->
+        <div class="url-row">
+          <input class="url-input" id="url-input" type="url"
+                 placeholder="Paste a bid board link or page URL…"
+                 onkeydown="if(event.key==='Enter')addUrl()" />
+          <button class="btn-add-url" onclick="addUrl()">Add Link</button>
+        </div>
+
+        <!-- Source chips -->
+        <div class="source-chips" id="source-chips"></div>
+      </div>
+    </div>
+
     <button class="btn-red" id="process-btn" onclick="processIntake()" disabled>Process Intake</button>
 
     <!-- Loading -->
     <div class="spinner-wrap" id="spinner">
       <div class="spinner"></div>
-      <div class="spinner-label">Extracting project data…</div>
+      <div class="spinner-label" id="spinner-label">Extracting project data…</div>
     </div>
 
     <!-- Result -->
@@ -452,6 +563,179 @@
 <div class="toast" id="toast"></div>
 
 <script>
+// ── PDF.js worker setup ───────────────────────────────────────────────────────
+if (typeof pdfjsLib !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+}
+
+// ── Sources state ─────────────────────────────────────────────────────────────
+// Each source: { id, type: 'image'|'pdf'|'url', name, data, text, status: 'pending'|'ready'|'error', warning? }
+let sources = [];
+
+function toggleSources() {
+  const body    = document.getElementById('sources-body');
+  const chevron = document.getElementById('sources-chevron');
+  const open    = body.classList.toggle('open');
+  chevron.classList.toggle('open', open);
+}
+
+function updateSourcesBadge() {
+  const badge = document.getElementById('sources-badge');
+  badge.textContent = sources.length;
+  badge.classList.toggle('show', sources.length > 0);
+}
+
+function renderChips() {
+  updateProcessBtn();
+  const container = document.getElementById('source-chips');
+  if (sources.length === 0) { container.innerHTML = ''; return; }
+  container.innerHTML = sources.map(s => {
+    const icon   = s.type === 'image' ? '🖼' : s.type === 'pdf' ? '📄' : '🔗';
+    const status = s.status === 'ready'   ? `<span class="source-chip-status ok">✓ Ready</span>`
+                 : s.status === 'error'   ? `<span class="source-chip-status err">✗ Failed</span>`
+                 :                          `<span class="source-chip-status">Pending</span>`;
+    return `<div class="source-chip">
+      <span class="source-chip-icon">${icon}</span>
+      <span class="source-chip-name" title="${esc(s.name)}">${esc(s.name)}</span>
+      ${status}
+      <button class="source-chip-remove" onclick="removeSource('${s.id}')" title="Remove">×</button>
+    </div>`;
+  }).join('');
+}
+
+function removeSource(id) {
+  sources = sources.filter(s => s.id !== id);
+  renderChips();
+  updateSourcesBadge();
+}
+
+// ── File pick / drag-drop ─────────────────────────────────────────────────────
+function onDragOver(e)  { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+function onDragLeave()  { document.getElementById('drop-zone').classList.remove('drag-over'); }
+function onDrop(e)      { e.preventDefault(); onDragLeave(); handleFiles(e.dataTransfer.files); }
+function onFilePick(e)  { handleFiles(e.target.files); e.target.value = ''; }
+
+function handleFiles(fileList) {
+  Array.from(fileList).forEach(file => {
+    const isImage = file.type.startsWith('image/');
+    const isPDF   = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+    if (!isImage && !isPDF) { showToast(`Skipped ${file.name} — only images and PDFs supported`); return; }
+
+    const id = 'src-' + Date.now() + '-' + Math.random().toString(36).slice(2,6);
+    const type = isImage ? 'image' : 'pdf';
+    sources.push({ id, type, name: file.name, data: file, text: '', status: 'pending' });
+    updateSourcesBadge();
+    renderChips();
+
+    // Open the panel if it's closed
+    const body = document.getElementById('sources-body');
+    if (!body.classList.contains('open')) toggleSources();
+  });
+}
+
+// ── Clipboard paste (screenshots) ────────────────────────────────────────────
+document.addEventListener('paste', e => {
+  const items = Array.from(e.clipboardData?.items || []);
+  const imageItem = items.find(i => i.type.startsWith('image/'));
+  if (!imageItem) return;
+  const file = imageItem.getAsFile();
+  if (!file) return;
+  const id = 'src-' + Date.now();
+  sources.push({ id, type: 'image', name: 'Pasted screenshot', data: file, text: '', status: 'pending' });
+  updateSourcesBadge();
+  renderChips();
+  const body = document.getElementById('sources-body');
+  if (!body.classList.contains('open')) toggleSources();
+  showToast('Screenshot added');
+});
+
+// ── URL add ───────────────────────────────────────────────────────────────────
+function addUrl() {
+  const input = document.getElementById('url-input');
+  let url = input.value.trim();
+  if (!url) return;
+  if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
+  const id = 'src-' + Date.now();
+  sources.push({ id, type: 'url', name: url, data: url, text: '', status: 'pending' });
+  updateSourcesBadge();
+  renderChips();
+  input.value = '';
+  const body = document.getElementById('sources-body');
+  if (!body.classList.contains('open')) toggleSources();
+}
+
+// ── Extract all sources to text ───────────────────────────────────────────────
+async function extractSources() {
+  if (sources.length === 0) return '';
+
+  const setLabel = msg => { document.getElementById('spinner-label').textContent = msg; };
+
+  const results = [];
+  for (let i = 0; i < sources.length; i++) {
+    const s = sources[i];
+    setLabel(`Extracting source ${i + 1} of ${sources.length}…`);
+    try {
+      if (s.type === 'image') {
+        const b64 = await fileToBase64(s.data);
+        const res = await fetch('/api/intake-ocr', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ image: b64 }),
+        });
+        const data = await res.json();
+        if (data.error) throw new Error(data.error);
+        s.text   = data.text || '';
+        s.status = 'ready';
+      } else if (s.type === 'pdf') {
+        s.text   = await extractPdfText(s.data);
+        s.status = 'ready';
+      } else if (s.type === 'url') {
+        const res = await fetch('/api/intake-url', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: s.data }),
+        });
+        const data = await res.json();
+        if (data.warning) s.status = 'error';
+        else s.status = 'ready';
+        s.text = data.text || '';
+        if (data.title) s.text = `Page title: ${data.title}\n\n${s.text}`;
+      }
+    } catch (err) {
+      s.status = 'error';
+      s.text   = '';
+      console.warn(`Source extraction failed for ${s.name}:`, err.message);
+    }
+    results.push(s.text);
+    renderChips(); // update status indicators live
+  }
+
+  return results.filter(Boolean).join('\n\n---\n\n');
+}
+
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload  = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function extractPdfText(file) {
+  if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
+  const arrayBuffer = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+  const pages = [];
+  for (let i = 1; i <= Math.min(pdf.numPages, 20); i++) {
+    const page    = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    pages.push(content.items.map(item => item.str).join(' '));
+  }
+  return pages.join('\n\n');
+}
+
 // ── IndexedDB ─────────────────────────────────────────────────────────────────
 const IDB_NAME = 'bobert-intakes', IDB_STORE = 'intakes', IDB_VER = 1;
 
@@ -514,14 +798,19 @@ function switchTab(which) {
 function onTextInput() {
   const v = document.getElementById('intake-text').value;
   document.getElementById('char-count').textContent = v.length.toLocaleString();
-  document.getElementById('process-btn').disabled = v.trim().length < 30;
+  updateProcessBtn();
+}
+function updateProcessBtn() {
+  const hasText    = document.getElementById('intake-text').value.trim().length >= 10;
+  const hasSources = sources.length > 0;
+  document.getElementById('process-btn').disabled = !hasText && !hasSources;
 }
 function val(v) { return v && v !== 'null' ? v : null; }
 
 // ── Process ───────────────────────────────────────────────────────────────────
 async function processIntake() {
-  const text = document.getElementById('intake-text').value.trim();
-  if (!text) return;
+  const typedText = document.getElementById('intake-text').value.trim();
+  if (!typedText && sources.length === 0) return;
 
   document.getElementById('process-btn').disabled = true;
   document.getElementById('spinner').classList.add('visible');
@@ -529,15 +818,27 @@ async function processIntake() {
   currentIntake = null;
 
   try {
+    // Step 1: extract text from all sources
+    let sourceText = '';
+    if (sources.length > 0) {
+      sourceText = await extractSources();
+    }
+
+    // Step 2: combine typed text + source text
+    document.getElementById('spinner-label').textContent = 'Processing with AI…';
+    const combined = [typedText, sourceText].filter(Boolean).join('\n\n---\n\n');
+
+    if (!combined.trim()) throw new Error('No content to process — add text or at least one source');
+
     const res  = await fetch('/api/intake', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
+      body: JSON.stringify({ text: combined }),
     });
     const data = await res.json();
     if (!res.ok || data.error) throw new Error(data.error || 'Server error');
 
-    currentIntake = { ...data.intake, _rawText: text, _processedAt: data.processedAt };
+    currentIntake = { ...data.intake, _rawText: combined, _processedAt: data.processedAt };
     renderResult(data.intake);
 
   } catch (err) {
@@ -545,6 +846,7 @@ async function processIntake() {
     document.getElementById('process-btn').disabled = false;
   } finally {
     document.getElementById('spinner').classList.remove('visible');
+    document.getElementById('spinner-label').textContent = 'Extracting project data…';
   }
 }
 
@@ -773,10 +1075,13 @@ function emailIntake() {
 function resetForm() {
   document.getElementById('intake-text').value = '';
   document.getElementById('char-count').textContent = '0';
-  document.getElementById('process-btn').disabled = true;
   document.getElementById('result').style.display = 'none';
   document.getElementById('flags-row').innerHTML = '';
   currentIntake = null;
+  sources = [];
+  renderChips();
+  updateSourcesBadge();
+  updateProcessBtn();
   window.scrollTo({ top: 0, behavior: 'smooth' });
   document.getElementById('process-btn').textContent = 'Process Intake';
 }
