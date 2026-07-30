@@ -7,6 +7,8 @@
 
 **Standing rule (effective July 29):** Any commit that changes a locked decision, ships a feature, or changes department status must update the relevant section of this file in the **same commit**. Before writing a new numbered Decision, check the current highest number in DECISIONS.md first — collisions have happened twice (Decision 016, Decision 018) when sessions wrote independently without checking.
 
+**Scope rule (effective July 29):** Every department has a defined lane in `business/WORKFLOW.md` ("Staying In Your Lane"). If you hit work outside your lane, don't attempt it — log it under the *owning* department's section here, and hand Rob the redirect prompt from WORKFLOW.md so it reaches the right chat without getting lost.
+
 ---
 
 ## The Platform

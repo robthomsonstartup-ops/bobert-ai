@@ -48,4 +48,49 @@ When a department reports work done, get the actual terminal output (the `git pu
 
 ---
 
+## Staying In Your Lane — Scope Boundaries & Redirects
+
+**Effective July 29.** Lanes exist so nothing gets built twice, built wrong, or built by someone without the context to own it. Lanes can grow — if a genuinely new category of work shows up, BD adds a lane for it here and in the Team table, rather than the nearest department just absorbing it. But while a lane exists, only its owner acts in it.
+
+### Scope table
+
+| Department | In scope | Explicitly out of scope |
+|---|---|---|
+| Business Development (BD) | `DECISIONS.md`, cross-department coordination, verifying GitHub state, `TEAM_SYNC.md` structure/reconciliation, drafting `PROMPT-*.md` directives | Writing code, creating brand assets, building financial models, writing customer-facing copy |
+| Finance | P&L, vendor cost models, monetization research, spend approval, gross-margin analysis | Code, brand assets or copy, product/feature decisions, committing code changes, locked Decisions outside Finance's own proposals |
+| Marketing | Customer-facing visual assets, copy, brand compliance tooling and enforcement (`brand-check.py` R6-R10) | Code (Dev implements what Marketing designs), financial modeling, product feature decisions, changing a locked Decision |
+| Development (FI) | All Bobert FI code and implementation (`/capture`, `/leads`, `/account`) | Brand asset creation, pricing, PI's codebase, locked Decisions outside Dev's own proposals |
+| Development (PI) | All Bobert PI code and implementation (`/intake` and related) | Brand asset creation, pricing, FI's codebase, CRM integration decisions before CS Illumination's stack is known |
+| Founder / CEO (Rob) | Final call on anything; the only person who can approve work that spans or overrides a lane | — |
+
+**Cross-cutting exception:** if Dev (FI) and Dev (PI) ever need to share code (a common component, a shared library), that's not either department's unilateral call — flag it to BD first so it's a tracked decision, not a silent merge of two lanes.
+
+### If you hit something out of your lane
+
+Do not attempt it, and do not silently drop it. Three steps, every time:
+
+1. **Stop.** Don't build, write, or decide the out-of-scope item, even if it would be quick.
+2. **Log it so it can't get lost.** Add one line to the correct department's section in `TEAM_SYNC.md` — the *owning* department's section, not your own — marked 🔲, tagged with who flagged it. This means the item is tracked in the single source of truth immediately, even before anyone acts on it, and even if the redirect prompt below sits unread for a while.
+3. **Hand Rob a redirect prompt.** Output the block below, filled in, so Rob can paste it straight into the correct department's chat with no editing required.
+
+### Redirect prompt template
+
+```
+From [your department] — redirect, [date].
+
+While working on [task you were doing], I hit something outside my lane: [one or two sentences on what it is and why it's not mine — e.g., "this requires a new vendor cost comparison, which is Finance's call, not Dev's"].
+
+This belongs to: [target department].
+
+I've logged it as an open item in that department's section of business/TEAM_SYNC.md so it's tracked. Pull latest from main, read business/DECISIONS.md and business/TEAM_SYNC.md, then pick it up from there.
+```
+
+Rob copies the filled-in block and pastes it into the target department's chat. That session pulls latest, sees the logged item in its own TEAM_SYNC.md section, and picks it up with full context — no separate explanation required, because the log step already captured it.
+
+### Why this matters
+
+The failure mode this prevents: a department improvises past its lane because redirecting "felt slower," and either does the work badly (no context, no ownership) or mentions it in passing and it never gets tracked. The three-step rule makes the correct department the only one that acts, while guaranteeing the item survives even if Rob doesn't act on the redirect immediately.
+
+---
+
 *This file is referenced at the top of TEAM_SYNC.md. Read it once; the four-step loop above should become automatic.*
