@@ -288,6 +288,39 @@
       opacity: 0; transition: opacity 0.2s; pointer-events: none; z-index: 200;
     }
     .toast.show { opacity: 1; }
+
+    /* ── Print / Save as PDF ── */
+    @media print {
+      body { background: #fff; color: #000; padding-bottom: 0; }
+      header, .tabs, .bottom-nav, .toast,
+      #process-btn, .spinner-wrap, .action-strip,
+      .btn-dark, .btn-red, textarea, .char-count,
+      .section-label, #panel-saved { display: none !important; }
+      main { padding: 0; max-width: 100%; }
+      #panel-new { display: block !important; }
+      #result { display: block !important; }
+      .card {
+        background: #fff; border: 1px solid #ccc;
+        border-radius: 0; margin-bottom: 14px;
+        page-break-inside: avoid;
+      }
+      .card-title { color: #444; border-bottom: 1px solid #ccc; padding-bottom: 6px; margin-bottom: 10px; }
+      .field-label { color: #555; }
+      .contact-card { background: #f9f9f9; border: 1px solid #ddd; }
+      .check-item { background: #f9f9f9; }
+      .check-dot.present { background: #16a34a; }
+      .check-dot.missing { background: #dc2626; }
+      .check-dot.unknown { background: #9ca3af; }
+      .missing-item { background: #f9f9f9; }
+      .missing-num { color: #92400e; }
+      .deal-block { background: #f0fafa; border: 1px solid #a7d7d7; }
+      .folder-row { background: #f9f9f9; }
+      .folder-name { color: #555; }
+      .handoff-badge { background: #f3f4f6; color: #374151; }
+      .note-block { background: #f3f4f6; color: #374151; }
+      .flag { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .flags { margin-bottom: 10px; }
+    }
   </style>
 </head>
 <body>
@@ -374,7 +407,11 @@
       <!-- Actions -->
       <div class="action-strip">
         <button class="btn-red" onclick="saveIntake()">Save Intake</button>
-        <button class="btn-dark" onclick="copyIntake()">Copy Summary</button>
+        <button class="btn-dark" onclick="copyIntake()">Copy</button>
+      </div>
+      <div class="action-strip" style="margin-top:0">
+        <button class="btn-dark" onclick="printIntake()">Print / PDF</button>
+        <button class="btn-dark" onclick="emailIntake()">Email</button>
       </div>
       <button class="btn-dark" onclick="resetForm()">New Intake</button>
 
@@ -673,13 +710,11 @@ async function saveIntake() {
   document.querySelector('.btn-red[onclick="saveIntake()"]').textContent = '✓ Saved';
 }
 
-// ── Copy summary ──────────────────────────────────────────────────────────────
-function copyIntake() {
-  if (!currentIntake) return;
-  const d   = currentIntake;
-  const p   = d.project || {};
-  const deal= d.deal    || {};
-  const lines = [
+// ── Shared summary builder ────────────────────────────────────────────────────
+function buildSummary(d) {
+  const p    = d.project || {};
+  const deal = d.deal    || {};
+  return [
     `JOB INTAKE — ${new Date().toLocaleDateString()}`,
     ``,
     `PROJECT: ${p.name || '—'}`,
@@ -703,11 +738,35 @@ function copyIntake() {
     `  Next Action: ${deal.next_action || '—'}`,
     `  Follow-up: ${deal.follow_up_date || '—'}`,
     deal.internal_note ? `\n  Note: ${deal.internal_note}` : '',
-  ].filter(l => l !== undefined);
+  ].filter(l => l !== undefined).join('\n');
+}
 
-  navigator.clipboard.writeText(lines.join('\n'))
+// ── Copy summary ──────────────────────────────────────────────────────────────
+function copyIntake() {
+  if (!currentIntake) return;
+  navigator.clipboard.writeText(buildSummary(currentIntake))
     .then(() => showToast('Copied to clipboard'))
     .catch(() => showToast('Copy failed — try selecting manually'));
+}
+
+// ── Print / Save as PDF ───────────────────────────────────────────────────────
+function printIntake() {
+  if (!currentIntake) return;
+  window.print();
+}
+
+// ── Email ─────────────────────────────────────────────────────────────────────
+function emailIntake() {
+  if (!currentIntake) return;
+  const projectName = currentIntake.project?.name || currentIntake.deal?.deal_name || 'Project';
+  const subject = encodeURIComponent(`Job Intake — ${projectName}`);
+  const body    = encodeURIComponent(buildSummary(currentIntake));
+  const link    = `mailto:?subject=${subject}&body=${body}`;
+  if (link.length > 8000) {
+    showToast('Summary too long for email — use Copy instead');
+    return;
+  }
+  window.location.href = link;
 }
 
 // ── Reset ─────────────────────────────────────────────────────────────────────
