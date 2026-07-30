@@ -93,6 +93,7 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 - ✅ FI/PI two-sector awareness acknowledged (`PROMPT-MARKETING-JULY29-FI-PI-BRAND.md`) — brand unchanged, FI/PI are sectors not sub-brands, no action required, nothing in flight affected.
 - 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — reclassified as **blocked on positioning**, not just open: `/capture`'s intel card currently speculates on contacts ("possibly key staff") rather than verifying, so the enrichment claim on `/upgrade` is half-true rather than plainly false. Copy built before this resolves will need rework.
 - 🔲 `/upgrade` copy vs actual scope. Decision 019 removes the billing gate for closed beta (nobody charged during beta, lowers urgency); Decision 020 makes "contact enrichment" a real capability, so that claim is no longer false. Open question for BD: is `/upgrade` still public during a no-billing beta, and if so does its copy describe beta or post-beta state?
+- 🔲 **New: bobert.ai site refresh** — see `PROMPT-MARKETING-JULY29-SITE-REFRESH.md`. Revisit full site messaging/structure now that FI + PI are both real; explore how to visibly show continuous improvement (Rob's "how do we be better everyday" operating principle — a lens for the refresh, not a new tagline; existing tagline/logo/palette stay locked). Folds in the `/upgrade` accuracy question and safe-use copy placement above into one pass.
 
 ### Development (FI)
 - ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
@@ -146,6 +147,7 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 | business/PROMPT-DEV-FI-JULY29.md | Finance's PDL-vs-Apollo confirmation ask to Dev |
 | business/PROMPT-FINANCE-JULY29-PI-MONETIZATION.md | PI monetization research ask |
 | business/PROMPT-MARKETING-JULY29-FI-PI-BRAND.md | FI/PI brand awareness briefing |
+| business/PROMPT-MARKETING-JULY29-SITE-REFRESH.md | Site messaging/structure refresh — reflect FI+PI, continuous-improvement framing |
 | business/PROMPT-DEV-JULY29-PROJECT-INTAKE.md | Original PI MVP build spec |
 | business/PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md | Multi-source intake spec — shipped `39b35b7` |
 | business/PROMPT-DEV-JULY29-INTAKE-EXPORT-ACTIONS.md | Print/Email export spec |
