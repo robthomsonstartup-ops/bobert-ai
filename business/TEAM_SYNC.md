@@ -112,8 +112,9 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
-- 🔲 **New: PI UI build-out phase (starting now)** — refine the `/intake` interface itself: layout, input flow for mixed multi-source drops (paste + file + URL in one pass), review/edit step before export, visual polish consistent with brand.
-- 🔲 **New: speed-to-structured-output** — explore combining/parallelizing multi-source ingestion (OCR + URL fetch + text extraction) into a single pass so a bid packet with several attachments resolves to one structured result in seconds, not sequential uploads. Goal: zero manual re-entry regardless of how many source documents/links a project comes in as.
+- ✅ **PI UI build-out phase (in progress)** — parallel source extraction (`Promise.all` across OCR/PDF/URL), inline field editing (Edit/Done toggle on Project Info, Quote Checklist, Deal Draft cards with `contenteditable` + `saveEdit`/`cycleChecklist`). Shipped as part of this sprint.
+- ✅ **Speed-to-structured-output** — multi-source ingestion now parallel: all attachments (images, PDFs, URLs) extract simultaneously in a single pass before AI synthesis. No sequential uploads.
+- 🔲 Remaining UI polish — visual refinements, input flow, brand consistency (next sprint)
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
 

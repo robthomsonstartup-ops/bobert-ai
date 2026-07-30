@@ -298,6 +298,40 @@
     }
     .source-chip-remove:hover { color: var(--red); }
 
+    /* ── Inline editing ── */
+    .card-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .card-header .card-title { margin-bottom: 0; }
+    .btn-edit {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.05em;
+      background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+      color: var(--gray); border-radius: 6px; padding: 3px 10px;
+      cursor: pointer; transition: color 0.15s, border-color 0.15s;
+    }
+    .btn-edit:hover, .btn-edit.active { color: var(--white); border-color: rgba(255,255,255,0.25); }
+    .editable-value {
+      border-bottom: 1px dashed transparent; cursor: default;
+      transition: border-color 0.15s; border-radius: 2px;
+      padding: 1px 2px; min-width: 40px; display: inline-block;
+    }
+    .edit-mode .editable-value {
+      border-bottom-color: rgba(220,38,38,0.5); cursor: text;
+      outline: none; background: rgba(255,255,255,0.04);
+    }
+    .edit-mode .editable-value:focus {
+      border-bottom-color: var(--red); background: rgba(255,255,255,0.07);
+    }
+    /* Checklist cycling in edit mode */
+    .edit-mode .check-item { cursor: pointer; }
+    .edit-mode .check-item:hover { background: rgba(255,255,255,0.08); }
+    .edit-hint {
+      font-size: 11px; color: var(--gray); font-style: italic;
+      margin-bottom: 8px; display: none;
+    }
+    .edit-mode .edit-hint { display: block; }
+
     /* ── Action strip ── */
     .action-strip {
       display: flex; gap: 10px; margin-top: 16px; margin-bottom: 4px;
@@ -475,7 +509,10 @@
 
       <!-- Project Info -->
       <div class="card" id="card-project">
-        <div class="card-title">Project / Deal Info</div>
+        <div class="card-header">
+          <div class="card-title">Project / Deal Info</div>
+          <button class="btn-edit" onclick="toggleEdit('card-project')">Edit</button>
+        </div>
         <div id="project-fields"></div>
       </div>
 
@@ -486,8 +523,12 @@
       </div>
 
       <!-- Quote Checklist -->
-      <div class="card">
-        <div class="card-title">Quote Checklist</div>
+      <div class="card" id="card-checklist">
+        <div class="card-header">
+          <div class="card-title">Quote Checklist</div>
+          <button class="btn-edit" onclick="toggleEdit('card-checklist')">Edit</button>
+        </div>
+        <div class="edit-hint">Tap any item to cycle: present → missing → unknown</div>
         <div class="checklist" id="checklist"></div>
       </div>
 
@@ -498,8 +539,11 @@
       </div>
 
       <!-- Deal Draft -->
-      <div class="card">
-        <div class="card-title">Deal Draft</div>
+      <div class="card" id="card-deal">
+        <div class="card-header">
+          <div class="card-title">Deal Draft</div>
+          <button class="btn-edit" onclick="toggleEdit('card-deal')">Edit</button>
+        </div>
         <div class="deal-block" id="deal-block"></div>
       </div>
 
@@ -669,16 +713,15 @@ function addUrl() {
 async function extractSources() {
   if (sources.length === 0) return '';
 
-  const setLabel = msg => { document.getElementById('spinner-label').textContent = msg; };
+  document.getElementById('spinner-label').textContent =
+    `Extracting ${sources.length} source${sources.length > 1 ? 's' : ''} in parallel…`;
 
-  const results = [];
-  for (let i = 0; i < sources.length; i++) {
-    const s = sources[i];
-    setLabel(`Extracting source ${i + 1} of ${sources.length}…`);
+  // Extract a single source, updating its status as it resolves
+  async function extractOne(s) {
     try {
       if (s.type === 'image') {
         const b64 = await fileToBase64(s.data);
-        const res = await fetch('/api/intake-ocr', {
+        const res  = await fetch('/api/intake-ocr', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ image: b64 }),
@@ -691,15 +734,14 @@ async function extractSources() {
         s.text   = await extractPdfText(s.data);
         s.status = 'ready';
       } else if (s.type === 'url') {
-        const res = await fetch('/api/intake-url', {
+        const res  = await fetch('/api/intake-url', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ url: s.data }),
         });
         const data = await res.json();
-        if (data.warning) s.status = 'error';
-        else s.status = 'ready';
-        s.text = data.text || '';
+        s.status = data.warning ? 'error' : 'ready';
+        s.text   = data.text || '';
         if (data.title) s.text = `Page title: ${data.title}\n\n${s.text}`;
       }
     } catch (err) {
@@ -707,10 +749,12 @@ async function extractSources() {
       s.text   = '';
       console.warn(`Source extraction failed for ${s.name}:`, err.message);
     }
-    results.push(s.text);
-    renderChips(); // update status indicators live
+    renderChips(); // update chip status as each one finishes
+    return s.text;
   }
 
+  // Run all in parallel
+  const results = await Promise.all(sources.map(s => extractOne(s)));
   return results.filter(Boolean).join('\n\n---\n\n');
 }
 
@@ -863,23 +907,28 @@ function renderResult(d) {
   // Project fields
   const p = d.project || {};
   const pFields = [
-    ['Project Name',    val(p.name)],
-    ['GC / Customer',   val(p.gc_customer)],
-    ['End Client',      val(p.end_client)],
-    ['Location',        val(p.location)],
-    ['Bid Due',         [val(p.bid_due_date), val(p.bid_due_time)].filter(Boolean).join(' · ')],
-    ['Job Walk',        val(p.job_walk_date)],
-    ['Trade Scope',     val(p.trade_codes)],
-    ['Bid Board',       val(p.bid_board)],
-    ['Bid Board Link',  val(p.bid_board_link) ? `<a style="color:var(--red)" href="${p.bid_board_link}" target="_blank">Open ↗</a>` : null],
-    ['Access Key',      val(p.access_key)],
-    ['Scope',           val(p.scope)],
-    ['Bid Status',      val(p.status)],
-  ].filter(([,v]) => v);
+    ['name',         'Project Name',   val(p.name)],
+    ['gc_customer',  'GC / Customer',  val(p.gc_customer)],
+    ['end_client',   'End Client',     val(p.end_client)],
+    ['location',     'Location',       val(p.location)],
+    ['bid_due_date', 'Bid Due',        [val(p.bid_due_date), val(p.bid_due_time)].filter(Boolean).join(' · ')],
+    ['job_walk_date','Job Walk',       val(p.job_walk_date)],
+    ['trade_codes',  'Trade Scope',    val(p.trade_codes)],
+    ['bid_board',    'Bid Board',      val(p.bid_board)],
+    [null,           'Bid Board Link', val(p.bid_board_link) ? `<a style="color:var(--red)" href="${p.bid_board_link}" target="_blank">Open ↗</a>` : null],
+    ['access_key',   'Access Key',     val(p.access_key)],
+    ['scope',        'Scope',          val(p.scope)],
+    ['status',       'Bid Status',     val(p.status)],
+  ].filter(([,, v]) => v);
 
-  document.getElementById('project-fields').innerHTML = pFields.map(([l,v]) =>
-    `<div class="field-row"><span class="field-label">${l}</span><span class="field-value">${v}</span></div>`
-  ).join('');
+  document.getElementById('project-fields').innerHTML = pFields.map(([key, label, v]) => {
+    const editable = key
+      ? `<span class="field-value editable-value" contenteditable="false"
+             data-field="project.${key}"
+             onblur="saveEdit(this,'project','${key}')">${v}</span>`
+      : `<span class="field-value">${v}</span>`;
+    return `<div class="field-row"><span class="field-label">${label}</span>${editable}</div>`;
+  }).join('');
 
   // Contacts
   const contacts = d.contacts || [];
@@ -923,7 +972,10 @@ function renderResult(d) {
   document.getElementById('checklist').innerHTML = Object.entries(checkLabels).map(([k, label]) => {
     const status = (ck[k] || 'unknown').toLowerCase().trim();
     const dot = status.includes('present') ? 'present' : status.includes('missing') ? 'missing' : 'unknown';
-    return `<div class="check-item"><div class="check-dot ${dot}"></div><div class="check-label">${label}</div></div>`;
+    return `<div class="check-item" data-ck-key="${k}" onclick="cycleChecklist(this,'${k}')">
+      <div class="check-dot ${dot}" id="ck-dot-${k}"></div>
+      <div class="check-label">${label}</div>
+    </div>`;
   }).join('');
 
   // Missing items
@@ -942,12 +994,15 @@ function renderResult(d) {
   const deal = d.deal || {};
   const pri  = (deal.priority || 'C').trim();
   document.getElementById('deal-block').innerHTML = `
-    <div class="deal-priority ${pri}">${pri}</div>
-    ${row('Deal Name',     val(deal.deal_name))}
-    ${row('Stage',         val(deal.stage))}
-    ${row('Next Action',   val(deal.next_action))}
-    ${row('Follow-up',     val(deal.follow_up_date))}
-    ${deal.internal_note ? `<div class="note-block" style="margin-top:10px">${esc(deal.internal_note)}</div>` : ''}
+    <div class="deal-priority ${pri}" id="deal-priority-badge">${pri}</div>
+    ${editRow('deal_name',     'Deal Name',   val(deal.deal_name))}
+    ${editRow('stage',         'Stage',       val(deal.stage))}
+    ${editRow('priority',      'Priority',    val(deal.priority))}
+    ${editRow('next_action',   'Next Action', val(deal.next_action))}
+    ${editRow('follow_up_date','Follow-up',   val(deal.follow_up_date))}
+    ${deal.internal_note ? `<div class="note-block editable-value" style="margin-top:10px"
+        contenteditable="false" data-field="deal.internal_note"
+        onblur="saveEdit(this,'deal','internal_note')">${esc(deal.internal_note)}</div>` : ''}
   `;
 
   // Box folders
@@ -991,6 +1046,60 @@ function row(label, value) {
   if (!value) return '';
   return `<div class="field-row"><span class="field-label">${label}</span><span class="field-value">${esc(value)}</span></div>`;
 }
+function editRow(key, label, value) {
+  if (!value) return '';
+  return `<div class="field-row">
+    <span class="field-label">${label}</span>
+    <span class="field-value editable-value" contenteditable="false"
+          onblur="saveEdit(this,'deal','${key}')">${esc(value)}</span>
+  </div>`;
+}
+
+// ── Inline editing ────────────────────────────────────────────────────────────
+function toggleEdit(cardId) {
+  const card = document.getElementById(cardId);
+  const btn  = card.querySelector('.btn-edit');
+  const editing = card.classList.toggle('edit-mode');
+  btn.textContent = editing ? 'Done' : 'Edit';
+  btn.classList.toggle('active', editing);
+  // Toggle contenteditable on all editable values in this card
+  card.querySelectorAll('.editable-value').forEach(el => {
+    el.contentEditable = editing ? 'true' : 'false';
+    if (editing) el.focus();
+  });
+}
+
+function saveEdit(el, section, key) {
+  if (!currentIntake) return;
+  const newVal = el.textContent.trim();
+  if (section === 'project') {
+    if (!currentIntake.project) currentIntake.project = {};
+    currentIntake.project[key] = newVal;
+  } else if (section === 'deal') {
+    if (!currentIntake.deal) currentIntake.deal = {};
+    currentIntake.deal[key] = newVal;
+    // Update priority badge if priority changed
+    if (key === 'priority') {
+      const badge = document.getElementById('deal-priority-badge');
+      if (badge) { badge.textContent = newVal; badge.className = `deal-priority ${newVal}`; }
+    }
+  }
+}
+
+function cycleChecklist(el, key) {
+  // Only cycle in edit mode
+  if (!el.closest('.edit-mode')) return;
+  if (!currentIntake) return;
+  if (!currentIntake.quote_checklist) currentIntake.quote_checklist = {};
+  const current = (currentIntake.quote_checklist[key] || 'unknown').toLowerCase();
+  const next = current.includes('present') ? 'missing'
+             : current.includes('missing') ? 'unknown'
+             : 'present';
+  currentIntake.quote_checklist[key] = next;
+  const dot = el.querySelector('.check-dot');
+  if (dot) { dot.className = `check-dot ${next}`; }
+}
+
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
