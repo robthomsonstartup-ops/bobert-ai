@@ -77,19 +77,23 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 ### Finance
 - ✅ v1.1 Revenue Mandate model built ($0 start, $0 contractor)
 - ✅ Founder Decisions A-F closed
-- ✅ **Contact enrichment vendor cost model complete (July 29)** — PDL (People Data Labs) recommended over Apollo at $0.28/record; Apollo has a TOS conflict with Bobert's use case. 1 contact/brief cap protects 77%+ GM on Solo. Add-on reveals priced at $1.25/contact. File: `FINANCE-APOLLO-COST-JULY28.md`.
-- ⚠️ **Open tension with Decision 020:** Decision 020 (Apollo free-tier for beta) and Finance's PDL recommendation are not yet reconciled — Decision 020 covers the free-during-beta arrangement only, not the paid-vendor choice once beta ends. **Blocking on Dev (FI) to confirm which vendor is actually in production** before this closes — see `PROMPT-DEV-FI-JULY29.md`.
-- 🔲 PI monetization research — see `PROMPT-FINANCE-JULY29-PI-MONETIZATION.md`
-- 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev
+- ✅ **Contact enrichment vendor cost model complete (July 29)** — PDL (People Data Labs) recommended over Apollo at $0.28/record; Apollo has a TOS conflict with Bobert's use case. 1 contact/brief cap protects 77%+ GM on Solo. Add-on reveals priced at $1.25/contact. File: `finance/FINANCE-APOLLO-COST-JULY28.md`.
+- ✅ **PI monetization research complete (July 29)** — exploratory, directional only. Path A (bundle PI into Pro/Team tiers) recommended for validation phase. No standalone PI pricing until Rob validates through real use at CS Illumination. File: `finance/FINANCE-PI-MONETIZATION-JULY29.md`.
+- ⚠️ **Open tension with Decision 020:** Decision 020 (Apollo free-tier for beta) and Finance's PDL recommendation are not yet reconciled — Decision 020 covers the free-during-beta arrangement only, not the paid-vendor choice once beta ends. **Blocking on Dev (FI) to confirm which vendor is actually in production** before this closes — see `business/PROMPT-DEV-FI-JULY29.md`.
+- 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev. Cannot close until Dev instruments and reports.
+- ⚠️ **Flag for BD:** DECISIONS.md has a duplication bug — Decisions 019 and 020 each appear twice in full. BD should clean before the next numbered decision is appended.
 
 ### Marketing
 - ✅ Wordmark/logo fix confirmed live
 - ✅ Gate 7 (adaptive icon assets) — CLOSED, all six assets built and committed
 - ✅ brand-check.py compliance tooling built and running (`scripts/brand-check.py`) — current result: 3 violations, all Dev-owned (see Dev section)
 - 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — reclassified as **blocked on positioning**, not just open: `/capture`'s intel card currently speculates on contacts ("possibly key staff") rather than verifying, so the enrichment claim on `/upgrade` is half-true rather than plainly false. Copy built before this resolves will need rework.
-- 🔲 Distracted-driving copy for the site
-- 🔲 `/upgrade` copy must match actual `/capture` MVP scope before Stripe goes live (Decision 016)
-- 🔲 FI/PI two-sector brand awareness — see `PROMPT-MARKETING-JULY29-FI-PI-BRAND.md` (no action required yet, awareness only)
+- ✅ **Distracted-driving copy — DONE.** `marketing/SAFE-USE-COPY.md` v1.0. Six placement-specific copy blocks (capture screen, onboarding, site, footer, motion assets, paid pages), tone rules, do-not-say list. **Awaiting Dev implementation** — Marketing owns copy, Dev owns placement. Finding: the site currently has *zero* safe-use language while the whole pitch is driving-adjacent
+- ✅ Walkthrough script corrected to v1.2 — v1.1's opening depicted capture while driving. New shot 1b: vehicle visibly stops before the phone appears. Self-flagged, not quietly amended
+- ✅ FI/PI two-sector awareness acknowledged (`PROMPT-MARKETING-JULY29-FI-PI-BRAND.md`) — brand unchanged, FI/PI are sectors not sub-brands, no action required, nothing in flight affected
+- 🔲 `/upgrade` copy vs actual scope. **Now partly superseded:** Decision 019 removes the billing gate for closed beta, so nobody is charged during beta — this lowers urgency but the page is still publicly promising features. Decision 020 makes "contact enrichment" a real capability (Apollo free tier), so the claim is no longer false. Open question for BD: is `/upgrade` still public during a no-billing beta, and if so does it describe beta or post-beta?
+- ⚠️ **Ledger integrity — for BD, not Marketing to fix.** `DECISIONS.md` currently contains duplicate numbered entries: **016 twice (conflicting titles)**, **019 twice (identical)**, **020 twice (structurally malformed — a stray 019 block is nested inside the second 020)**. Per WORKFLOW.md, DECISIONS.md is BD-owned and Marketing does not edit locked decisions. Reported, not touched
+- ⚠️ Attribution note: Decisions 019/020 are logged as "reconciled from Marketing session TEAM_SYNC.md draft." Marketing flagged that commit `f73c519` cited a Decision 019 absent from the ledger; Marketing did not author those decisions or mis-number anything as 018. Minor, but the ledger should be accurate about provenance
 
 ### Development (FI)
 - ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
