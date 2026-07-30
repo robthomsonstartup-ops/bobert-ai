@@ -401,3 +401,74 @@ gate closes — see PROMPT-DEV-FI-JULY29.md.
 open pending Dev confirmation.
 
 
+
+
+---
+
+## Decision 021 — Beachhead Confirmed: Construction-Project Ecosystem, Lighting/Electrical First
+**Date:** 2026-07-30
+**Owner:** Rob (Founder)
+**Triggered by:** Marketing's site audit (`marketing/SITE-AUDIT-JULY29.md`) found the live
+bobert.ai "Who It's For" section conflicts with Decision 004 — it features Real Estate and
+Landscaping, neither of which is in 004's locked beachhead or expansion list.
+
+**Decision:** The target market is not a fixed trade checklist — it is anyone with a hand in
+building or bringing a construction project together (contractors, subcontractors by trade,
+manufacturers' reps, suppliers). This is consistent with, and clarifies rather than replaces,
+Decision 004. Real estate transactions are explicitly a different business (property sale,
+not construction delivery) and are not part of the beachhead. Landscaping/exterior maintenance
+is not part of the current beachhead either.
+
+**Current live beachhead:** Rob's own vertical — lighting and electrical field sales, consistent
+with CS Illumination. Expansion to other construction trades (HVAC, roofing, solar, signage,
+and beyond) happens as revenue and capacity allow, per the revenue-first mandate (Decisions 013,
+014) — not before.
+
+**Action:** bobert.ai's "Who It's For" section must be revised to drop Real Estate and
+Landscaping and reflect construction-project framing, led by lighting/electrical as the concrete,
+credible example. This also affects `marketing/WALKTHROUGH-30SEC-SCRIPT.md` v1.2, which was built
+neutral across the old four-audience set — Marketing to revise once this lands.
+
+**Status:** Locked.
+
+---
+
+## Decision 022 — Operating Principle: "How do we be better every day?"
+**Date:** 2026-07-30
+**Owner:** Rob (Founder)
+**Triggered by:** Marketing's proposal in `marketing/SITE-PLAN-JULY29.md`, Section "Motto."
+
+**Decision:** "How do we be better every day?" (corrected wording — "every day" as two words,
+adverb form) is locked as Bobert's internal operating principle. It is explicitly NOT a tagline
+and does not replace or share billing with Decision 007 ("See what others drive past.").
+
+**Public expression:** a quiet footer line ("We ship, we listen, we fix it. Every day.") plus a
+new `/changelog` page as its primary, falsifiable proof — dated, plain-language entries of what
+shipped and when, including fixes, not just features. The principle may appear in the footer,
+`/changelog`, an about page, and internal docs. It may NOT appear in the homepage hero, adjacent
+to the tagline, in the wordmark lockup, or in paid ads.
+
+**Status:** Locked.
+
+---
+
+## Decision 023 — Decision 005 Pricing Amended to Fixed Figures
+**Date:** 2026-07-30
+**Owner:** Rob (Founder)
+**Triggered by:** Marketing's site audit flagged that Decision 005 locks pricing as ranges
+($49–79 / $99–149 / $299+ / Custom), but the live site, Stripe Checkout, and TEAM_SYNC have used
+fixed figures since Decision 005 was written, and 005 itself was never updated to match.
+
+**Decision:** Per WORKFLOW.md (append, never rewrite a locked entry), this decision supersedes
+Decision 005's price figures without altering 005's original text. The authoritative, current
+pricing is fixed, not a range:
+
+- Solo: $59/mo
+- Pro: $119/mo
+- Team: $349/mo
+- Enterprise: $1,500/mo
+
+30-day free trial terms from Decision 005 remain unchanged. This is a ledger-accuracy fix only —
+it does not change what's live, since the live site and Stripe already use these fixed figures.
+
+**Status:** Locked.

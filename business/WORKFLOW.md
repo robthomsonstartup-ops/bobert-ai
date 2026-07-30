@@ -65,6 +65,8 @@ When a department reports work done, get the actual terminal output (the `git pu
 
 **Cross-cutting exception:** if Dev (FI) and Dev (PI) ever need to share code (a common component, a shared library), that's not either department's unilateral call — flag it to BD first so it's a tracked decision, not a silent merge of two lanes.
 
+**Named carve-out — `scripts/brand-check.py`:** this file is Python, but it's Marketing's own compliance instrument (Marketing built and maintains it), not product code. Marketing may edit its detection logic directly. This is distinct from the site itself (`.html`/`.js` files it checks), which stays Dev's to implement. If Marketing's edits ever extend into anything beyond this one script, that's back in Dev's lane.
+
 ### If you hit something out of your lane
 
 Do not attempt it, and do not silently drop it. Three steps, every time:

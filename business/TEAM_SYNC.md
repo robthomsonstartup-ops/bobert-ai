@@ -43,7 +43,7 @@ Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Sig
 
 ## What Is Locked (Do Not Revisit)
 
-See `business/DECISIONS.md` for full text — currently through **Decision 020**, deduplicated and clean (`fb46536`). Highlights:
+See `business/DECISIONS.md` for full text — currently through **Decision 023**, deduplicated and clean (`fb46536`). Highlights:
 
 | Decision | Details | Ref |
 |---|---|---|
@@ -60,6 +60,9 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 | Two-sector platform | Bobert FI + Bobert PI under one brand | 018 |
 | Beta strategy | Closed beta, no billing gate during beta | 019 |
 | Apollo free-tier | Free credits for beta enrichment; paid tier needs Finance sign-off | 020 (open dependency — see Finance section below) |
+| Beachhead scope | Construction-project ecosystem, not a fixed trade list; live beachhead = lighting/electrical (Rob's own vertical); Real Estate and Landscaping explicitly excluded | 021 |
+| Operating principle | "How do we be better every day?" — internal principle, footer + `/changelog` only, not a tagline, not homepage hero | 022 |
+| Pricing (fixed) | Solo $59 / Pro $119 / Team $349 / Enterprise $1,500/mo — supersedes 005's range language, trial terms unchanged | 023 |
 
 ---
 
@@ -93,9 +96,11 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 - ✅ **Distracted-driving copy — DONE.** `marketing/SAFE-USE-COPY.md` v1.0. Six placement-specific copy blocks (capture screen, onboarding, site, footer, motion assets, paid pages), tone rules, do-not-say list. **Awaiting Dev implementation** — Marketing owns copy, Dev owns placement. Finding: the site currently has zero safe-use language while the whole FI pitch is driving-adjacent.
 - ✅ Walkthrough script corrected to v1.2 (`marketing/WALKTHROUGH-30SEC-SCRIPT.md`) — v1.1's opening depicted capture while driving; new shot 1b shows the vehicle stopped before the phone appears. Self-flagged, not quietly amended.
 - ✅ FI/PI two-sector awareness acknowledged (`PROMPT-MARKETING-JULY29-FI-PI-BRAND.md`) — brand unchanged, FI/PI are sectors not sub-brands, no action required, nothing in flight affected.
-- 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — reclassified as **blocked on positioning**, not just open: `/capture`'s intel card currently speculates on contacts ("possibly key staff") rather than verifying, so the enrichment claim on `/upgrade` is half-true rather than plainly false. Copy built before this resolves will need rework.
-- 🔲 `/upgrade` copy vs actual scope. Decision 019 removes the billing gate for closed beta (nobody charged during beta, lowers urgency); Decision 020 makes "contact enrichment" a real capability, so that claim is no longer false. Open question for BD: is `/upgrade` still public during a no-billing beta, and if so does its copy describe beta or post-beta state?
-- 🔲 **New: bobert.ai site refresh** — see `PROMPT-MARKETING-JULY29-SITE-REFRESH.md`. Revisit full site messaging/structure now that FI + PI are both real; explore how to visibly show continuous improvement (Rob's "how do we be better everyday" operating principle — a lens for the refresh, not a new tagline; existing tagline/logo/palette stay locked). Folds in the `/upgrade` accuracy question and safe-use copy placement above into one pass.
+- 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — still blocked on positioning until Decision 021's beachhead correction lands on the live site (below).
+- ✅ **Site audit + revised content/structure plan delivered (July 29-30)** — `marketing/SITE-AUDIT-JULY29.md` and `marketing/SITE-PLAN-JULY29.md`. Found and correctly escalated three real conflicts rather than deciding them: audience mismatch (→ Decision 021), motto placement (→ Decision 022), pricing ledger drift (→ Decision 023). All three now ruled and locked. Also caught and fixed a real under-reporting bug in `brand-check.py` itself (R1b missed `class="logo-mark"`, hiding 4 violations) — this is Marketing's own tool, in-lane (see WORKFLOW.md carve-out).
+- 🔲 **Revise `WALKTHROUGH-30SEC-SCRIPT.md`** — v1.2 was built neutral across the old four-audience set; now that Decision 021 narrows to construction-project/lighting-electrical, the montage needs reshooting toward trade triggers, not FSBO signs.
+- 🔲 **Write `/changelog` initial content** — translate `CHANGELOG.md` entries to plain, user-facing language per Decision 022. Needs an ongoing owner/cadence (Marketing, triggered by any user-visible ship) or it goes stale and undercuts the principle it's meant to prove.
+- 🔲 `/upgrade` copy — **testing-only for now.** Rob: current implementation (see Dev section) is a placeholder to remove the beta billing contradiction, not a locked structure. Real subscription/scaling architecture comes later, at which point this page gets properly rebuilt — don't treat anything about `/upgrade`'s current form as permanent.
 
 ### Development (FI)
 - ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
@@ -107,14 +112,14 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
   - `upgrade.html` — add `<link rel="icon">`
   - `upgrade.html` — nav/footer brand chrome uses `icon.png`, must use `bobert-wordmark-white.png` instead (same fix already applied on `index.html`)
 - 🔲 Implement Marketing's safe-use copy (`marketing/SAFE-USE-COPY.md`) into `/capture` and site placements
+- 🔲 **New: site implementation from Marketing's plan** — see `PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md`. Highest priority: bobert.ai currently has zero links to `/capture`, `/leads`, `/account`, `/intake`, or `/upgrade` — live beta users have no way into the product from the homepage. Fix that first, everything else in that file is secondary.
 - 🔲 Stripe live-mode flip — blocked on Decision 016 gate (product must justify the trial promise)
 
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
-- ✅ **PI UI build-out phase (in progress)** — parallel source extraction (`Promise.all` across OCR/PDF/URL), inline field editing (Edit/Done toggle on Project Info, Quote Checklist, Deal Draft cards with `contenteditable` + `saveEdit`/`cycleChecklist`). Shipped as part of this sprint.
-- ✅ **Speed-to-structured-output** — multi-source ingestion now parallel: all attachments (images, PDFs, URLs) extract simultaneously in a single pass before AI synthesis. No sequential uploads.
-- 🔲 Remaining UI polish — visual refinements, input flow, brand consistency (next sprint)
+- 🔲 **New: PI UI build-out phase (starting now)** — refine the `/intake` interface itself: layout, input flow for mixed multi-source drops (paste + file + URL in one pass), review/edit step before export, visual polish consistent with brand.
+- 🔲 **New: speed-to-structured-output** — explore combining/parallelizing multi-source ingestion (OCR + URL fetch + text extraction) into a single pass so a bid packet with several attachments resolves to one structured result in seconds, not sequential uploads. Goal: zero manual re-entry regardless of how many source documents/links a project comes in as.
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
 
@@ -150,7 +155,10 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 | business/PROMPT-DEV-FI-JULY29.md | Finance's PDL-vs-Apollo confirmation ask to Dev |
 | business/PROMPT-FINANCE-JULY29-PI-MONETIZATION.md | PI monetization research ask |
 | business/PROMPT-MARKETING-JULY29-FI-PI-BRAND.md | FI/PI brand awareness briefing |
-| business/PROMPT-MARKETING-JULY29-SITE-REFRESH.md | Site messaging/structure refresh — reflect FI+PI, continuous-improvement framing |
+| business/PROMPT-MARKETING-JULY29-SITE-REFRESH.md | Original site-refresh ask — fulfilled by SITE-AUDIT-JULY29.md + SITE-PLAN-JULY29.md below |
+| marketing/SITE-AUDIT-JULY29.md | Full site audit — findings behind the site plan, evidence for Decisions 021/023 |
+| marketing/SITE-PLAN-JULY29.md | Revised site content/structure plan — Dev implements per PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md |
+| business/PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md | Dev task list from Marketing's site plan, priority-ordered |
 | business/PROMPT-DEV-JULY29-PROJECT-INTAKE.md | Original PI MVP build spec |
 | business/PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md | Multi-source intake spec — shipped `39b35b7` |
 | business/PROMPT-DEV-JULY29-INTAKE-EXPORT-ACTIONS.md | Print/Email export spec |
