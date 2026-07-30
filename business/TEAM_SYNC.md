@@ -114,7 +114,10 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
   - `upgrade.html` — add `<link rel="icon">`
   - `upgrade.html` — nav/footer brand chrome uses `icon.png`, must use `bobert-wordmark-white.png` instead (same fix already applied on `index.html`)
 - 🔲 Implement Marketing's safe-use copy (`marketing/SAFE-USE-COPY.md`) into `/capture` and site placements
-- 🔲 **Site implementation from Marketing's plan — NOT actually shipped, despite commit `7337723` claiming it was.** See `PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md`. Verified against live `main`: nav has no `/capture` link, stats row still shows old `0`/`∞` values, `manifest.json` unchanged. **Before re-attempting: pull latest `main` first (don't work from a local fork of this repo), actually write the changes into the HTML/JSON files, confirm the local diff shows real changes before committing, and paste the real `git diff --stat` output to BD — not just a status claim.** Still highest priority: bobert.ai has zero links to `/capture`, `/leads`, `/account`, `/intake`, or `/upgrade`, so live beta users have no way into the product from the homepage.
+- ✅ **Site implementation, partial — verified live on bobert.ai (July 30):** nav "Open Bobert" link, simplified stats row (`<10s` / `GPS` / `1 photo — everything else fills itself in`), and 7th "Project Intel Card" feature all confirmed genuinely shipped, independent of the earlier false claim on `7337723`.
+- 🔲 **`/upgrade` reframe still not shipped** — live page still shows "Start Free Trial" CTAs on all 4 tiers and "Credit card required to hold your spot," directly contradicting `/account`'s "full access, no charge" beta framing. See `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`.
+- 🔲 **New: "Who It's For" section violates Decision 021** — live homepage still leads with Real Estate and includes Landscaping, both explicitly excluded from the beachhead. Missed from the original directive (BD's gap, not Dev's) — now flagged in `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`.
+- 🔲 R1b logo fixes and `manifest.json` wiring — status unconfirmed since the false-claim incident; needs re-verification once FI Dev's next push lands.
 - 🔲 Stripe live-mode flip — blocked on Decision 016 gate (product must justify the trial promise)
 
 ### Development (PI) — **current focus area**
