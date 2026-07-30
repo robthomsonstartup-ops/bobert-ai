@@ -1,5 +1,5 @@
 # Bobert — 30-Second Walkthrough
-**Script + Storyboard v1.1 — Vertical-Neutral**
+**Script + Storyboard v1.2 — Vertical-Neutral, Safe-Use Corrected**
 **Drafted:** July 27, 2026
 **Status:** Draft — awaiting Marketing review and BD sign-off
 **Directive:** CDE-JULY19 Directive 004
@@ -42,9 +42,10 @@ Must read equally to all four verticals named on the live site:
 
 | # | Time | Shot | On-screen text | Action |
 |---|---|---|---|---|
-| 1 | 0:00–0:03 | **Three fast cuts, ~1s each, driver POV through windshield:** (a) permit sign staked on a lot, (b) overgrown commercial frontage, (c) a vacant storefront with a faded sign. | **You always see it.** | The montage is what makes this neutral — each vertical sees their own trigger in one of the three. Hold text across all three cuts; don't re-animate. |
-| 2 | 0:03–0:06 | Cut to phone in hand, thumb opens Bobert. Capture screen loads. | — | Icon → capture screen. Keep under 1s; the app must feel instant. |
-| 3 | 0:06–0:11 | Tap **Photo**. Shutter fires. Photo fills the capture frame. | **Photo.** | Red corner bracket lands on the frame as the shot resolves. This is the brand beat — hold it. |
+| 1 | 0:00–0:03 | **Three fast cuts, ~1s each, driver POV through windshield:** (a) permit sign staked on a lot, (b) overgrown commercial frontage, (c) a vacant storefront with a faded sign. | **You always see it.** | The montage is what makes this neutral — each vertical sees their own trigger in one of the three. Hold text across all three cuts; don't re-animate. **Phone must not be visible or in hand during any of these shots.** |
+| 1b | 0:03–0:05 | **Vehicle stops.** Turn signal audible, truck pulls to the curb, shifts to park. Hand comes off the wheel. | **So you pull over.** | **Non-negotiable — see `SAFE-USE-COPY.md`.** Without this beat the video depicts capture while driving. The stop must be unmistakable: parked, engine settled, hands free. |
+| 2 | 0:05–0:07 | Phone in hand, thumb opens Bobert. Capture screen loads. | — | Icon → capture screen. Keep under 1s; the app must feel instant. |
+| 3 | 0:07–0:11 | Tap **Photo**. Shutter fires. Photo fills the capture frame. | **Photo.** | Red corner bracket lands on the frame as the shot resolves. This is the brand beat — hold it. |
 | 4 | 0:11–0:15 | GPS pin drops. Address auto-fills beneath the photo. | **Location, automatic.** | Do not show anyone typing an address. The whole point is that they don't. |
 | 5 | 0:15–0:20 | Tap **Voice**. Waveform moves. Note transcribes to text. | **Say what you saw.** | Transcribed note on screen must stay generic — see VO. No trade jargon in the visible text. |
 | 6 | 0:20–0:24 | Tap **Save Opportunity**. Confirmation. Reminder chip: *Follow up in 3 days.* | **Saved. And it'll remind you.** | The reminder is the retention hook. Do not cut it for time. |
@@ -61,7 +62,9 @@ Delivery is flat and competent — a peer, not an announcer. No upsell inflectio
 >
 > Then you keep driving — and by dinner, it's gone.
 >
-> *(beat — shutter)*
+> *(beat — turn signal, truck stops)*
+>
+> So pull over. Takes ten seconds.
 >
 > Photo. Location's already there.
 >
@@ -71,7 +74,9 @@ Delivery is flat and competent — a peer, not an announcer. No upsell inflectio
 >
 > Bobert. See what others drive past.
 
-**Word count:** 48. Deliberately sparse — the screen action carries the middle, and the pauses are load-bearing. Do not pad to fill 30 seconds.
+**Word count:** 54. Deliberately sparse — the screen action carries the middle, and the pauses are load-bearing. Do not pad to fill 30 seconds.
+
+**On "So pull over. Takes ten seconds."** — this line is doing two jobs and both matter. It satisfies the safe-use requirement, and it reframes stopping as trivial rather than as a cost. Do not cut it for time and do not soften it to "when you can." See `SAFE-USE-COPY.md`.
 
 **On the dictated line:** *"Third and Maple. Worth a call Thursday"* is the neutral core of the script. It states a location and an intent and nothing else. A real estate agent, a roofer, a lawn crew, and a territory rep would each say something close to it. Any edit that adds a *reason* — a roof, a lawn, a listing — breaks neutrality. If this line changes, re-check it against all four verticals.
 
