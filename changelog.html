@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>What&#8217;s Shipped &#8212; Bobert</title>
+  <meta name="description" content="Everything Bobert has shipped, dated and in plain language. Including the fixes." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="/assets/icon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #0A0A0A; --red: #DC2626; --white: #FFFFFF;
+      --gray: #6B7280; --card: #1A1A1A; --border: rgba(229,231,235,0.1);
+    }
+    body { font-family: -apple-system, 'Inter', sans-serif; background: var(--black); color: var(--white); min-height: 100vh; }
+    header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 20px;
+      padding-top: calc(14px + env(safe-area-inset-top));
+      border-bottom: 1px solid var(--border);
+    }
+    .logo-wordmark { height: 22px; width: auto; }
+    header h1 { font-size: 16px; font-weight: 700; }
+    main { max-width: 680px; margin: 0 auto; padding: 48px 20px 80px; }
+    .page-label { font-size: 10px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
+    .page-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 12px; }
+    .page-sub { font-size: 15px; color: rgba(255,255,255,0.6); line-height: 1.7; margin-bottom: 48px; }
+    .month-group { margin-bottom: 40px; }
+    .month-label { font-size: 11px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+    .entry { display: flex; gap: 20px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .entry:last-child { border-bottom: none; }
+    .entry-date { font-size: 11px; font-weight: 700; color: var(--red); letter-spacing: 0.04em; white-space: nowrap; padding-top: 3px; min-width: 36px; }
+    .entry-body { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.65; }
+    .entry-type { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 7px; border-radius: 4px; margin-right: 6px; vertical-align: middle; }
+    .entry-type--fix    { background: rgba(245,158,11,0.15); color: #F59E0B; }
+    .entry-type--ship   { background: rgba(220,38,38,0.12);  color: var(--red); }
+    .entry-type--change { background: rgba(107,114,128,0.15); color: var(--gray); }
+    footer { padding: 32px 20px; border-top: 1px solid var(--border); text-align: center; font-size: 12px; color: rgba(255,255,255,0.3); }
+    footer a { color: rgba(255,255,255,0.45); text-decoration: none; }
+    footer a:hover { color: rgba(255,255,255,0.7); }
+    .back-link { display: inline-block; margin-top: 32px; font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none; }
+    .back-link:hover { color: rgba(255,255,255,0.7); }
+  </style>
+</head>
+<body>
+<header>
+  <img class="logo-wordmark" src="/assets/bobert-wordmark-white.png" alt="Bobert" />
+  <h1>What&#8217;s Shipped</h1>
+</header>
+<main>
+  <div class="page-label">Built in the Open</div>
+  <h2 class="page-title">Bobert is early.<br>Here&#8217;s exactly what&#8217;s changed.</h2>
+  <p class="page-sub">We&#8217;d rather show you the work than tell you about it. Dated, specific, and including the things we broke and fixed. If it affected you as a user, it&#8217;s here.</p>
+
+  <div class="month-group">
+    <div class="month-label">July 2026</div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> Landing page: thesis section (&#8220;Why Bobert Exists&#8221;), FI/PI platform cards, &#8220;Built in the Open&#8221; changelog preview, hero updated to platform language.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> Added persistent &#8220;Park first&#8221; safety banner to /capture &#8212; always visible, positioned below the header. First of six planned safe-use placements.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> Rewrote /upgrade. Stripe checkout removed for closed beta &#8212; no &#8220;Credit card required,&#8221; no trial clock. Pricing published as a preview ($59&nbsp;/&nbsp;$119&nbsp;/&nbsp;$349&nbsp;/&nbsp;$1,500) with unbuilt features tagged Planned.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--change">Change</span> &#8220;Who It&#8217;s For&#8221; updated to 4 construction verticals: Lighting &amp; Electrical, Contractors &amp; Subs, Manufacturers&#8217; Reps, Suppliers &amp; Distributors. Real Estate and Landscaping removed &#8212; outside the beachhead (Decision 021).</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--fix">Fix</span> manifest.json regression &#8212; maskable icon now points at adaptive-icon.png (safe-zone geometry), sizes corrected to 1024&times;1024, background_color updated to #1A1A1A.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--fix">Fix</span> Added favicon and apple-touch-icon links to capture, leads, account, intake, success, and upgrade &#8212; browser tab showed no icon on those pages.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 30</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> &#8220;Open Bobert&#8221; link added to landing page nav &#8212; beta members no longer need to type /capture from memory.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 29</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> 7th feature card &#8220;Project Intel&#8221; added to landing page. Renamed &#8220;Leads Dashboard&#8221; &#8594; &#8220;Your List&#8221; to match the in-app label.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 29</div>
+      <div class="entry-body"><span class="entry-type entry-type--change">Change</span> PWA manifest: purpose fields added (any / maskable). Stats row simplified from 4 figures to 3 &#8212; removed vanity metrics.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 28</div>
+      <div class="entry-body"><span class="entry-type entry-type--ship">Ship</span> AI intel card &#8212; /capture now returns project, company, and contact intel from a single photo. Apollo contact enrichment live.</div>
+    </div>
+
+    <div class="entry">
+      <div class="entry-date">Jul 28</div>
+      <div class="entry-body"><span class="entry-type entry-type--fix">Fix</span> GPS auto-tagging: location written at save time (not capture time) so it survives app switching. Follow-up dates now persist across reloads (IndexedDB fix).</div>
+    </div>
+
+  </div>
+
+  <a class="back-link" href="/">&larr; Back to bobert.ai</a>
+</main>
+<footer>
+  <a href="/">bobert.ai</a> &nbsp;&middot;&nbsp;
+  <a href="/capture">Open Bobert</a> &nbsp;&middot;&nbsp;
+  <a href="/upgrade">Plans</a>
+  <br><br>
+  <strong>Safe use:</strong> Bobert is intended for use while stopped. Never use a mobile device while driving.
+</footer>
+</body>
+</html>

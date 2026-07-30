@@ -123,30 +123,27 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 
 ### Development (FI)
 - ✅ bobert.ai live on Vercel
-- ✅ Stripe Checkout integrated — test mode (not active during beta, Decision 019)
-- ✅ Brevo email capture live on landing page
 - ✅ /capture — photo (Vision OCR), GPS, note, follow-up date, IndexedDB save
-- ✅ /api/capture-intel — Vision OCR → Tavily search → Groq synthesis → Apollo contacts
+- ✅ /api/capture-intel — Vision OCR → Tavily → Groq synthesis → Apollo contacts
 - ✅ /leads — list view, tap-to-open intel drawer, delete
 - ✅ /account — beta member card, live stats, coming-soon roadmap
 - ✅ Bottom nav (My List / Capture / Account) — consistent across all pages
-- ✅ PWA: manifest.json + sw.js, Add to Home Screen capable
-- ✅ All 4 intel API keys live in Vercel
-- ✅ vercel.json: cleanUrls true
-- ✅ Landing page nav: "Open Bobert → /capture" live (July 30)
-- ✅ Landing page stats: "1 photo — everything else fills itself in" live (July 30)
-- ✅ Landing page features: "Your List" + 7th "Project Intel Card" live (July 30)
-- ✅ App headers: bobert-wordmark-white.png in capture/leads/account (July 30)
-- ✅ manifest.json: adaptive-icon.png for maskable, sizes 1024x1024, background_color #1A1A1A, platform description (July 30)
-- ✅ capture.html: persistent "Park first" safe-use banner — placement #1 (July 30)
-- ✅ Brand-check: favicon + apple-touch-icon links added to capture/leads/account/intake/success/upgrade (July 30)
-- ✅ upgrade.html: beta preview — no Stripe CTAs, "closed beta / free / no card," Planned tags, favicon (July 30)
-- ✅ index.html "Who It's For": Decision 021 compliant — Lighting & Electrical, Contractors & Subs, Manufacturers' Reps, Suppliers & Distributors (July 30)
-- 🟲 New sections 4/5/10 (thesis, FI+PI reveal, Built in the Open) — SITE-PLAN v2.0 specs ready, implement next
-- 🟲 Hero subhead revision — SITE-PLAN v2.0 §3 copy ready, implement next
-- 🟲 Footer additions (operating principle, safe-use statement, /changelog link)
-- 🟲 /changelog page shell — Marketing writes content
-- 🟲 Improve contact enrichment accuracy (see PROMPT-DEV-JULY28-CONTACT-ENRICHMENT.md)
+- ✅ PWA: manifest.json fixed (adaptive-icon.png maskable, 1024x1024, #1A1A1A, platform description) (Jul 30)
+- ✅ Brand-check: favicon + apple-touch-icon across all app pages (Jul 30)
+- ✅ capture.html: persistent “Park first” safe-use banner — placement #1 (Jul 30)
+- ✅ upgrade.html: beta preview — no Stripe CTAs, Planned tags, favicon (Jul 30)
+- ✅ index.html: nav “Open Bobert → /capture” live (Jul 30)
+- ✅ index.html: hero subhead → platform language (Jul 30)
+- ✅ index.html: section 4 “Why Bobert Exists” (thesis) (Jul 30)
+- ✅ index.html: section 5 “Two Ways Bobert Works” (FI + PI describe-only, no CTA for PI) (Jul 30)
+- ✅ index.html: Who It’s For → heading/sub/copy per SITE-PLAN v2.0 §9 (Jul 30)
+- ✅ index.html: section 10 “Built in the Open” + changelog teaser entries (Jul 30)
+- ✅ index.html: footer — operating principle (Decision 022) + safe-use block 4 (Jul 30)
+- ✅ /changelog page scaffold live (Jul 30)
+- 🟲 Safe-use placements #2–6 (first-run acknowledge, footer legal, /upgrade, /success, terms)
+- 🟲 Improve contact enrichment accuracy
+- 🟲 Sharpen Groq prompt: cite real sources rather than infer
+- 🟲 Beta feedback collection mechanism
 - 🟲 Stripe live mode flip — pending Finance sign-off + beta validation
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save

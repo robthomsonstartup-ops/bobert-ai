@@ -1320,6 +1320,133 @@
       }
     }
 
+  
+    /* -- HERO SAFE-USE -- */
+    .hero-safe {
+      font-size: 12px;
+      color: rgba(255,255,255,0.38);
+      margin-top: 20px;
+      letter-spacing: 0.01em;
+      line-height: 1.5;
+    }
+
+    /* -- THESIS SECTION (Why Bobert Exists) -- */
+    .thesis-body {
+      max-width: 680px;
+      margin: 28px auto 0;
+      font-size: 17px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.8;
+    }
+
+    /* -- PLATFORM CARDS (FI / PI) -- */
+    .platform-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 48px;
+    }
+    .platform-card {
+      background: #1A1A1A;
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 16px;
+      padding: 28px 26px;
+    }
+    .platform-card--live { border-color: rgba(220,38,38,0.28); }
+    .platform-card--dev  { opacity: 0.82; }
+    .platform-card-status {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: #6B7280;
+      margin-bottom: 14px;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot--live { background: #DC2626; }
+    .status-dot--dev  { background: transparent; border: 1.5px solid #6B7280; }
+    .platform-card h3 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+    .platform-card p {
+      font-size: 15px;
+      color: rgba(255,255,255,0.68);
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+    .platform-card-note {
+      font-size: 13px !important;
+      color: #6B7280 !important;
+      font-style: italic;
+      margin-top: 18px !important;
+    }
+    .platform-card-cta {
+      display: inline-block;
+      margin-top: 24px;
+    }
+    @media (max-width: 700px) {
+      .platform-cards { grid-template-columns: 1fr; }
+    }
+
+    /* -- CHANGELOG PREVIEW (Built in the Open) -- */
+    .changelog-preview {
+      margin-top: 36px;
+    }
+    .changelog-entry {
+      display: flex;
+      align-items: baseline;
+      gap: 14px;
+      padding: 13px 16px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 8px;
+      border-left: 3px solid rgba(220,38,38,0.35);
+      font-size: 14px;
+      color: rgba(255,255,255,0.72);
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+    .changelog-date {
+      font-size: 10px;
+      font-weight: 700;
+      color: #DC2626;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .changelog-more {
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    /* -- FOOTER ADDITIONS -- */
+    .footer-principle {
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.42);
+      font-style: italic;
+      text-align: center;
+    }
+    .footer-safe-use {
+      margin-top: 10px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.28);
+      text-align: center;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
@@ -1343,13 +1470,14 @@
   <h1>See what <em>others</em><br>drive past.</h1>
 
   <p class="hero-sub">
-    Bobert is the field intelligence app for professionals who find opportunity on the road. Capture it in seconds — before you leave the curb.
+    Bobert is the field intelligence platform for construction. Catch the opportunity when you spot it — and handle the paperwork when it lands.
   </p>
 
   <div class="hero-actions">
     <a class="btn-primary" href="#beta">Join the Beta</a>
     <a class="btn-secondary" href="#how">See How It Works</a>
   </div>
+  <p class="hero-safe">Built to be used stopped. Pull over, capture in seconds, get back on the road.</p>
 
   <!-- Phone Mockup -->
   <div class="phone-frame">
@@ -1481,13 +1609,13 @@
 <!-- WHO IT'S FOR -->
 <div class="section">
   <div class="section-label">Who It's For</div>
-  <h2 class="section-title">If you work in the field,<br>this is for you.</h2>
-  <p class="section-sub">Built for anyone who drives a territory and hunts for opportunity on the road.</p>
+  <h2 class="section-title">If you help build it,<br>this is for you.</h2>
+  <p class="section-sub">Bobert is built for the people who help bring construction projects together — contractors, subs, manufacturers’ reps, and suppliers who spend their days in the field and their evenings on paperwork.</p>
   <div class="features-grid" style="margin-top:44px;">
         <div class="feature-card">
       <div class="feature-icon">&#x26A1;</div>
       <h3>Lighting &amp; Electrical</h3>
-      <p>Know who controls the lighting spec before the job gets shopped. One photo — developer, GC, and the right contact to call.</p>
+      <p>Spot a build before the fixture package is spec’d. Get in while there’s still a decision to influence.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">&#x1F528;</div>
@@ -1497,12 +1625,12 @@
     <div class="feature-card">
       <div class="feature-icon">&#x1F4CB;</div>
       <h3>Manufacturers' Reps</h3>
-      <p>Spec your product category before the bid closes. Capture a sign, get the developer and architect — route the spec conversation at the right time.</p>
+      <p>Track your territory by driving it. Know which projects are live before the RFQ hits your inbox.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">&#x1F69A;</div>
       <h3>Suppliers &amp; Distributors</h3>
-      <p>Every new project is a materials opportunity. Bobert identifies the GC and purchasing contact before the job goes to bid.</p>
+      <p>Catch projects early enough to quote, not late enough to lose.</p>
     </div>
   </div>
 </div>
