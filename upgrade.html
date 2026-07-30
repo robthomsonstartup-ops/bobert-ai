@@ -5,29 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Plans — Bobert</title>
   <meta name="description" content="Bobert is free during beta. See what's coming when subscriptions launch." />
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#0A0A0A" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="apple-touch-icon" href="/assets/icon.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --black:  #0A0A0A;
-      --red:    #DC2626;
-      --white:  #FFFFFF;
-      --gray:   #6B7280;
-      --card:   #1A1A1A;
-      --border: rgba(229,231,235,0.1);
+      --black: #0A0A0A; --red: #DC2626; --white: #FFFFFF;
+      --gray: #6B7280; --card: #1A1A1A; --border: rgba(229,231,235,0.1);
       --nav-h: calc(64px + env(safe-area-inset-bottom));
     }
     body {
       font-family: -apple-system, 'Inter', sans-serif;
-      background: var(--black);
-      color: var(--white);
-      min-height: 100vh;
-      padding-bottom: var(--nav-h);
+      background: var(--black); color: var(--white);
+      min-height: 100vh; padding-bottom: var(--nav-h);
     }
-
     header {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 14px 20px;
-      padding-top: calc(14px + env(safe-area-inset-top));
+      padding: 14px 20px; padding-top: calc(14px + env(safe-area-inset-top));
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0; background: var(--black); z-index: 10;
     }
@@ -38,85 +35,50 @@
       background: rgba(220,38,38,0.15); color: var(--red);
       padding: 3px 8px; border-radius: 99px;
     }
-
     main { padding: 32px 20px; max-width: 520px; margin: 0 auto; }
-
-    /* Beta banner */
     .beta-banner {
-      background: rgba(220,38,38,0.08);
-      border: 1px solid rgba(220,38,38,0.2);
-      border-radius: 16px;
-      padding: 20px 22px;
-      margin-bottom: 32px;
-      text-align: center;
+      background: rgba(220,38,38,0.08); border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 16px; padding: 20px 22px; margin-bottom: 32px; text-align: center;
     }
-    .beta-banner h2 {
-      font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px;
-    }
-    .beta-banner p {
-      font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5;
-    }
+    .beta-banner h2 { font-size: 18px; font-weight: 800; letter-spacing: -0.3px; margin-bottom: 6px; }
+    .beta-banner p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.5; }
     .beta-banner .free-tag {
       display: inline-block; margin-top: 12px;
       background: rgba(220,38,38,0.15); color: var(--red);
       font-size: 12px; font-weight: 700; letter-spacing: 0.05em;
       padding: 4px 12px; border-radius: 99px;
     }
-
     .section-label {
       font-size: 10px; font-weight: 700; color: var(--gray);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 14px;
+      text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 14px;
     }
-
-    /* Plan cards */
     .plans { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
-
-    .plan {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 22px;
-    }
+    .plan { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; }
     .plan.featured { border-color: rgba(220,38,38,0.35); }
-
     .plan-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
     .plan-name { font-size: 12px; font-weight: 700; color: var(--gray); text-transform: uppercase; letter-spacing: 0.08em; }
-    .plan-popular {
-      font-size: 10px; font-weight: 700; color: var(--red);
-      background: rgba(220,38,38,0.12); padding: 2px 8px; border-radius: 99px;
-    }
+    .plan-popular { font-size: 10px; font-weight: 700; color: var(--red); background: rgba(220,38,38,0.12); padding: 2px 8px; border-radius: 99px; }
     .plan-price { font-size: 30px; font-weight: 800; letter-spacing: -1px; line-height: 1; margin-bottom: 6px; }
     .plan-price span { font-size: 13px; font-weight: 400; color: var(--gray); }
     .plan-desc { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
-
-    /* Features list inside plan */
     .plan-features { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; }
-    .plan-feature {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 13px; color: rgba(255,255,255,0.7);
-    }
+    .plan-feature { display: flex; align-items: center; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.7); }
     .plan-feature .check { color: var(--red); font-size: 12px; flex-shrink: 0; }
     .plan-feature .planned {
       font-size: 10px; font-weight: 700; color: var(--gray);
-      background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px;
-      margin-left: 4px; vertical-align: middle;
+      background: rgba(255,255,255,0.06); padding: 1px 6px; border-radius: 4px; margin-left: 4px;
     }
-
-    /* Notify row */
     .notify-section {
       background: var(--card); border: 1px solid var(--border);
-      border-radius: 16px; padding: 22px;
-      text-align: center;
+      border-radius: 16px; padding: 22px; text-align: center;
     }
     .notify-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
     .notify-section p { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 16px; line-height: 1.5; }
     .notify-form { display: flex; gap: 8px; }
     .notify-form input {
-      flex: 1; padding: 11px 14px;
-      background: rgba(255,255,255,0.06); border: 1px solid var(--border);
-      border-radius: 8px; color: var(--white); font-size: 14px;
-      outline: none;
+      flex: 1; padding: 11px 14px; background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border); border-radius: 8px;
+      color: var(--white); font-size: 14px; outline: none;
     }
     .notify-form input::placeholder { color: var(--gray); }
     .notify-form input:focus { border-color: rgba(220,38,38,0.4); }
@@ -127,21 +89,18 @@
     }
     .notify-form button:hover { opacity: 0.85; }
     .notify-confirm { display: none; font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 10px; }
-
-    /* Bottom Nav */
     .bottom-nav {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 30;
       background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
       border-top: 1px solid var(--border);
       display: flex; align-items: flex-start; justify-content: space-around;
-      padding-top: 10px;
-      padding-bottom: calc(10px + env(safe-area-inset-bottom));
+      padding-top: 10px; padding-bottom: calc(10px + env(safe-area-inset-bottom));
     }
     .nav-item {
       display: flex; flex-direction: column; align-items: center; gap: 4px;
-      text-decoration: none; flex: 1;
-      color: var(--gray); font-size: 10px; font-weight: 600;
-      letter-spacing: 0.03em; padding: 0 8px; transition: color 0.15s;
+      text-decoration: none; flex: 1; color: var(--gray);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.03em;
+      padding: 0 8px; transition: color 0.15s;
     }
     .nav-item.active { color: var(--white); }
     .nav-item svg { width: 24px; height: 24px; }
@@ -175,9 +134,7 @@
   <div class="plans">
 
     <div class="plan">
-      <div class="plan-header">
-        <div class="plan-name">Solo</div>
-      </div>
+      <div class="plan-header"><div class="plan-name">Solo</div></div>
       <div class="plan-price">$59<span>/mo</span></div>
       <div class="plan-desc">One rep. Full capture workflow, AI intel card, contact enrichment, and Your List.</div>
       <div class="plan-features">
@@ -206,9 +163,7 @@
     </div>
 
     <div class="plan">
-      <div class="plan-header">
-        <div class="plan-name">Team</div>
-      </div>
+      <div class="plan-header"><div class="plan-name">Team</div></div>
       <div class="plan-price">$349<span>/mo</span></div>
       <div class="plan-desc">Up to 10 reps. Full team dashboard, usage reporting, dedicated onboarding.</div>
       <div class="plan-features">
@@ -220,9 +175,7 @@
     </div>
 
     <div class="plan">
-      <div class="plan-header">
-        <div class="plan-name">Enterprise</div>
-      </div>
+      <div class="plan-header"><div class="plan-name">Enterprise</div></div>
       <div class="plan-price">$1,500<span>/mo</span></div>
       <div class="plan-desc">Unlimited users. White-label, API access, SLA, custom integrations.</div>
       <div class="plan-features">
@@ -238,7 +191,7 @@
 
   <div class="notify-section">
     <h3>Get notified when subscriptions open</h3>
-    <p>We'll email you before beta ends so you can choose your plan — no surprise charges.</p>
+    <p>We'll reach out before beta ends so you can choose your plan — no surprise charges.</p>
     <div class="notify-form">
       <input type="email" id="notifyEmail" placeholder="your@email.com" />
       <button onclick="submitNotify()">Notify me</button>
@@ -278,14 +231,12 @@
 function submitNotify() {
   const email = document.getElementById('notifyEmail').value.trim();
   if (!email || !email.includes('@')) return;
-  // Store locally — no backend call during beta
   const list = JSON.parse(localStorage.getItem('notifyList') || '[]');
   if (!list.includes(email)) list.push(email);
   localStorage.setItem('notifyList', JSON.stringify(list));
   document.getElementById('notifyConfirm').style.display = 'block';
   document.getElementById('notifyEmail').value = '';
 }
-
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js').catch(()=>{});
 }
