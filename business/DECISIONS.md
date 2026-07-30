@@ -472,3 +472,11 @@ pricing is fixed, not a range:
 it does not change what's live, since the live site and Stripe already use these fixed figures.
 
 **Status:** Locked.
+
+## Decision 024 — /changelog Ownership and Cadence
+**Date:** July 30, 2026
+**Status:** Locked
+
+Marketing owns /changelog content — translating Dev's technical commits into
+plain, user-facing language per Decision 022's "falsifiable proof" requirement.
+Cadence is triggered by any user-visible ship, not a fixed schedule.
