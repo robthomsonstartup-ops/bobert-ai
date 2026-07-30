@@ -77,6 +77,7 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 - ✅ PI `/intake` live and tested — extraction, checklist, deal draft, Copy/Print/Email/Save
 - ✅ Founder Decisions A-F closed (017); Decisions 019/020 reconciled into the ledger and deduplicated (`fb46536`)
 - ✅ Git lock incident (stale `HEAD.lock`/`ORIG_HEAD.lock`) resolved July 29 — no data loss, but two sessions writing to TEAM_SYNC.md around the same time meant BD's own push (`69a9334`) clobbered Finance's just-landed update (`ea714db`). Reconciled in this commit — nothing from either version lost.
+- ⚠️ **Second occurrence, July 30:** BD's own Decisions 021-023 push was built from a local TEAM_SYNC.md copy that predated PI Dev's real, shipped `0473b34` (parallel extraction + inline editing) — silently reverted those two ✅ items back to 🔲. Caught by verifying `main` directly against the commit hash before trusting the summary, not by assuming the prior push was clean. Fixed with a targeted edit, same as before. **BD is now the repeat offender on this exact failure mode — the fix going forward is to `git log`/fetch `main` immediately before building any TEAM_SYNC.md edit, every single time, not just at the start of a session.**
 - 🔲 LLC formation — deferred until first paid subscriptions land (015)
 - 🔲 Aug 10-12 checkpoint — tracking signups/run-rate/Stripe-live/auth/cost-per-brief toward Sep vs Oct launch
 
@@ -118,8 +119,9 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
-- 🔲 **New: PI UI build-out phase (starting now)** — refine the `/intake` interface itself: layout, input flow for mixed multi-source drops (paste + file + URL in one pass), review/edit step before export, visual polish consistent with brand.
-- 🔲 **New: speed-to-structured-output** — explore combining/parallelizing multi-source ingestion (OCR + URL fetch + text extraction) into a single pass so a bid packet with several attachments resolves to one structured result in seconds, not sequential uploads. Goal: zero manual re-entry regardless of how many source documents/links a project comes in as.
+- ✅ **PI UI build-out — parallel extraction + inline editing shipped (commit `0473b34`)** — parallel source extraction (`Promise.all` across OCR/PDF/URL) and inline field editing (Edit/Done toggle on Project Info, Quote Checklist, Deal Draft cards with `contenteditable` + `saveEdit`/`cycleChecklist`).
+- ✅ **Speed-to-structured-output shipped (commit `0473b34`)** — multi-source ingestion now parallel: all attachments (images, PDFs, URLs) extract simultaneously in one pass before AI synthesis, not sequential uploads. Goal (zero manual re-entry) met for the multi-attachment case.
+- 🔲 Remaining UI polish — visual refinements, input flow, brand consistency (next sprint, awaiting go-ahead)
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
 
