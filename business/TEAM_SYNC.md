@@ -1,15 +1,18 @@
 # Bobert — Team Sync
-**Date:** July 2026  
-**Status:** Active  
-**Source of truth:** This file + DECISIONS.md. When in doubt, read both before acting.
+**Date:** July 29, 2026
+**Status:** Active
+**Source of truth:** This file + business/DECISIONS.md. Pull latest from main and read both before acting. Do not resume any department session without reading this file first.
 
 ---
 
-## The Product
+## The Platform
 
-Bobert is an AI-powered field intelligence app for outside sales reps. Point your phone at a construction sign. In under 30 seconds: developer, GC, leasing brokers, contacts, routing note. No manual research.
+Bobert AI is the platform. Bobert is the brand — domain bobert.ai, "B" Corner Signal mark, "Bobert" name (Decision 010). The platform now has two sectors (Decision 018):
 
-**Live proof:** Lakepoint Commerce Center, Emerson GA — Core5 Industrial Partners (developer), Billy Snowden & Willie Candler at Lee & Associates (brokers). One photo. 30 seconds. Real data.
+- **Bobert FI (Field Intelligence)** — LIVE, public beta. `/capture`, `/leads`. Point your phone at a project, get GPS + AI-generated intel (developer, GC, contacts, routing note) in seconds.
+- **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. `/intake`. Bid invite / RFP / screenshot in, structured project summary + RFI checklist + generic deal draft out. No CRM integration yet — CS Illumination's stack is unknown, not being guessed at.
+
+Sector names (FI/PI) are working labels, not locked branding.
 
 ---
 
@@ -18,99 +21,81 @@ Bobert is an AI-powered field intelligence app for outside sales reps. Point you
 | Department | Owner | Session / Tool |
 |---|---|---|
 | Business Development | Claude (VP BD) | Cowork session |
-| Marketing | ChatGPT (VP Marketing) | ChatGPT session |
-| Development | Dev AI (VP Product & Dev) | Separate dev session |
-| Founder / CEO | Rob Thomson | Indianapolis, IN |
+| Marketing | Claude (Bobert AI marketing project) | Claude project |
+| Development | Claude (Bobert AI App Developer/Programmer project) | Claude project |
+| Project Intake Dev | Claude (Bobert AI PI Development project) | Claude project |
+| Finance | Claude (Bobert AI finance project) | Claude project |
+| Founder / CEO | Rob Thomson | Indianapolis, IN — starting at CS Illumination Aug 3 |
 
 **Rules:**
-- GitHub is the single source of truth for all documents
-- DECISIONS.md is the single source of truth for all locked decisions
-- No department changes a locked decision without an RFI through BD
-- Marketing owns all customer-facing visual assets — Dev implements, does not create
-- Dev owns all code — Marketing and BD do not modify code
+- GitHub is the single source of truth for all documents.
+- `business/DECISIONS.md` is the single source of truth for all locked decisions.
+- No department changes a locked decision without an RFI through BD.
+- Marketing owns all customer-facing visual assets — Dev implements, does not create.
+- Dev owns all code — Marketing and BD do not modify code.
+- Before writing a new numbered Decision, check the current highest number in DECISIONS.md first — duplicate numbers have happened when two sessions wrote independently.
 
 ---
 
 ## What Is Locked (Do Not Revisit)
 
+See `business/DECISIONS.md` for full text — currently through **Decision 018**. Highlights:
+
 | Decision | Details | Ref |
 |---|---|---|
-| Product name | **Bobert** | DECISION 001 |
-| Brand architecture | Bobert is the primary brand — company, product, and AI persona | DECISION 002 |
-| Founder model | Solo, bootstrapped, no outside funding in 2026 | DECISION 003 |
-| Launch market | Construction + commercial field sales | DECISION 004 |
-| Pricing | $49–$299/mo SaaS, 30-day free trial | DECISION 005 |
-| Logo direction | Concept 4 — Corner Signal (B mark + capture frame corners + red accent) | DECISION 006 |
-| Primary tagline | **"See what others drive past."** — do not alter | DECISION 007 |
-| Brand asset ownership | Marketing owns all customer-facing visual assets | DECISION 008 |
-| Color palette | See below — all departments confirmed | DECISION 009 |
+| Product name | **Bobert** | 001 |
+| Founder model | Solo, bootstrapped | 003 |
+| Launch market | Construction + commercial field sales, incl. lighting/electrical/HVAC/roofing/solar/signage/manufacturer reps | 004 |
+| Pricing | Solo $59 / Pro $119 / Team $349 / Enterprise $1,500, 30-day free trial | 005 |
+| Logo | Corner Signal mark, must not be filtered/recolored/cropped | 006, 010 |
+| Tagline | "See what others drive past." | 007 |
+| Wordmark assets | Use pre-rendered transparent PNGs, never filter/blend-mode the mark | 011 |
+| No upfront spend | $0 starting capital, no contractor spend until revenue | 013 |
+| Revenue-first mandate | Finance finds the path to self-funded growth, doesn't ask for capital | 014 |
+| Stripe bootstrap | Live mode on Rob's personal account when ready — LLC deferred to post-revenue | 015 |
+| Stripe gate | **Stays in test/sandbox mode** — do not flip live until product justifies it | 016 |
+| Two-sector platform | Bobert FI + Bobert PI under one brand | 018 |
 
 ---
 
-## Official Color Palette
-
-| Role | Hex |
-|---|---|
-| Primary Black | #1A1A1A |
-| Bobert Red | #DC2626 |
-| White | #FFFFFF |
-| Mid Gray | #6B7280 |
-| Light Gray | #F0F0F0 |
-| Graphite (reserve) | #1F2937 |
-
----
-
-## Approved Messaging
-
-**Primary tagline:** See what others drive past.
-
-**Supporting messages (approved for use):**
-- "Full project intel in under 30 seconds."
-- "Built for reps who think in miles, not spreadsheets."
-- "Snap it. Voice it. Bobert handles the rest."
-
-**Voice rules:** No "AI-powered." No "seamless." Concrete numbers. Active voice. Field language. The user drives a truck, not a desk.
-
----
-
-## Current Status by Department
+## Current Status by Department — July 29, 2026
 
 ### Business Development
-- ✅ Business plan v2 complete
-- ✅ Brand brief complete
-- ✅ Logo-icon brief complete
-- ✅ Founder narrative updated
-- ✅ DECISIONS.md current through Decision 010
-- ✅ 90-second demo script (Lakepoint)
-- ✅ Beta outreach email (10–15 TestFlight testers)
-- ✅ Pre-launch checklist (PRE_LAUNCH_CHECKLIST.md)
-- ✅ Dev landing page instructions (dev-landing-page-instructions.md)
-- ✅ Beta email automation system (beta-email-automation.md) — 6-email sequence, Brevo, Tally survey
-- ✅ Brevo automation live — confirmation email (Email 1) with logo and Marketing copy
-- 🔲 Brevo signup form (next BD session)
-- 🔲 Rob notification step in automation (next BD session)
-- 🔲 App Store description draft
+- ✅ Domain (bobert.ai), Vercel hosting, GitHub repo — all live
+- ✅ Logo/wordmark rendering fixed on nav + footer
+- ✅ Email capture wired to Brevo — confirmed working
+- ✅ Stripe Checkout built (4 tiers, 30-day trial, webhook) — **sandbox only**, gated by Decision 016
+- ✅ FI `/capture` + `/leads` live and tested (real capture: O'Shea Orthopaedic)
+- ✅ PI `/intake` live and tested — extraction, checklist, deal draft, Copy/Print/Email/Save
+- ✅ Founder Decisions A-F closed (Decision 017)
+- 🔲 LLC formation — deferred until first paid subscriptions land (Decision 015)
+- 🔲 Aug 10-12 checkpoint — tracking signups/run-rate/Stripe-live/auth/cost-per-brief toward Sep vs Oct launch
+
+### Finance
+- ✅ v1.1 Revenue Mandate model built ($0 start, $0 contractor)
+- ✅ Founder Decisions A-F closed
+- ✅ Working file: `Bobert_Projected_Budget_PnL_v1.1_RevenueMandate.xlsx`
+- 🔲 PI monetization research — comparable products (ParSpec, PlanHub, BuildingConnected, Bluebeam, Procore) + directional pricing sketch — see PROMPT-FINANCE-JULY29-PI-MONETIZATION.md
+- 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev
 
 ### Marketing
-- ✅ Logo concepts delivered — Concept 4 approved
-- ✅ Brand asset brief (Bobert_Marketing_Brief.docx) approved
-- ✅ Confirmation email copy delivered and live in Brevo
-- ✅ Brand asset packet delivered (Bobert_BrandReview_Packet/) — icon, adaptive-icon, splash, wordmarks, B marks
-- 🔲 Digital one-pager PDF — highest priority remaining deliverable
-- 🔲 LinkedIn launch assets (1200×627px announcement + 6-slide carousel)
-- 🔲 Facebook/Instagram post (1080×1080px)
-- 🔲 Landing page content spec and wireframe direction
+- ✅ Wordmark/logo fix confirmed live
+- 🔲 Gate 5 — one-pager / leave-behind
+- 🔲 Gate 6 — LinkedIn launch assets
+- 🔲 Gate 7 — adaptive icon transparent/monochrome PNGs
+- 🔲 Distracted-driving copy for the site
+- 🔲 FI/PI two-sector brand awareness — see PROMPT-MARKETING-JULY29-FI-PI-BRAND.md (no action required yet, awareness only)
+- 🔲 `/upgrade` copy needs to match actual `/capture` MVP scope before Stripe goes live (Decision 016)
 
-### Development
-- ✅ App V1 live on iOS (internal testing)
-- ✅ Core workflow functional: photo OCR → AI intel → contacts → CRM push
-- ✅ Bobert rebrand COMPLETE — July 15, 2026
-- ✅ App name, icon, splash, onboarding, headers, email subject lines updated
-- ✅ theme.js updated to #DC2626
-- ✅ icon.png pushed to GitHub repo root (live on GitHub Pages)
-- 🔲 TestFlight setup (requires Apple Developer account — Rob's plate, ~$99)
-- 🔲 Brevo form embed (waiting on embed code from BD)
-- 🔲 Standing by — no new feature work until TestFlight is live
+### Development (FI)
+- ✅ `/capture` and `/leads` live — photo, GPS, note, follow-up date, AI intel card, save
+- 🔲 Contact enrichment accuracy — intel card currently speculates ("possibly key staff") instead of verified data; explore free/public sources (county property records, contractor license lookups, permit databases) before any paid enrichment API
+- 🔲 Stripe live-mode flip — blocked on Decision 016 gate (product must justify the trial promise)
+
+### Development (PI)
+- ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
+- 🔲 Multi-source intake (screenshots, PDFs, files, reference links combined into one intake) — see PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md, not blocking, post-Monday
+- 🔲 CRM push — explicitly not in scope until CS Illumination's actual stack is known
 
 ---
 
@@ -118,41 +103,22 @@ Bobert is an AI-powered field intelligence app for outside sales reps. Point you
 
 | Item | Blocked by | Who unblocks |
 |---|---|---|
-| TestFlight beta | Apple Developer account ($99) | Rob |
-| bobert.ai domain | Funds (~$89.98) | Rob |
-| USPTO trademark filing | Funds (~$350 x2) | Rob |
-| Indiana LLC filing | Funds (~$50) | Rob |
-| Brevo form on landing page | Form embed code from BD | BD next session |
-| Brand assets in repo | Push from Rob's Desktop | Rob |
-| SPF/DKIM/DMARC | bobert.ai domain | Rob |
+| Stripe live mode | `/capture` MVP being fully proven (Decision 016) | Dev + Rob sign-off |
+| LLC formation | First paid subscriptions (Decision 015) | Revenue |
+| PI → CRM integration | Knowing CS Illumination's actual tech stack | Rob, once on the job |
+| Sep vs Oct launch decision | Aug 10-12 checkpoint results | Rob, Aug 10-12 |
 
 ---
 
-## Rob's Money List (in priority order)
-
-1. USPTO trademark — Class 042 + 009 — ~$350 each — file before going public
-2. bobert.ai domain — $89.98/yr
-3. Indiana LLC — ~$50
-4. Apple Developer account — $99/yr
-
----
-
-## Reference Files in Repo (business/)
+## Reference Files in Repo (business/ and finance/)
 
 | File | Purpose |
 |---|---|
-| ALL-HANDS-BRIEF-JULY19.md | Cross-department status sync — start here |
-| DECISIONS.md | All locked decisions — single source of truth |
-| brand-brief.md | Brand personality, voice, colors, typography |
-| logo-icon-brief.md | Logo and app icon spec — Concept 4 locked |
-| founder-narrative.md | Rob's story — use in pitch, App Store, press |
-| bobert-one-pager.md | One-page product overview |
-| demo-script-90sec.md | Live demo script (Lakepoint proof point) |
-| beta-outreach-email.md | Personal outreach email to beta testers |
-| beta-email-automation.md | Full 6-email beta sequence + Brevo setup + Tally survey |
-| PRE_LAUNCH_CHECKLIST.md | Final inspection before launch |
-| dev-landing-page-instructions.md | Dev tasks: Brevo form, GitHub Pages DNS, domain setup |
+| DECISIONS.md | All locked decisions — single source of truth, currently through 018 |
+| TEAM_SYNC.md | This file — cross-department status, read first |
+| finance/FINANCE-STATUS-JULY28.md | Finance session-resumption doc — supersedes FINANCE-STATUS-JULY20.md |
+| finance/FOUNDER-DECISIONS-JULY20.md | Closed — all six items answered (Decision 017) |
 
 ---
 
-*Pull latest from main before starting any session. Read DECISIONS.md and TEAM_SYNC.md first.*
+*Pull latest from main before starting any session. Read DECISIONS.md and TEAM_SYNC.md first. Update this file's "Current Status by Department" section at the end of any session that changes state — this is what keeps the hub honest.*
