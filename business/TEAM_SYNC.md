@@ -1,6 +1,6 @@
 # Bobert — Team Sync
-**Date:** July 29, 2026
-**Status:** Active — web platform live at bobert.ai, FI in closed beta, PI in personal-use validation
+**Date:** July 30, 2026
+**Status:** Active — web platform live at bobert.ai, FI in closed beta, PI in personal-use validation, site rebuild in progress (v2.0 plan)
 **Source of truth:** This file + business/DECISIONS.md. Pull latest from main and read both before acting. **DECISIONS.md always wins if the two ever disagree — this file is a summary, not the ledger.**
 
 **Process:** See `business/WORKFLOW.md` for the full cross-department protocol — read it before your first commit of any session.
@@ -17,6 +17,7 @@ Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Sig
 
 - **Bobert FI (Field Intelligence)** — LIVE, closed beta. Point your phone at a project, get GPS + AI-generated intel (developer, GC, contacts, routing note) in seconds. No billing/trial gating during beta (Decision 019) — full access, free, to gather accuracy feedback before charging anyone.
 - **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. Bid invite / RFP / screenshot / file / URL in, structured project summary + RFI checklist + generic deal draft out. Multi-source intake shipped July 29. No CRM integration yet — CS Illumination's stack is unknown. **Current focus: PI UI build-out and expediting multi-source-to-structured-output speed, eliminating manual entry.**
+- **Public site as of July 30:** the homepage is being rebuilt (`marketing/SITE-PLAN-JULY30.md` v2.0) to present both sectors — FI live, PI described as "in development," no CTA. Confirmed directly by Rob.
 
 ---
 
@@ -66,7 +67,20 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 
 ---
 
-## Current Status by Department — July 29, 2026
+## BD Rulings — July 30 (on SITE-PLAN-JULY30.md v2.0)
+
+Rob ruled directly on Marketing's open questions before this goes further into Dev:
+
+- **PI on the homepage: confirmed.** Describe-only, "in development," no CTA, no waitlist — as specced in v2.0 §5.
+- **Thesis framing ("Opportunity gets lost twice"): build it, not locked yet.** Rob wants to see it live before final sign-off — copy may get revised after reacting to the real page, not treated as approved-final.
+- **`/upgrade`: no change from prior direction.** Preview only, no checkout, testing-only — not a locked structure.
+- **`/changelog` ownership/cadence: still open**, doesn't block Dev building the page shell.
+
+See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI site prompts, consolidates everything into one directive.
+
+---
+
+## Current Status by Department — July 30, 2026
 
 ### Business Development
 - ✅ Domain (bobert.ai), Vercel hosting, GitHub repo — all live
@@ -76,9 +90,10 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 - ✅ FI `/capture`, `/leads`, `/account` live — real capture tested (O'Shea Orthopaedic)
 - ✅ PI `/intake` live and tested — extraction, checklist, deal draft, Copy/Print/Email/Save
 - ✅ Founder Decisions A-F closed (017); Decisions 019/020 reconciled into the ledger and deduplicated (`fb46536`)
-- ✅ Git lock incident (stale `HEAD.lock`/`ORIG_HEAD.lock`) resolved July 29 — no data loss, but two sessions writing to TEAM_SYNC.md around the same time meant BD's own push (`69a9334`) clobbered Finance's just-landed update (`ea714db`). Reconciled in this commit — nothing from either version lost.
-- ⚠️ **Second occurrence, July 30:** BD's own Decisions 021-023 push was built from a local TEAM_SYNC.md copy that predated PI Dev's real, shipped `0473b34` (parallel extraction + inline editing) — silently reverted those two ✅ items back to 🔲. Caught by verifying `main` directly against the commit hash before trusting the summary, not by assuming the prior push was clean. Fixed with a targeted edit, same as before. **BD is now the repeat offender on this exact failure mode — the fix going forward is to `git log`/fetch `main` immediately before building any TEAM_SYNC.md edit, every single time, not just at the start of a session.**
-- ⚠️ **Third occurrence, July 30 — different and more serious.** Dev (FI)'s commit `7337723` claimed six site-implementation items shipped (nav link, stats fix, wordmark headers, `/upgrade` reframe, manifest fixes) via a TEAM_SYNC.md update. Verified directly against the live code on `main`: **none of it is actually there.** Nav still has no `/capture` link, stats row still shows `0`/`∞`, `manifest.json` is byte-identical to before (still `#0A0A0A`, still `icon.png`, no maskable purpose). The commit's own diff stat only touched TEAM_SYNC.md. On top of that, the TEAM_SYNC.md content itself was an old, independently-drifted fork of this file (Decisions only through 019, Decision 018 mislabeled "Apollo billing" — the exact collision already fixed weeks ago, no PI department, wrong locked palette hex) — Dev (FI) had apparently been working from a stale local copy this whole time rather than pulling `main`. Restored the real ledger below; FI's site-implementation items are marked open again, honestly, until code changes are actually verified live.
+- ✅ Git lock incident (stale `HEAD.lock`/`ORIG_HEAD.lock`) resolved July 29 — two sessions writing to TEAM_SYNC.md around the same time meant BD's own push clobbered Finance's just-landed update. Reconciled, nothing lost.
+- ⚠️ **Second occurrence, July 30:** BD's own Decisions 021-023 push briefly reverted PI Dev's real, shipped status (`0473b34`) by building from a stale local copy. Caught by verifying `main` directly, fixed with a targeted edit. **Standing fix: `git log`/fetch `main` immediately before building any TEAM_SYNC.md edit, every time.**
+- ⚠️ **Third occurrence, July 30:** Dev (FI)'s commit `7337723` claimed six site-implementation items shipped that verifiably were not live in the code, plus overwrote the ledger with a stale independent fork of TEAM_SYNC.md. Restored the real ledger; re-verified FI's actual progress independently afterward (see Dev (FI) section) rather than trusting either the false claim or assuming nothing shipped.
+- ✅ Re-verification (July 30) found real progress: nav link, stats fix, and 7th feature card are genuinely live — confirmed independently, credit given where due.
 - 🔲 LLC formation — deferred until first paid subscriptions land (015)
 - 🔲 Aug 10-12 checkpoint — tracking signups/run-rate/Stripe-live/auth/cost-per-brief toward Sep vs Oct launch
 
@@ -94,43 +109,39 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 ### Marketing
 - ✅ Wordmark/logo fix confirmed live
 - ✅ Gate 7 (adaptive icon assets) — CLOSED, all six assets built and committed
-- ✅ brand-check.py compliance tooling built and running (`scripts/brand-check.py`). **Bug fixed July 29:** R1b matched only `logo|nav-brand|footer-brand` and was blind to `class="logo-mark"`, used by all four app pages — violations went 3 → 7 once corrected. **Current: 5 violations**, all R1b/R3, all Dev-owned per the ownership split
-- ✅ **Site audit + content plan** — `marketing/SITE-AUDIT-JULY29.md` (findings/evidence) and `marketing/SITE-PLAN-JULY30.md` v2.0 (the deliverable, for BD review before Dev). v2.0 supersedes the July 29 plan
-- ✅ **Verified Dev's site work — partially real, and better than BD's July 30 check found.** Confirmed in code on `main`: nav link to `/capture` **is** present; stats row **is** fixed to the exact three recommended (`<10s` / `GPS` / `1 photo`, with `0` and `∞` gone); two logo/favicon fixes landed (7 → 5 violations). Credit where due — this shipped after BD's verification pass
-- ⚠️ **BUT the manifest maskable change is a regression, not a fix.** `manifest.json` now declares `"purpose": "any maskable"` — pointing at `/assets/icon.png`. That icon's content spans **59.2%** of canvas (diagonal 90.4dp vs the 66dp safe circle). Declaring a non-padded icon as maskable is **worse than not declaring it**: Android now trusts that safe-zone padding exists and crops accordingly, which clips the capture-frame corners and the red corner — precisely what Decision 012 exists to prevent. **Fix: point the maskable entry at `/assets/adaptive-icon.png`** (content 43.2%, diagonal 65.9dp, verified safe). Dev-owned
-- 🔲 Remaining manifest issues: `sizes` declared 192/512 on a 1024×1024 file; `background_color: #0A0A0A` ≠ locked `#1A1A1A` (Decision 009); `description` still FI-only
-- 🔲 **PI is absent from the homepage** — 0 occurrences of "intake", "platform", or "sector" in `index.html`. Per Rob's July 30 direction the site must represent both sectors; specced in SITE-PLAN v2.0 §5 as **describe-only, no CTA, "in development"**
-- 🔲 `WALKTHROUGH-30SEC-SCRIPT.md` needs v1.3 per Decision 021 — v1.2's montage includes an FSBO sign, now explicitly out of scope. Replacement triggers should be construction signals (permit board, electrical rough-in, staged fixture package). Separate deliverable, not folded into the site plan
-- ✅ **Distracted-driving copy — DONE.** `marketing/SAFE-USE-COPY.md` v1.0. Six placement-specific copy blocks (capture screen, onboarding, site, footer, motion assets, paid pages), tone rules, do-not-say list. **Awaiting Dev implementation** — Marketing owns copy, Dev owns placement. Finding: the site currently has zero safe-use language while the whole FI pitch is driving-adjacent.
-- ✅ Walkthrough script corrected to v1.2 (`marketing/WALKTHROUGH-30SEC-SCRIPT.md`) — v1.1's opening depicted capture while driving; new shot 1b shows the vehicle stopped before the phone appears. Self-flagged, not quietly amended.
-- ✅ FI/PI two-sector awareness acknowledged (`PROMPT-MARKETING-JULY29-FI-PI-BRAND.md`) — brand unchanged, FI/PI are sectors not sub-brands, no action required, nothing in flight affected.
-- 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — still blocked on positioning until Decision 021's beachhead correction lands on the live site (below).
-- ✅ **Site audit + revised content/structure plan delivered (July 29-30)** — `marketing/SITE-AUDIT-JULY29.md` and `marketing/SITE-PLAN-JULY29.md`. Found and correctly escalated three real conflicts rather than deciding them: audience mismatch (→ Decision 021), motto placement (→ Decision 022), pricing ledger drift (→ Decision 023). All three now ruled and locked. Also caught and fixed a real under-reporting bug in `brand-check.py` itself (R1b missed `class="logo-mark"`, hiding 4 violations) — this is Marketing's own tool, in-lane (see WORKFLOW.md carve-out).
-- 🔲 **Revise `WALKTHROUGH-30SEC-SCRIPT.md`** — v1.2 was built neutral across the old four-audience set; now that Decision 021 narrows to construction-project/lighting-electrical, the montage needs reshooting toward trade triggers, not FSBO signs.
-- 🔲 **Write `/changelog` initial content** — translate `CHANGELOG.md` entries to plain, user-facing language per Decision 022. Needs an ongoing owner/cadence (Marketing, triggered by any user-visible ship) or it goes stale and undercuts the principle it's meant to prove.
-- 🔲 `/upgrade` copy — **testing-only for now.** Rob: current implementation (see Dev section) is a placeholder to remove the beta billing contradiction, not a locked structure. Real subscription/scaling architecture comes later, at which point this page gets properly rebuilt — don't treat anything about `/upgrade`'s current form as permanent.
+- ✅ brand-check.py compliance tooling built and running (`scripts/brand-check.py`). **Bug fixed July 29:** R1b matched only `logo|nav-brand|footer-brand` and was blind to `class="logo-mark"`, used by all four app pages — violations went 3 → 7 once corrected. **Current: 5 violations**, all R1b/R3, all Dev-owned per the ownership split.
+- ✅ **Site audit + content plan.** `marketing/SITE-AUDIT-JULY29.md` (findings/evidence) and `marketing/SITE-PLAN-JULY30.md` v2.0 (the deliverable — supersedes the July 29 v1.0 plan). v2.0 resolves the three conflicts flagged in v1.0 (audience → Decision 021, motto → Decision 022, pricing → Decision 023) and adds a new narrative spine tying FI + PI together, now that PI is going public per Rob's July 30 direction.
+- ✅ **Verified Dev's site work independently — partially real.** Confirmed in code on `main`: nav link to `/capture`, the fixed stats row, and 2 of 7 brand-check violations resolved (7 → 5). Credit given for real progress after the earlier false-claim incident.
+- ⚠️ **Caught a regression Dev introduced:** `manifest.json`'s new maskable icon entry points at `/assets/icon.png`, whose content spans 59.2% of canvas — outside Android's safe zone. Declaring it maskable is worse than not declaring it: Android will crop to the safe zone and clip the corner-signal mark, violating Decision 012. Fix specced: point at `/assets/adaptive-icon.png` instead (verified safe, 43.2% content). Flagged to Dev in `PROMPT-DEV-FI-JULY30-SITE-V2.md`.
+- 🔲 Remaining manifest issues: `sizes` wrong for a 1024×1024 file, `background_color` ≠ locked `#1A1A1A` (Decision 009), `description` still FI-only.
+- 🔲 **`WALKTHROUGH-30SEC-SCRIPT.md` needs v1.3** per Decision 021 — v1.2's montage includes an FSBO sign, now out of scope. Replacement triggers: construction signals (permit board, electrical rough-in, staged fixture package). Separate deliverable from the site plan.
+- 🔲 **Write `/changelog` initial content** — translate `CHANGELOG.md` to plain, user-facing language per Decision 022. Owner/cadence still open (BD ruling above) — doesn't block Dev building the page shell.
+- ✅ **Distracted-driving copy — DONE.** `marketing/SAFE-USE-COPY.md` v1.0. Six placement-specific copy blocks, tone rules, do-not-say list. Awaiting Dev implementation — placement #1 (persistent statement on `capture.html`) is highest priority, a footer line alone doesn't change behavior.
+- ✅ Walkthrough script v1.2 — vehicle stops before capture, self-flagged and corrected (superseded by the v1.3 item above).
+- ✅ FI/PI two-sector awareness acknowledged — now superseded by the July 30 direction to present both sectors publicly.
+- 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — still blocked on positioning until Decision 021's beachhead correction lands on the live site.
 
 ### Development (FI)
 - ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
 - ✅ Apollo wired into `/api/capture-intel` for contact enrichment (free tier, per Decision 020)
+- ✅ **Site implementation, partial — independently verified live on bobert.ai (July 30):** nav "Open Bobert" link, simplified stats row (`<10s` / `GPS` / `1 photo`), 7th "Project Intel Card" feature, and 2 of 7 brand-check.py fixes all confirmed genuinely shipped.
+- 🔲 **Manifest.json regression — urgent, new.** Maskable icon now points at `/assets/icon.png`, outside Android's safe zone — clips the brand mark, violates Decision 012. Point at `/assets/adaptive-icon.png` instead. See `PROMPT-DEV-FI-JULY30-SITE-V2.md`.
+- 🔲 **`/upgrade` reframe still not shipped** — live page still shows "Start Free Trial" CTAs and "Credit card required to hold your spot," contradicting `/account`'s beta framing.
+- 🔲 **"Who It's For" section violates Decision 021** — live homepage still leads with Real Estate, includes Landscaping; both explicitly excluded from the beachhead.
+- 🔲 5 remaining brand-check.py violations (R1b/R3) — `capture`, `leads`, `account`, `intake`, `upgrade` still use `icon.png` as header logo; `upgrade.html`/`success.html` missing favicon.
+- 🔲 Safe-use copy placement #1 (persistent statement on `capture.html`) — highest priority per Marketing's spec.
+- 🔲 New sections from SITE-PLAN v2.0: thesis + FI/PI reveal (§4-5, build but not final), hero subhead, "Built in the Open" teaser (§10), footer additions, `/changelog` page shell.
 - 🔲 **Blocking Finance:** confirm whether Apollo (current) or PDL (Finance's recommendation) is the vendor going forward — see `PROMPT-DEV-FI-JULY29.md`
-- 🔲 Contact enrichment accuracy — intel card currently speculates instead of verifying; explore free/public sources (county property records, contractor license lookups, permit databases) alongside the vendor decision
-- 🔲 **brand-check.py fixes owed (all Dev-owned, all quick):**
-  - `success.html` — add `<link rel="icon">`
-  - `upgrade.html` — add `<link rel="icon">`
-  - `upgrade.html` — nav/footer brand chrome uses `icon.png`, must use `bobert-wordmark-white.png` instead (same fix already applied on `index.html`)
-- 🔲 Implement Marketing's safe-use copy (`marketing/SAFE-USE-COPY.md`) into `/capture` and site placements
-- ✅ **Site implementation, partial — verified live on bobert.ai (July 30):** nav "Open Bobert" link, simplified stats row (`<10s` / `GPS` / `1 photo — everything else fills itself in`), and 7th "Project Intel Card" feature all confirmed genuinely shipped, independent of the earlier false claim on `7337723`.
-- 🔲 **`/upgrade` reframe still not shipped** — live page still shows "Start Free Trial" CTAs on all 4 tiers and "Credit card required to hold your spot," directly contradicting `/account`'s "full access, no charge" beta framing. See `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`.
-- 🔲 **New: "Who It's For" section violates Decision 021** — live homepage still leads with Real Estate and includes Landscaping, both explicitly excluded from the beachhead. Missed from the original directive (BD's gap, not Dev's) — now flagged in `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`.
-- 🔲 R1b logo fixes and `manifest.json` wiring — status unconfirmed since the false-claim incident; needs re-verification once FI Dev's next push lands.
-- 🔲 Stripe live-mode flip — blocked on Decision 016 gate (product must justify the trial promise)
+- 🔲 Contact enrichment accuracy — intel card currently speculates instead of verifying.
+- 🔲 Stripe live-mode flip — blocked on Decision 016 gate.
+
+**Full consolidated task list:** `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI site prompts (`PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md`, `PROMPT-DEV-FI-JULY30-FOLLOWUP.md`). Work from the V2 file.
 
 ### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
 - ✅ **PI UI build-out — parallel extraction + inline editing shipped (commit `0473b34`)** — parallel source extraction (`Promise.all` across OCR/PDF/URL) and inline field editing (Edit/Done toggle on Project Info, Quote Checklist, Deal Draft cards with `contenteditable` + `saveEdit`/`cycleChecklist`).
-- ✅ **Speed-to-structured-output shipped (commit `0473b34`)** — multi-source ingestion now parallel: all attachments (images, PDFs, URLs) extract simultaneously in one pass before AI synthesis, not sequential uploads. Goal (zero manual re-entry) met for the multi-attachment case.
+- ✅ **Speed-to-structured-output shipped (commit `0473b34`)** — multi-source ingestion now parallel: all attachments extract simultaneously in one pass before AI synthesis. Goal (zero manual re-entry) met for the multi-attachment case.
 - 🔲 Remaining UI polish — visual refinements, input flow, brand consistency (next sprint, awaiting go-ahead)
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
@@ -148,7 +159,9 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 | PI monetization model | 4-6 weeks of real PI usage data | Rob, from Aug 3 |
 | Sep vs Oct launch decision | Aug 10-12 checkpoint results | Rob, Aug 10-12 |
 | Marketing Gates 5 & 6 | Contact-enrichment accuracy resolving (copy can't be finalized against a half-true claim) | Dev (FI) |
-| Safe-use copy live on site | Dev implementation of `marketing/SAFE-USE-COPY.md` | Dev (FI) |
+| Safe-use copy live on site | Dev implementation, placement #1 first | Dev (FI) |
+| `/changelog` content | Owner/cadence decision | BD/Marketing |
+| Thesis framing final sign-off | Rob reacting to the live built version | Rob |
 
 ---
 
@@ -156,9 +169,9 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 
 | File | Purpose |
 |---|---|
-| DECISIONS.md | All locked decisions — single source of truth, currently through 020, deduplicated |
+| DECISIONS.md | All locked decisions — single source of truth, currently through 023, deduplicated |
 | business/TEAM_SYNC.md | This file — cross-department status, read first |
-| business/WORKFLOW.md | Cross-department protocol — four-step loop, roles, verification rule |
+| business/WORKFLOW.md | Cross-department protocol — four-step loop, roles, verification rule, scope table |
 | finance/FINANCE-STATUS-JULY28.md | Finance session-resumption doc |
 | finance/FOUNDER-DECISIONS-JULY20.md | Closed — all six items answered (017) |
 | business/FINANCE-APOLLO-COST-JULY28.md | Vendor cost model — PDL vs Apollo |
@@ -166,17 +179,18 @@ See `business/DECISIONS.md` for full text — currently through **Decision 023**
 | business/PROMPT-DEV-JULY28-CONTACT-ENRICHMENT.md | Original contact-enrichment accuracy direction |
 | business/PROMPT-DEV-FI-JULY29.md | Finance's PDL-vs-Apollo confirmation ask to Dev |
 | business/PROMPT-FINANCE-JULY29-PI-MONETIZATION.md | PI monetization research ask |
-| business/PROMPT-MARKETING-JULY29-FI-PI-BRAND.md | FI/PI brand awareness briefing |
-| business/PROMPT-MARKETING-JULY29-SITE-REFRESH.md | Original site-refresh ask — fulfilled by SITE-AUDIT-JULY29.md + SITE-PLAN-JULY29.md below |
-| marketing/SITE-AUDIT-JULY29.md | Full site audit — findings behind the site plan, evidence for Decisions 021/023 |
-| marketing/SITE-PLAN-JULY29.md | Revised site content/structure plan — Dev implements per PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md |
-| business/PROMPT-DEV-FI-JULY30-SITE-IMPLEMENTATION.md | Dev task list from Marketing's site plan, priority-ordered |
+| business/PROMPT-MARKETING-JULY29-FI-PI-BRAND.md | Original FI/PI brand awareness briefing — superseded by July 30 direction to go public |
+| business/PROMPT-MARKETING-JULY29-SITE-REFRESH.md | Original site-refresh ask — fulfilled by SITE-AUDIT-JULY29.md + SITE-PLAN v2.0 |
+| marketing/SITE-AUDIT-JULY29.md | Full site audit — findings behind the site plan |
+| marketing/SITE-PLAN-JULY29.md | v1.0 site plan — superseded by v2.0 |
+| marketing/SITE-PLAN-JULY30.md | **v2.0 site plan — current, build against this** |
+| business/PROMPT-DEV-FI-JULY30-SITE-V2.md | **Current consolidated Dev (FI) directive — supersedes the two earlier FI site prompts** |
 | business/PROMPT-DEV-JULY29-PROJECT-INTAKE.md | Original PI MVP build spec |
 | business/PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md | Multi-source intake spec — shipped `39b35b7` |
 | business/PROMPT-DEV-JULY29-INTAKE-EXPORT-ACTIONS.md | Print/Email export spec |
 | business/PROMPT-ALL-DEPTS-JULY29-TEAM-SYNC-RULE.md | Standing rule — update this file in the same commit as status changes |
 | marketing/SAFE-USE-COPY.md | Distracted-driving copy, six placements — awaiting Dev implementation |
-| marketing/WALKTHROUGH-30SEC-SCRIPT.md | Walkthrough script v1.2 — vehicle stops before capture |
+| marketing/WALKTHROUGH-30SEC-SCRIPT.md | Walkthrough script v1.2 — needs v1.3 per Decision 021 |
 
 ---
 
