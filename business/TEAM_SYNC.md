@@ -14,7 +14,7 @@
 Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Signal mark, "Bobert" name — Decision 010). Two sectors (Decision 018):
 
 - **Bobert FI (Field Intelligence)** — LIVE, closed beta. Point your phone at a project, get GPS + AI-generated intel (developer, GC, contacts, routing note) in seconds. No billing/trial gating during beta (Decision 019) — full access, free, to gather accuracy feedback before charging anyone.
-- **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. Bid invite / RFP / screenshot in, structured project summary + RFI checklist + generic deal draft out. No CRM integration yet — CS Illumination's stack is unknown.
+- **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. Bid invite / RFP / screenshot / file / URL in, structured project summary + RFI checklist + generic deal draft out. Multi-source intake shipped July 29. No CRM integration yet — CS Illumination's stack is unknown. **Current focus: PI UI build-out and expediting multi-source-to-structured-output speed, eliminating manual entry.**
 
 ---
 
@@ -41,7 +41,7 @@ Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Sig
 
 ## What Is Locked (Do Not Revisit)
 
-See `business/DECISIONS.md` for full text — currently through **Decision 020**. Highlights:
+See `business/DECISIONS.md` for full text — currently through **Decision 020**, deduplicated and clean (`fb46536`). Highlights:
 
 | Decision | Details | Ref |
 |---|---|---|
@@ -70,26 +70,29 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 - ✅ Stripe Checkout built (4 tiers, 30-day trial, webhook) — **sandbox only**, gated by Decision 016
 - ✅ FI `/capture`, `/leads`, `/account` live — real capture tested (O'Shea Orthopaedic)
 - ✅ PI `/intake` live and tested — extraction, checklist, deal draft, Copy/Print/Email/Save
-- ✅ Founder Decisions A-F closed (017); Decisions 019/020 reconciled into the ledger (previously cited in TEAM_SYNC but never actually logged)
+- ✅ Founder Decisions A-F closed (017); Decisions 019/020 reconciled into the ledger and deduplicated (`fb46536`)
+- ✅ Git lock incident (stale `HEAD.lock`/`ORIG_HEAD.lock`) resolved July 29 — no data loss, but two sessions writing to TEAM_SYNC.md around the same time meant BD's own push (`69a9334`) clobbered Finance's just-landed update (`ea714db`). Reconciled in this commit — nothing from either version lost.
 - 🔲 LLC formation — deferred until first paid subscriptions land (015)
 - 🔲 Aug 10-12 checkpoint — tracking signups/run-rate/Stripe-live/auth/cost-per-brief toward Sep vs Oct launch
 
 ### Finance
 - ✅ v1.1 Revenue Mandate model built ($0 start, $0 contractor)
 - ✅ Founder Decisions A-F closed
-- ✅ **Contact enrichment vendor cost model complete (July 29)** — PDL (People Data Labs) recommended over Apollo at $0.28/record; Apollo has a TOS conflict with Bobert's use case. 1 contact/brief cap protects 77%+ GM on Solo. Add-on reveals priced at $1.25/contact. File: `FINANCE-APOLLO-COST-JULY28.md`.
-- ⚠️ **Open tension with Decision 020:** Decision 020 (Apollo free-tier for beta) and Finance's PDL recommendation are not yet reconciled — Decision 020 covers the free-during-beta arrangement only, not the paid-vendor choice once beta ends. **Blocking on Dev (FI) to confirm which vendor is actually in production** before this closes — see `PROMPT-DEV-FI-JULY29.md`.
-- 🔲 PI monetization research — see `PROMPT-FINANCE-JULY29-PI-MONETIZATION.md`
-- 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev
+- ✅ **Contact enrichment vendor cost model complete (July 29)** — PDL (People Data Labs) recommended over Apollo at $0.28/record; Apollo has a TOS conflict with Bobert's use case. 1 contact/brief cap protects 77%+ GM on Solo. Add-on reveals priced at $1.25/contact. File: `finance/FINANCE-APOLLO-COST-JULY28.md`.
+- ✅ **PI monetization research complete (July 29)** — exploratory, directional only, no locked model. Path A (bundle PI into Pro/Team tiers) recommended once PI is validated through real use; no standalone PI pricing until Rob has 4-6 weeks of real usage data at CS Illumination. File: `finance/FINANCE-PI-MONETIZATION-JULY29.md`.
+- ⚠️ **Open tension with Decision 020:** Decision 020 (Apollo free-tier for beta) and Finance's PDL recommendation are not yet reconciled — Decision 020 covers the free-during-beta arrangement only, not the paid-vendor choice once beta ends. **Blocking on Dev (FI) to confirm which vendor is actually in production** before this closes — see `business/PROMPT-DEV-FI-JULY29.md`.
+- 🔲 Cost-per-brief telemetry — still estimated at $0.10, needs real usage data from Dev. Cannot close until Dev instruments and reports.
+- 🔲 PI usage data — waiting on Rob's real-world use at CS Illumination (intake volume, time saved) before any PI P&L gets built.
 
 ### Marketing
 - ✅ Wordmark/logo fix confirmed live
 - ✅ Gate 7 (adaptive icon assets) — CLOSED, all six assets built and committed
 - ✅ brand-check.py compliance tooling built and running (`scripts/brand-check.py`) — current result: 3 violations, all Dev-owned (see Dev section)
+- ✅ **Distracted-driving copy — DONE.** `marketing/SAFE-USE-COPY.md` v1.0. Six placement-specific copy blocks (capture screen, onboarding, site, footer, motion assets, paid pages), tone rules, do-not-say list. **Awaiting Dev implementation** — Marketing owns copy, Dev owns placement. Finding: the site currently has zero safe-use language while the whole FI pitch is driving-adjacent.
+- ✅ Walkthrough script corrected to v1.2 (`marketing/WALKTHROUGH-30SEC-SCRIPT.md`) — v1.1's opening depicted capture while driving; new shot 1b shows the vehicle stopped before the phone appears. Self-flagged, not quietly amended.
+- ✅ FI/PI two-sector awareness acknowledged (`PROMPT-MARKETING-JULY29-FI-PI-BRAND.md`) — brand unchanged, FI/PI are sectors not sub-brands, no action required, nothing in flight affected.
 - 🔲 Gates 5 & 6 (one-pager, LinkedIn assets) — reclassified as **blocked on positioning**, not just open: `/capture`'s intel card currently speculates on contacts ("possibly key staff") rather than verifying, so the enrichment claim on `/upgrade` is half-true rather than plainly false. Copy built before this resolves will need rework.
-- 🔲 Distracted-driving copy for the site
-- 🔲 `/upgrade` copy must match actual `/capture` MVP scope before Stripe goes live (Decision 016)
-- 🔲 FI/PI two-sector brand awareness — see `PROMPT-MARKETING-JULY29-FI-PI-BRAND.md` (no action required yet, awareness only)
+- 🔲 `/upgrade` copy vs actual scope. Decision 019 removes the billing gate for closed beta (nobody charged during beta, lowers urgency); Decision 020 makes "contact enrichment" a real capability, so that claim is no longer false. Open question for BD: is `/upgrade` still public during a no-billing beta, and if so does its copy describe beta or post-beta state?
 
 ### Development (FI)
 - ✅ `/capture`, `/leads`, `/account` all live — photo, GPS, note, follow-up date, AI intel card, save, beta-member dashboard
@@ -100,11 +103,14 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
   - `success.html` — add `<link rel="icon">`
   - `upgrade.html` — add `<link rel="icon">`
   - `upgrade.html` — nav/footer brand chrome uses `icon.png`, must use `bobert-wordmark-white.png` instead (same fix already applied on `index.html`)
+- 🔲 Implement Marketing's safe-use copy (`marketing/SAFE-USE-COPY.md`) into `/capture` and site placements
 - 🔲 Stripe live-mode flip — blocked on Decision 016 gate (product must justify the trial promise)
 
-### Development (PI)
+### Development (PI) — **current focus area**
 - ✅ `/intake` live — text paste, AI extraction (Groq), checklist, deal draft, Box folder plan, Copy/Print/Email/Save
 - ✅ **Multi-source intake shipped (commit `39b35b7`)** — images, PDFs, screenshots, and reference URLs now all supported alongside pasted text (`api/intake-ocr.js`, `api/intake-url.js`). Closes `PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md`.
+- 🔲 **New: PI UI build-out phase (starting now)** — refine the `/intake` interface itself: layout, input flow for mixed multi-source drops (paste + file + URL in one pass), review/edit step before export, visual polish consistent with brand.
+- 🔲 **New: speed-to-structured-output** — explore combining/parallelizing multi-source ingestion (OCR + URL fetch + text extraction) into a single pass so a bid packet with several attachments resolves to one structured result in seconds, not sequential uploads. Goal: zero manual re-entry regardless of how many source documents/links a project comes in as.
 - 🔲 CRM push — explicitly out of scope until CS Illumination's actual stack is known
 - 🔲 Open question: what did commit `f73c519`'s message mean by "Decision 019"? That number is now taken by the real, reconciled Decision 019 (beta strategy) above — if PI Dev meant something different, it needs its own number and proper logging, not a repeat of the collision pattern.
 
@@ -118,8 +124,10 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 | LLC formation | First paid subscriptions (Decision 015) | Revenue |
 | Contact enrichment vendor | Dev confirming Apollo vs. PDL against Finance's cost model | Dev (FI) |
 | PI → CRM integration | Knowing CS Illumination's actual tech stack | Rob, once on the job |
+| PI monetization model | 4-6 weeks of real PI usage data | Rob, from Aug 3 |
 | Sep vs Oct launch decision | Aug 10-12 checkpoint results | Rob, Aug 10-12 |
 | Marketing Gates 5 & 6 | Contact-enrichment accuracy resolving (copy can't be finalized against a half-true claim) | Dev (FI) |
+| Safe-use copy live on site | Dev implementation of `marketing/SAFE-USE-COPY.md` | Dev (FI) |
 
 ---
 
@@ -127,19 +135,23 @@ See `business/DECISIONS.md` for full text — currently through **Decision 020**
 
 | File | Purpose |
 |---|---|
-| DECISIONS.md | All locked decisions — single source of truth, currently through 020 |
+| DECISIONS.md | All locked decisions — single source of truth, currently through 020, deduplicated |
 | business/TEAM_SYNC.md | This file — cross-department status, read first |
+| business/WORKFLOW.md | Cross-department protocol — four-step loop, roles, verification rule |
 | finance/FINANCE-STATUS-JULY28.md | Finance session-resumption doc |
 | finance/FOUNDER-DECISIONS-JULY20.md | Closed — all six items answered (017) |
 | business/FINANCE-APOLLO-COST-JULY28.md | Vendor cost model — PDL vs Apollo |
+| finance/FINANCE-PI-MONETIZATION-JULY29.md | PI monetization research — Path A recommended once validated |
 | business/PROMPT-DEV-JULY28-CONTACT-ENRICHMENT.md | Original contact-enrichment accuracy direction |
 | business/PROMPT-DEV-FI-JULY29.md | Finance's PDL-vs-Apollo confirmation ask to Dev |
 | business/PROMPT-FINANCE-JULY29-PI-MONETIZATION.md | PI monetization research ask |
 | business/PROMPT-MARKETING-JULY29-FI-PI-BRAND.md | FI/PI brand awareness briefing |
 | business/PROMPT-DEV-JULY29-PROJECT-INTAKE.md | Original PI MVP build spec |
-| business/PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md | Multi-source intake spec (post-Monday) |
+| business/PROMPT-DEV-JULY29-INTAKE-IMAGE-UPLOAD.md | Multi-source intake spec — shipped `39b35b7` |
 | business/PROMPT-DEV-JULY29-INTAKE-EXPORT-ACTIONS.md | Print/Email export spec |
 | business/PROMPT-ALL-DEPTS-JULY29-TEAM-SYNC-RULE.md | Standing rule — update this file in the same commit as status changes |
+| marketing/SAFE-USE-COPY.md | Distracted-driving copy, six placements — awaiting Dev implementation |
+| marketing/WALKTHROUGH-30SEC-SCRIPT.md | Walkthrough script v1.2 — vehicle stops before capture |
 
 ---
 
