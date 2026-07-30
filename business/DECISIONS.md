@@ -318,3 +318,39 @@ answered directly in that memo, not just referenced elsewhere:
 
 **Status:** Locked. No Founder decisions remain pending against the original
 July 20 memo.
+
+
+---
+
+## Decision 018 — Bobert AI Two-Sector Structure: FI + PI
+**Date:** 2026-07-29
+**Owner:** Rob (BD)
+
+**Decision:** Bobert AI is the platform; Bobert is the brand (domain bobert.ai,
+"B" Corner Signal mark per Decision 010, "Bobert" name). The platform now has
+two sectors:
+
+- **Bobert FI (Field Intelligence)** — live, public beta. /capture, /leads.
+  Windshield-survey-to-lead capture: photo, GPS, AI intel card.
+- **Bobert PI (Project Intake)** — in development, personal use only for now.
+  /intake. Bid invite / RFP / screenshot / files in, structured project
+  summary + RFI checklist + generic deal draft out.
+
+Sector names (FI/PI) are working labels, not locked branding — the brand
+identity (Bobert.ai, the mark, the name) is what's fixed per Decision 010.
+
+**Positioning note:** Bobert is emerging as a platform for field reps solving
+multiple adjacent problems (finding opportunities in the field, processing
+bid/project intake) — not a single narrow tool. This should inform how
+Marketing frames the brand going forward, without requiring an immediate
+rebrand or new visual identity work.
+
+**PI status:** Personal-use validation tool for Rob at CS Illumination.
+No CRM integration until a real platform/stack is known (see Decision on
+CS Illumination stack being unknown — not planning around assumptions).
+CRM-agnostic deal draft output (generic fields, copy/print/email export)
+is the deliberate interim design so the tool works today and can connect
+to real platforms later once known.
+
+**Status:** Locked. Finance and Marketing to be briefed accordingly — see
+PROMPT-FINANCE-JULY29-PI-MONETIZATION.md and PROMPT-MARKETING-JULY29-FI-PI-BRAND.md.
