@@ -34,6 +34,7 @@ Sector names (FI/PI) are working labels, not locked branding.
 - Marketing owns all customer-facing visual assets — Dev implements, does not create.
 - Dev owns all code — Marketing and BD do not modify code.
 - Before writing a new numbered Decision, check the current highest number in DECISIONS.md first — duplicate numbers have happened when two sessions wrote independently.
+- **Standing rule — update this file on every push.** Any git commit that changes DECISIONS.md, ships a feature, or changes a department's status must update that department's section under "Current Status by Department" below **in the same commit**. Not a separate follow-up, not "next session" — same push. This is what keeps the hub honest instead of going stale like it did before July 29.
 
 ---
 
