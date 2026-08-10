@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<title>Market — Bobert</title>
+<link rel="manifest" href="/manifest.json" />
+<meta name="theme-color" content="#0A0A0A" />
+<link rel="icon" href="/assets/icon.png" type="image/png" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#0A0A0A;--red:#DC2626;--white:#FFFFFF;--gray:#6B7280;--card:#111111;--card2:#1A1A1A;--border:rgba(255,255,255,0.1);--green:#22C55E;--amber:#F59E0B;--nav-h:calc(64px + env(safe-area-inset-bottom))}
+body{font-family:-apple-system,'Inter',sans-serif;background:var(--black);color:var(--white);min-height:100vh;padding-bottom:var(--nav-h)}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px calc(14px + env(safe-area-inset-top));border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--black);z-index:20}
+header h1{font-size:16px;font-weight:700;letter-spacing:-0.3px}
+.beta-pill{font-size:10px;font-weight:700;letter-spacing:0.05em;background:rgba(220,38,38,0.15);color:var(--red);padding:3px 8px;border-radius:99px}
+main{padding:18px;max-width:520px;margin:0 auto}
+section{margin-bottom:20px}
+.lbl{display:block;font-size:10px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+input[type=text]{width:100%;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:13px 14px;font-size:15px;color:var(--white);font-family:inherit;outline:none}
+input[type=text]:focus{border-color:rgba(220,38,38,0.5)}
+input[type=text]::placeholder{color:var(--gray)}
+.hint{font-size:12px;color:var(--gray);margin-top:6px;line-height:1.5}
+.analyze-btn{width:100%;padding:16px;background:var(--red);color:var(--white);border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
+.analyze-btn:disabled{opacity:0.4;cursor:not-allowed}
+.analyzing-overlay{display:none;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;text-align:center}
+.analyzing-overlay.show{display:block}
+.analyzing-overlay p{color:var(--gray);font-size:13px;margin-top:10px}
+.result{display:none}
+.result.show{display:block}
+.score-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;text-align:center}
+.score-num{font-size:42px;font-weight:800;letter-spacing:-1px}
+.score-num.high{color:var(--green)}
+.score-num.mid{color:var(--amber)}
+.score-num.low{color:var(--gray)}
+.score-label{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-top:4px}
+.info-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px}
+.info-card h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--gray);margin-bottom:8px}
+.info-card p{font-size:14px;line-height:1.6;color:rgba(255,255,255,0.9)}
+.signal-list{list-style:none}
+.signal-list li{font-size:13px;padding:6px 0;color:rgba(255,255,255,0.85);border-bottom:1px solid var(--border)}
+.signal-list li:last-child{border-bottom:none}
+.err-msg{display:none;background:rgba(220,38,38,0.1);border:1px solid rgba(220,38,38,0.3);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--red);margin-top:12px}
+.err-msg.show{display:block}
+</style>
+</head>
+<body>
+<header>
+<h1>Market Intel</h1>
+<span class="beta-pill">BETA</span>
+</header>
+<main>
+<section>
+<span class="lbl">Company or Website</span>
+<input type="text" id="query" placeholder="acmeconstruction.com or Acme Construction" />
+<p class="hint">Enter a company URL or name. We will pull public info and score fit against Bobert's target vertical.</p>
+<button class="analyze-btn" id="analyzeBtn">Analyze Fit</button>
+<div class="err-msg" id="errMsg"></div>
+</section>
+<div class="analyzing-overlay" id="analyzing"><p>Searching and scoring...</p></div>
+<div class="result" id="result">
+<div class="score-card"><div class="score-num" id="scoreNum">-</div><div class="score-label">Fit Score</div></div>
+<div class="info-card"><h3>Company</h3><p id="companyDesc">-</p></div>
+<div class="info-card"><h3>Why This Score</h3><p id="fitReasoning">-</p></div>
+<div class="info-card"><h3>Signals</h3><ul class="signal-list" id="signalList"></ul></div>
+</div>
+</main>
+<script>
+const btn=document.getElementById('analyzeBtn');
+const queryInput=document.getElementById('query');
+const analyzing=document.getElementById('analyzing');
+const result=document.getElementById('result');
+const errMsg=document.getElementById('errMsg');
+btn.addEventListener('click', async () => {
+const query=queryInput.value.trim();
+if(!query) return;
+errMsg.classList.remove('show');
+result.classList.remove('show');
+analyzing.classList.add('show');
+btn.disabled=true;
+try{
+const res=await fetch('/api/market-intel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+const data=await res.json();
+if(!res.ok||data.error) throw new Error(data.error||'Something went wrong');
+const score=data.fitScore??0;
+const scoreEl=document.getElementById('scoreNum');
+scoreEl.textContent=score;
+scoreEl.className='score-num '+(score>=70?'high':score>=40?'mid':'low');
+document.getElementById('companyDesc').textContent=data.description||'No description available.';
+document.getElementById('fitReasoning').textContent=data.fitReasoning||'No reasoning available.';
+const list=document.getElementById('signalList');
+list.innerHTML='';
+(data.signals||[]).forEach(s=>{const li=document.createElement('li');li.textContent=s;list.appendChild(li);});
+result.classList.add('show');
+}catch(e){errMsg.textContent=e.message||'Analysis failed. Try again.';errMsg.classList.add('show');}
+finally{analyzing.classList.remove('show');btn.disabled=false;}
+});
+</script>
+</body>
+</html>
