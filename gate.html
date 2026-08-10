@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Bobert</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" href="/assets/icon.png" type="image/png" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+      background: #0A0A0A;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      padding-bottom: calc(40px + env(safe-area-inset-bottom));
+    }
+    .msg {
+      font-size: 15px;
+      color: rgba(255,255,255,0.35);
+      text-align: center;
+      letter-spacing: 0.01em;
+    }
+    form {
+      margin-top: 44px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    input[type="text"] {
+      background: #1A1A1A;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 11px 14px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      width: 180px;
+      transition: border-color 0.15s;
+      -webkit-appearance: none;
+    }
+    input[type="text"]:focus { border-color: rgba(255,255,255,0.28); }
+    button {
+      background: #DC2626;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 11px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.15s;
+      -webkit-appearance: none;
+    }
+    button:active { opacity: 0.8; }
+    .err {
+      margin-top: 14px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.25);
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <p class="msg">This isn't available right now.</p>
+  <form action="/api/gate" method="POST">
+    <input type="hidden" name="from" id="from-field" value="/capture" />
+    <input
+      type="text"
+      name="passcode"
+      placeholder="Access code"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+    />
+    <button type="submit">&#8594;</button>
+  </form>
+  <p class="err" id="err" style="display:none">That code didn't work.</p>
+  <script>
+    (function () {
+      var p = new URLSearchParams(location.search)
+      var from = p.get('from')
+      if (from && /^\/[a-z]/.test(from)) {
+        document.getElementById('from-field').value = from
+      }
+      if (p.get('err')) {
+        document.getElementById('err').style.display = 'block'
+      }
+    })()
+  </script>
+</body>
+</html>
