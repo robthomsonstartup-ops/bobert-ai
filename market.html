@@ -60,8 +60,14 @@ input[type=text]::placeholder{color:var(--gray)}
 <div class="analyzing-overlay" id="analyzing"><p>Searching and scoring...</p></div>
 <div class="result" id="result">
 <div class="score-card"><div class="score-num" id="scoreNum">-</div><div class="score-label">Fit Score</div></div>
+<div id="badgeRow" style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;"></div>
+<div class="info-card"><h3>Sector / Account Type</h3><p id="sectorType">-</p></div>
+<div class="info-card"><h3>Active Pipeline</h3><p id="activePipeline">-</p></div>
 <div class="info-card"><h3>Company</h3><p id="companyDesc">-</p></div>
 <div class="info-card"><h3>Why This Score</h3><p id="fitReasoning">-</p></div>
+<div class="info-card"><h3>Reason to Call</h3><p id="reasonToCall">-</p></div>
+<div class="info-card"><h3>Target Contacts</h3><ul class="signal-list" id="contactList"></ul></div>
+<div class="info-card"><h3>Next Action</h3><p id="nextAction">-</p></div>
 <div class="info-card"><h3>Signals</h3><ul class="signal-list" id="signalList"></ul></div>
 </div>
 </main>
@@ -91,6 +97,30 @@ document.getElementById('fitReasoning').textContent=data.fitReasoning||'No reaso
 const list=document.getElementById('signalList');
 list.innerHTML='';
 (data.signals||[]).forEach(s=>{const li=document.createElement('li');li.textContent=s;list.appendChild(li);});
+document.getElementById('sectorType').textContent=(data.sector||'-')+' — '+(data.accountType||'-');
+document.getElementById('activePipeline').textContent=data.activePipeline||'No specific active project found.';
+document.getElementById('reasonToCall').textContent=data.reasonToCall||'-';
+document.getElementById('nextAction').textContent=data.nextAction||'-';
+const contactList=document.getElementById('contactList');
+contactList.innerHTML='';
+(data.targetContacts||[]).forEach(t=>{const li=document.createElement('li');li.textContent=t;contactList.appendChild(li);});
+if((data.targetContacts||[]).length===0){const li=document.createElement('li');li.textContent='No target roles identified';contactList.appendChild(li);}
+const badgeRow=document.getElementById('badgeRow');
+badgeRow.innerHTML='';
+const priorityColors={A:'#22C55E',B:'#F59E0B',C:'#6B7280'};
+const timingColors={NOW:'#DC2626',DEVELOP:'#F59E0B',SECONDARY:'#6B7280',UNKNOWN:'#6B7280'};
+if(data.priority){
+const pb=document.createElement('span');
+pb.textContent='PRIORITY '+data.priority;
+pb.style.cssText='font-size:10px;font-weight:700;letter-spacing:0.05em;padding:4px 10px;border-radius:99px;background:'+(priorityColors[data.priority]||'#6B7280')+'26;color:'+(priorityColors[data.priority]||'#6B7280')+';';
+badgeRow.appendChild(pb);
+}
+if(data.timing){
+const tb=document.createElement('span');
+tb.textContent=data.timing;
+tb.style.cssText='font-size:10px;font-weight:700;letter-spacing:0.05em;padding:4px 10px;border-radius:99px;background:'+(timingColors[data.timing]||'#6B7280')+'26;color:'+(timingColors[data.timing]||'#6B7280')+';';
+badgeRow.appendChild(tb);
+}
 result.classList.add('show');
 }catch(e){errMsg.textContent=e.message||'Analysis failed. Try again.';errMsg.classList.add('show');}
 finally{analyzing.classList.remove('show');btn.disabled=false;}
