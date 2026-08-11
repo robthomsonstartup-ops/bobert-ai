@@ -91,7 +91,7 @@ Return ONLY valid JSON, no other text:
   "accountType": "e.g. Brand / Retailer, Hotel Group, Restaurant Group",
   "description": "1-2 sentence description of what the company does",
   "fitScore": 0,
-  "priority": "A, B, or C -- A = custom design need AND a real growth signal, B = custom design need present but growth signal weak or unconfirmed, or supply-only fit, C = no custom design angle and no growth signal, regardless of brand size or fame",
+  "priority": "A, B, or C -- driven primarily by growth signal strength, not design confirmation. A = a real, specific growth signal (confirmed multi-unit agreement, funding round, active multi-location expansion). B = a growth signal exists but is small, early-stage, or vague. C = no growth signal found at all",
   "growthSignal": "short label for the expansion evidence found",
   "activePipeline": "specific expansion evidence found in search results -- funding raised, locations added or planned, states/markets entered, franchise deals, named store/design projects. For fast-growing retail/hospitality chains this is often a growth trajectory (e.g. location count and pace) rather than a single named project -- report that. Use \"No specific active project found\" only if search results have no concrete expansion evidence at all -- never invent figures.",
   "fitReasoning": "1-2 sentences explaining the score",
@@ -106,7 +106,7 @@ targetContacts must be ROLE TITLES only (e.g. VP of Store Design, Director of Co
 
 Brand size and fame are NOT scoring factors on their own -- a small regional brand with a real growth signal scores higher than a famous brand with no expansion evidence.
 
-Scoring guide -- fitScore MUST align with priority, do not set them independently: fitScore 80-100 / priority A = custom design need AND a real growth signal (pilot with expansion intent, or confirmed multi-location rollout). fitScore 40-79 / priority B = custom design need present but growth signal weak, unconfirmed, or supply-only fit. fitScore 0-39 / priority C = no custom design angle and no growth signal. If search results are too thin, use fitScore 0, priority "C", growthSignal "No expansion signal found", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
+Scoring guide -- GROWTH SIGNAL is the primary driver of priority, not design ambition. A confirmed custom-design need pushes a score higher within its tier, but is NOT required for a high score -- growing accounts are worth calling because expansion itself creates lighting/fixture opportunity, even before a specific design need is confirmed. fitScore 80-100 / priority A = a real, specific growth signal (confirmed multi-unit agreement, funding round, active multi-location expansion currently underway) -- regardless of whether design need is explicitly confirmed in search results. fitScore 40-79 / priority B = a growth signal exists but is small, early-stage, or vague. fitScore 0-39 / priority C = no growth signal found at all. If search results are too thin, use fitScore 0, priority "C", growthSignal "No expansion signal found", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
 
 const text = await synthesizeWithGroq(prompt);
 if (!text) return null;
