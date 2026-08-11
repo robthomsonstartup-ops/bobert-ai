@@ -42,3 +42,19 @@ parsing PI already does).
 - `/capture` not renamed to `/field` (deliberately deferred — gate/nav risk)
 - Passcode gate built but inactive; only covers FI routes, not PI/MI yet
 - `BOBERT-FINANCE-MIGRATION-EXPORT-AUG8.md` still untracked, unresolved
+
+
+## 4. MI search quality gap (found Aug 10-11 testing)
+Lens 1 scoring/pipeline logic confirmed working correctly (fixed tonight),
+but Tavily search results for 7 Brew were stale/thin -- returned "321
+locations by 2024" when the real picture is 750+ locations across 38
+states, on pace for 1,000 units by end of 2026, per QSR Magazine and
+RestaurantDive. This produced an honest but under-scored result (60/B)
+that should likely have been much higher (closer to A/NOW) with better
+search data.
+
+Not a prompt/logic bug -- the scoring model correctly used what it was
+given. The gap is search quality/recency for fast-moving retail growth
+stories. Needs investigation next session: better search query
+construction, or whether Tavily's basic search depth is missing
+recent/authoritative sources that a deeper search would surface.
