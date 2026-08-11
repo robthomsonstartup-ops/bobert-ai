@@ -2,7 +2,7 @@
   "name": "Bobert",
   "short_name": "Bobert",
   "description": "Field intelligence for outside sales reps -- capture, identify, and act on construction project opportunities in real time.",
-  "start_url": "/capture",
+  "start_url": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#1A1A1A",
