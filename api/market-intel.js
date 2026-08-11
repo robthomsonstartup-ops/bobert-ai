@@ -35,7 +35,7 @@ return data?.choices?.[0]?.message?.content || null;
 async function scoreCompany(query, searchResults) {
 const searchText = (searchResults?.results || []).map((r, i) => `Source ${i + 1} (${r.url}): ${r.title}\n${r.content}`).join('\n\n');
 const summary = searchResults?.answer ? `Search summary: ${searchResults.answer}\n\n` : '';
-const prompt = `You are Bobert's Market Intelligence engine. Score how well a company fits Bobert's target vertical: commercial construction, lighting/electrical contractors, general contractors, and commercial real estate developers who need lighting/controls work.
+const prompt = `You are Bobert's Market Intelligence engine, modeled on a national account-scoring framework for construction/lighting-electrical prospecting across four target sectors: Data Center, Distribution/Warehouse, Design-Build/GC, and Electrical/MEP.
 
 COMPANY QUERY: ${query}
 
@@ -45,13 +45,24 @@ ${searchText || 'No search results available.'}
 Return ONLY valid JSON, no other text:
 {
   "companyName": "best-guess company name",
+  "sector": "one of: Data Center | Distribution / Warehouse | Design-Build / GC | Electrical / MEP | Other",
+  "accountType": "role in the vertical, e.g. Owner / Developer / Operator, National GC, Developer / GC, National EC",
   "description": "1-2 sentence description of what the company does",
   "fitScore": 0,
+  "priority": "A, B, or C -- A = strong active fit with a current trigger, B = fits but needs a sharper trigger, C = weak or no fit",
+  "growthSignal": "short label for the growth driver, e.g. AI/hyperscale expansion, Build-to-suit development",
+  "activePipeline": "specific active project/expansion detail found in search results -- dollar amount, square footage, building count, timeline. Use \"No specific active project found\" if search results do not support one -- never invent figures.",
   "fitReasoning": "1-2 sentences explaining the score",
+  "timing": "NOW, DEVELOP, SECONDARY, or UNKNOWN",
+  "reasonToCall": "one sentence -- the specific trigger that makes this company worth reaching out to now",
+  "targetContacts": ["job title 1", "job title 2"],
+  "nextAction": "one concrete next step, e.g. Identify decision maker / verify current project",
   "signals": ["short factual signal 1", "short factual signal 2"]
 }
 
-fitScore must be an integer 0-100: 100 = perfect fit (GC/electrical contractor/developer in commercial construction), 0 = no relevance at all. If search results are too thin, return fitScore 0, description "Insufficient public information found.", empty signals array. Never fabricate specifics not supported by the search results.`;
+targetContacts must be ROLE TITLES only (e.g. VP of Construction, Director of Development, Facilities/Real Estate Director) -- never a named individual, no contact-enrichment vendor is connected yet.
+
+Scoring guide: fitScore 90-100 / priority A = active construction or expansion happening now, clear GC/developer/owner role, lighting/electrical relevant scope. fitScore 60-89 / priority B = fits the vertical but no clear current trigger. fitScore below 60 / priority C = weak or no relevance. If search results are too thin, use fitScore 0, priority "C", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
 
 const text = await synthesizeWithGroq(prompt);
 if (!text) return null;
@@ -76,13 +87,13 @@ try {
 const searchResults = await tavilySearch(query);
 
 if (!searchResults && !TAVILY_KEY) {
-return res.status(200).json({ companyName: query, description: 'Search is not configured yet.', fitScore: 0, fitReasoning: 'No search data available.', signals: [] });
+return res.status(200).json({ companyName: query, sector: 'Other', accountType: 'Unknown', description: 'Search is not configured yet.', fitScore: 0, priority: 'C', growthSignal: 'Unknown', activePipeline: 'No specific active project found', fitReasoning: 'No search data available.', timing: 'UNKNOWN', reasonToCall: 'Insufficient data.', targetContacts: [], nextAction: 'Configure search to evaluate this company.', signals: [] });
 }
 
 const scored = await scoreCompany(query, searchResults);
 
 if (!scored) {
-return res.status(200).json({ companyName: query, description: 'Could not generate a scored profile.', fitScore: 0, fitReasoning: 'Insufficient data.', signals: [] });
+return res.status(200).json({ companyName: query, sector: 'Other', accountType: 'Unknown', description: 'Could not generate a scored profile.', fitScore: 0, priority: 'C', growthSignal: 'Unknown', activePipeline: 'No specific active project found', fitReasoning: 'Insufficient data.', timing: 'UNKNOWN', reasonToCall: 'Insufficient data.', targetContacts: [], nextAction: 'Try a more specific company name or URL.', signals: [] });
 }
 
 return res.status(200).json(scored);
