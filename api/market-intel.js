@@ -93,7 +93,7 @@ Return ONLY valid JSON, no other text:
   "fitScore": 0,
   "priority": "A, B, or C -- A = custom design need AND a real growth signal, B = custom design need present but growth signal weak or unconfirmed, or supply-only fit, C = no custom design angle and no growth signal, regardless of brand size or fame",
   "growthSignal": "short label for the expansion evidence found",
-  "activePipeline": "specific pilot or rollout detail found in search results. Use \"No specific active project found\" if not supported -- never invent figures.",
+  "activePipeline": "specific expansion evidence found in search results -- funding raised, locations added or planned, states/markets entered, franchise deals, named store/design projects. For fast-growing retail/hospitality chains this is often a growth trajectory (e.g. location count and pace) rather than a single named project -- report that. Use \"No specific active project found\" only if search results have no concrete expansion evidence at all -- never invent figures.",
   "fitReasoning": "1-2 sentences explaining the score",
   "timing": "NOW, DEVELOP, or UNKNOWN",
   "reasonToCall": "one sentence -- the specific trigger",
