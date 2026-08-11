@@ -22,6 +22,8 @@ input[type=text]:focus{border-color:rgba(220,38,38,0.5)}
 input[type=text]::placeholder{color:var(--gray)}
 .hint{font-size:12px;color:var(--gray);margin-top:6px;line-height:1.5}
 .analyze-btn{width:100%;padding:16px;background:var(--red);color:var(--white);border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:14px}
+.lens-btn{flex:1;padding:10px;background:var(--card);color:var(--gray);border:1px solid var(--border);border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.lens-btn.active{background:var(--red);color:var(--white);border-color:var(--red)}
 .analyze-btn:disabled{opacity:0.4;cursor:not-allowed}
 .analyzing-overlay{display:none;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px 24px;text-align:center}
 .analyzing-overlay.show{display:block}
@@ -54,6 +56,10 @@ input[type=text]::placeholder{color:var(--gray)}
 <span class="lbl">Company or Website</span>
 <input type="text" id="query" placeholder="acmeconstruction.com or Acme Construction" />
 <p class="hint">Enter a company URL or name. We will pull public info and score fit against Bobert's target vertical.</p>
+<div id="lensRow" style="display:flex;gap:8px;margin:14px 0;">
+<button type="button" class="lens-btn active" id="lensDataCenter" onclick="setLens('datacenter')">Data Center / Warehouse</button>
+<button type="button" class="lens-btn" id="lensRetail" onclick="setLens('retail')">Retail / Hospitality</button>
+</div>
 <button class="analyze-btn" id="analyzeBtn">Analyze Fit</button>
 <div class="err-msg" id="errMsg"></div>
 </section>
@@ -72,6 +78,12 @@ input[type=text]::placeholder{color:var(--gray)}
 </div>
 </main>
 <script>
+let currentLens='datacenter';
+function setLens(l){
+currentLens=l;
+document.getElementById('lensDataCenter').classList.toggle('active',l==='datacenter');
+document.getElementById('lensRetail').classList.toggle('active',l==='retail');
+}
 const btn=document.getElementById('analyzeBtn');
 const queryInput=document.getElementById('query');
 const analyzing=document.getElementById('analyzing');
@@ -85,7 +97,7 @@ result.classList.remove('show');
 analyzing.classList.add('show');
 btn.disabled=true;
 try{
-const res=await fetch('/api/market-intel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query})});
+const res=await fetch('/api/market-intel',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query,lens:currentLens})});
 const data=await res.json();
 if(!res.ok||data.error) throw new Error(data.error||'Something went wrong');
 const score=data.fitScore??0;

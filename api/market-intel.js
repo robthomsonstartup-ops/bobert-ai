@@ -71,6 +71,49 @@ if (!match) return null;
 try { return JSON.parse(match[0]); } catch { return null; }
 }
 
+async function scoreCompanyRetailHospitality(query, searchResults) {
+const searchText = (searchResults?.results || []).map((r, i) => `Source ${i + 1} (${r.url}): ${r.title}\n${r.content}`).join('\n\n');
+const summary = searchResults?.answer ? `Search summary: ${searchResults.answer}\n\n` : '';
+
+const prompt = `You are LPA CSI's Market Intelligence engine, scoring how well a company fits LPA CSI's core business: custom-designed lighting and display fixtures for retail and hospitality brands, sold as a design-and-supply relationship.
+
+LPA CSI is NOT scoring against a fixed vertical list. The question is not "is this company in construction" -- it's "does this company need custom lighting/fixture design, and are they growing." Established accounts include Lululemon (full US/Canada design+supply rollout), Skims (store lighting build-out), and Converse (piloting custom illuminated wall, track heads, mannequin stanchion for a corporate display, evaluating rollout).
+
+COMPANY QUERY: ${query}
+
+${summary}WEB SEARCH RESULTS:
+${searchText || 'No search results available.'}
+
+Return ONLY valid JSON, no other text:
+{
+  "companyName": "best-guess company name",
+  "sector": "one of: Retail - Apparel | Retail - Footwear | Retail - Other | Hospitality - Hotel | Hospitality - Restaurant | Hospitality - Other | Other",
+  "accountType": "e.g. Brand / Retailer, Hotel Group, Restaurant Group",
+  "description": "1-2 sentence description of what the company does",
+  "fitScore": 0,
+  "priority": "A, B, or C -- A = custom design need AND a real growth signal, B = custom design need present but growth signal weak or unconfirmed, or supply-only fit, C = no custom design angle and no growth signal, regardless of brand size or fame",
+  "growthSignal": "short label for the expansion evidence found",
+  "activePipeline": "specific pilot or rollout detail found in search results. Use \"No specific active project found\" if not supported -- never invent figures.",
+  "fitReasoning": "1-2 sentences explaining the score",
+  "timing": "NOW, DEVELOP, or UNKNOWN",
+  "reasonToCall": "one sentence -- the specific trigger",
+  "targetContacts": ["job title 1", "job title 2"],
+  "nextAction": "one concrete next step",
+  "signals": ["short factual signal 1", "short factual signal 2"]
+}
+
+targetContacts must be ROLE TITLES only (e.g. VP of Store Design, Director of Construction, VP of Real Estate, Director of Visual Merchandising, Facilities Director) -- never a named individual, no contact-enrichment vendor is connected yet.
+
+Brand size and fame are NOT scoring factors on their own -- a small regional brand with a real growth signal scores higher than a famous brand with no expansion evidence. If search results are too thin, use fitScore 0, priority "C", growthSignal "No expansion signal found", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
+
+const text = await synthesizeWithGroq(prompt);
+if (!text) return null;
+const match = text.match(/\{[\s\S]*\}/);
+if (!match) return null;
+try { return JSON.parse(match[0]); } catch { return null; }
+}
+
+
 module.exports = async function handler(req, res) {
 res.setHeader('Access-Control-Allow-Origin', '*');
 res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
@@ -78,7 +121,7 @@ res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 if (req.method === 'OPTIONS') return res.status(200).end();
 if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-const { query } = req.body;
+const { query, lens } = req.body;
 if (!query || !query.trim()) {
 return res.status(400).json({ error: 'Company name or URL is required.' });
 }
@@ -90,7 +133,7 @@ if (!searchResults && !TAVILY_KEY) {
 return res.status(200).json({ companyName: query, sector: 'Other', accountType: 'Unknown', description: 'Search is not configured yet.', fitScore: 0, priority: 'C', growthSignal: 'Unknown', activePipeline: 'No specific active project found', fitReasoning: 'No search data available.', timing: 'UNKNOWN', reasonToCall: 'Insufficient data.', targetContacts: [], nextAction: 'Configure search to evaluate this company.', signals: [] });
 }
 
-const scored = await scoreCompany(query, searchResults);
+const scored = lens === 'retail' ? await scoreCompanyRetailHospitality(query, searchResults) : await scoreCompany(query, searchResults);
 
 if (!scored) {
 return res.status(200).json({ companyName: query, sector: 'Other', accountType: 'Unknown', description: 'Could not generate a scored profile.', fitScore: 0, priority: 'C', growthSignal: 'Unknown', activePipeline: 'No specific active project found', fitReasoning: 'Insufficient data.', timing: 'UNKNOWN', reasonToCall: 'Insufficient data.', targetContacts: [], nextAction: 'Try a more specific company name or URL.', signals: [] });
