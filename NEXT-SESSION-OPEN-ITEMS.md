@@ -58,3 +58,60 @@ given. The gap is search quality/recency for fast-moving retail growth
 stories. Needs investigation next session: better search query
 construction, or whether Tavily's basic search depth is missing
 recent/authoritative sources that a deeper search would surface.
+
+
+## 6. Bobert PI architecture -- general engine + client-specific layer (locked Aug 11, 2026)
+
+Revises/supersedes item 5's framing -- this is the real architecture,
+same pattern as MI's Lens 1/Lens 2 split (shared engine, swappable
+client-specific criteria on top).
+
+### Bobert PI (general engine, not LPA-CSI-specific)
+
+**Inputs (any of):**
+- Bid job board screenshot
+- Email copy/paste
+- Uploaded drawing (PDF or image)
+- Uploaded Excel spreadsheet or screenshot of a fixture schedule
+
+**Extraction from any input:**
+- Contacts -- names, companies, roles found on the document
+- Job information -- title block data, developer, GC, project name,
+  location
+- Pertinent job details -- whatever's relevant to deciding if/how to
+  pursue
+
+**Special case -- fixture schedule:** when a drawing, spreadsheet, or
+fixture-schedule screenshot is uploaded, extract and replicate the
+schedule into an Excel spreadsheet **exactly as listed on the source**
+-- not reformatted or summarized. Core columns: description and part
+number -- that's what's actually needed, not a wider guess at
+wattage/lumens/mounting/etc. Rob will find a real LPA CSI quote to
+mirror the exact format -- treat this as the placeholder until that
+arrives, not the locked schema.
+
+### LPA CSI layer (client-specific, sits on top of the general engine)
+
+LPA CSI provided their own checklist -- this becomes a configuration
+that runs after general extraction, specific to them. Not built into
+the core engine. This is what makes it "Bobert for LPA CSI" rather than
+building LPA-CSI-only tooling.
+
+### BLOCKING NEXT STEPS
+1. Get input from LPA CSI's quotes team (quotes director first --
+   he owns the process) before building around their assumed needs.
+   Rob's prior-job tool is a good icebreaker/proof of concept to show
+   them.
+2. Rob to find a real LPA CSI quote tomorrow to mirror the exact
+   spreadsheet format (columns confirmed so far: description, part
+   number -- may have more once the real quote is seen).
+3. Get LPA CSI's actual checklist (mentioned as already provided) --
+   needed to build the client-specific layer accurately.
+
+### Unchanged technical reality
+General job/contact/title-block extraction from text-searchable
+sources is buildable with current tools (Groq synthesis pattern PI
+already uses). Fixture-schedule-to-Excel replication is a vision-model
+problem for scanned/scattered-callout drawings specifically -- clean
+text-searchable tables are the buildable first case; scanned/scattered
+needs vendor research and likely triggers Decision 013's spend gate.
