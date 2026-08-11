@@ -104,7 +104,9 @@ Return ONLY valid JSON, no other text:
 
 targetContacts must be ROLE TITLES only (e.g. VP of Store Design, Director of Construction, VP of Real Estate, Director of Visual Merchandising, Facilities Director) -- never a named individual, no contact-enrichment vendor is connected yet.
 
-Brand size and fame are NOT scoring factors on their own -- a small regional brand with a real growth signal scores higher than a famous brand with no expansion evidence. If search results are too thin, use fitScore 0, priority "C", growthSignal "No expansion signal found", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
+Brand size and fame are NOT scoring factors on their own -- a small regional brand with a real growth signal scores higher than a famous brand with no expansion evidence.
+
+Scoring guide -- fitScore MUST align with priority, do not set them independently: fitScore 80-100 / priority A = custom design need AND a real growth signal (pilot with expansion intent, or confirmed multi-location rollout). fitScore 40-79 / priority B = custom design need present but growth signal weak, unconfirmed, or supply-only fit. fitScore 0-39 / priority C = no custom design angle and no growth signal. If search results are too thin, use fitScore 0, priority "C", growthSignal "No expansion signal found", activePipeline "No specific active project found", targetContacts [], signals [] -- never fabricate specifics not in the search results.`;
 
 const text = await synthesizeWithGroq(prompt);
 if (!text) return null;
