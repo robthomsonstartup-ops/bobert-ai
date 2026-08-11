@@ -476,3 +476,51 @@ to a public-launch-ready state once feedback lands, then open for business
 signups. Both /capture (FI) and /intake (PI) get a lightweight passcode/
 invite gate — not full auth, just enough that only people Rob shares the
 link with can get in.
+---
+
+## Decision 026 — MI (Market Intelligence) Sector Added
+**Date:** 2026-08-10
+**Owner:** Rob (Founder/CEO)
+**Recorded by:** Dev session, single-session model.
+
+**Decision:** Bobert adds a third sector, **MI (Market Intelligence)**, alongside
+FI and PI, live at `/market`. Given a company URL or name, MI returns a
+scored profile assessing fit against Bobert's target vertical.
+
+**Scoring framework:** Modeled on Rob's LPA CSI prospect-scoring
+methodology (data center, distribution/warehouse, design-build/GC, and
+electrical/MEP verticals — confirmed unrelated to CBMC/day-job work).
+Each result includes:
+- `sector` / `accountType` — e.g. "Distribution / Warehouse", "Owner /
+  Developer / Operator"
+- `fitScore` (0-100) and `priority` (A/B/C)
+- `growthSignal` and `activePipeline` — specific active-project detail
+  when search results support it; explicitly states when they don't,
+  rather than inventing figures
+- `timing` (NOW / DEVELOP / SECONDARY / UNKNOWN)
+- `reasonToCall` and `nextAction`
+- `targetContacts` — **role titles only** (e.g. "VP of Construction"),
+  never named individuals
+
+**No new vendor spend:** Reuses the existing Tavily (web search) + Groq
+(synthesis) pattern already live in `api/capture-intel.js` for FI. No new
+API keys, no new cost, no Decision-013 spend gate triggered. Contact
+enrichment (Apollo vs. PDL, raised earlier and left unresolved) remains a
+**separate, still-open decision** — MI does not depend on it and works
+from public web search alone.
+
+**IndexedDB:** MI's future persistence (if/when results are saved) gets
+its own namespace, `"bobert-market"` / `"companies"` — never shares FI's
+`"bobert-db"` or PI's `"bobert-intakes"`, per the existing per-sector
+isolation rule.
+
+**Access:** MI is served at `/market`, ungated — same as FI/PI before
+Decision 025's passcode gate. `FI_PASSCODE` remains unset by choice
+(Rob wants to send `bobert.ai` to colleagues for testing first).
+
+**Verified live:** Tested against real companies (Prologis, Turner
+Construction) via both direct API call and browser — all fields render
+correctly, no fabricated data observed, "no active project found" stated
+honestly when search results don't support a specific figure.
+
+**Status:** Locked.
