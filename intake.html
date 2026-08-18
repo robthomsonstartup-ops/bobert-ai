@@ -767,17 +767,22 @@ function fileToBase64(file) {
   });
 }
 
-const LIGHTING_KEYWORDS = [
-  'lighting', 'luminaire', 'fixture schedule', 'fixture type', 'light fixture',
-  'rcp', 'reflected ceiling', 'pole light', 'site lighting', 'parking lot lighting',
-  'wall pack', 'downlight', 'troffer', 'high bay', 'sconce', 'photometric',
-  'lighting control', 'occupancy sensor', 'vacancy sensor', 'daylight', 'dimming',
-  'dimmer', 'photocell', 'time clock', 'relay panel', 'low voltage control',
-  'bas', 'building automation',
-  'emergency light', 'exit sign', 'egress', 'battery backup', 'emergency ballast',
-  'life safety', 'unswitched', 'night light',
-  'panel schedule', 'circuit', 'branch circuit', 'load calculation'
+const SCHEDULE_PHRASES = [
+  'fixture schedule', 'luminaire schedule', 'lighting fixture schedule',
+  'lighting schedule', 'light fixture schedule'
 ];
+const SCHEDULE_HEADER_WORDS = [
+  'type', 'manufacturer', 'catalog', 'description', 'mounting',
+  'voltage', 'lamp', 'wattage', 'remarks', 'symbol'
+];
+const SCHEDULE_HEADER_MIN_MATCHES = 4;
+
+function isScheduleTablePage(lowerText) {
+  var hasPhrase = SCHEDULE_PHRASES.some(function(p) { return lowerText.indexOf(p) !== -1; });
+  if (hasPhrase) return true;
+  var headerMatches = SCHEDULE_HEADER_WORDS.filter(function(w) { return lowerText.indexOf(w) !== -1; });
+  return headerMatches.length >= SCHEDULE_HEADER_MIN_MATCHES;
+}
 
 async function extractPdfText(file) {
   if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
@@ -789,14 +794,13 @@ async function extractPdfText(file) {
     const content = await page.getTextContent();
     const pageText = content.items.map(item => item.str).join(' ');
     const lower = pageText.toLowerCase();
-    const isRelevant = LIGHTING_KEYWORDS.some(function(kw) { return lower.indexOf(kw) !== -1; });
-    if (isRelevant) {
+    if (isScheduleTablePage(lower)) {
       relevantPages.push(`[Page ${i}]\n${pageText}`);
     }
   }
   const result = relevantPages.join('\n\n');
-  console.log('[extractPdfText] ' + pdf.numPages + ' total pages, ' + relevantPages.length + ' relevant pages, ' + result.length + ' characters extracted');
-  return result || '(No lighting, controls, or emergency content detected in this document)';
+  console.log('[extractPdfText] ' + pdf.numPages + ' total pages, ' + relevantPages.length + ' schedule-table pages, ' + result.length + ' characters extracted');
+  return result || '(No fixture schedule table detected in this document)';
 }
 
 // ── IndexedDB ─────────────────────────────────────────────────────────────────
