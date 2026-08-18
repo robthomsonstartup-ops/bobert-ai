@@ -524,3 +524,32 @@ correctly, no fabricated data observed, "no active project found" stated
 honestly when search results don't support a specific figure.
 
 **Status:** Locked.
+## Decision 027 — PI Intake Character Limit Raised: 20k → 100k
+
+**Date:** August 17, 2026
+**Status:** Locked
+
+**Problem:** `api/intake.js` rejected any pasted text over 20,000 characters
+outright (no truncation, no chunking) — a real drawing PDF's extracted text
+routinely exceeds this, so intake failed every time on real-world documents.
+
+**Root cause:** The 20,000-char limit was an arbitrary guard, not a real
+constraint. The Groq prompt sent to `llama-3.3-70b-versatile` combines a
+fixed-size instruction/schema block with the raw pasted text appended once
+at the end — no per-chunk merging occurs. The model's context window is
+128k tokens; a 100,000-character document (~25k tokens) plus schema
+overhead fits comfortably inside that.
+
+**Fix:** Raised the limit to 100,000 characters (commit `655bcab`). No
+chunking logic added — not needed at this document size, and chunking
+would have introduced real complexity (the schema's `deal`, `flags`, and
+`box_folders` fields are whole-document judgments, not per-chunk facts,
+so merging partial results across chunks is non-trivial and was avoided
+rather than built speculatively).
+
+**Open item:** Groq per-key/tier token-per-minute rate limits were not
+verified against this change — worth confirming in the Groq console.
+If a genuinely huge drawing set (well beyond 100k chars) causes a Groq
+response to hit `max_tokens: 2000` and get truncated, that will surface
+as a "Failed to parse AI response as JSON" error, not a length-limit
+error — a different bug, revisit `max_tokens` if seen.
