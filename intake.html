@@ -778,7 +778,9 @@ async function extractPdfText(file) {
     const pageText = content.items.map(item => item.str).join(' ');
     pages.push(`[Page ${i}]\n${pageText}`);
   }
-  return pages.join('\n\n');
+  const result = pages.join('\n\n');
+  console.log('[extractPdfText] ' + pdf.numPages + ' pages, ' + result.length + ' characters extracted');
+  return result;
 }
 
 // ── IndexedDB ─────────────────────────────────────────────────────────────────
