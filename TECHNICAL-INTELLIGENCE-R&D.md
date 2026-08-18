@@ -177,7 +177,13 @@ An IES/standards knowledge layer could be one source of that intelligence, along
 
 Before building anything, research is required into:
 
-1. What IES standards and recommendations can legally/licensably be used.
+1. ~~What IES standards and recommendations can legally/licensably be used.~~
+   **RESOLVED (Aug 2026):** IES licensing is not in play. Discussed and
+   decided to steer clear of any IES licensing conflicts entirely rather
+   than pursue a workaround. Technical Intelligence does not depend on
+   licensed IES content -- manufacturer data, drawings, specs, and
+   validated expert judgment captured through use are the actual
+   knowledge sources.
 2. What information can be derived independently from standards.
 3. What manufacturer data can be obtained/licensed.
 4. What public technical data is available.
