@@ -784,23 +784,45 @@ function isScheduleTablePage(lowerText) {
   return headerMatches.length >= SCHEDULE_HEADER_MIN_MATCHES;
 }
 
+const SCHEDULE_AUTO_EXTRACT_LIMIT = 80000;
+
 async function extractPdfText(file) {
   if (typeof pdfjsLib === 'undefined') throw new Error('PDF.js not loaded');
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-  const relevantPages = [];
+  let firstPageText = '';
+  const schedulePages = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page    = await pdf.getPage(i);
     const content = await page.getTextContent();
     const pageText = content.items.map(item => item.str).join(' ');
+    if (i === 1) {
+      firstPageText = pageText;
+    }
     const lower = pageText.toLowerCase();
     if (isScheduleTablePage(lower)) {
-      relevantPages.push(`[Page ${i}]\n${pageText}`);
+      schedulePages.push({ num: i, text: pageText });
     }
   }
-  const result = relevantPages.join('\n\n');
-  console.log('[extractPdfText] ' + pdf.numPages + ' total pages, ' + relevantPages.length + ' schedule-table pages, ' + result.length + ' characters extracted');
-  return result || '(No fixture schedule table detected in this document)';
+
+  const scheduleFullText = schedulePages.map(function(p) { return `[Page ${p.num}]\n${p.text}`; }).join('\n\n');
+  let result = `[Page 1]\n${firstPageText}`;
+  let mode = 'none';
+
+  if (schedulePages.length === 0) {
+    result += '\n\n[No pages matched fixture schedule detection in this document]';
+    mode = 'none';
+  } else if (scheduleFullText.length <= SCHEDULE_AUTO_EXTRACT_LIMIT) {
+    result += `\n\n[FIXTURE SCHEDULE CONTENT — pages ${schedulePages.map(function(p){return p.num;}).join(', ')}]\n${scheduleFullText}`;
+    mode = 'auto';
+  } else {
+    const pageNums = schedulePages.map(function(p) { return p.num; }).join(', ');
+    result += `\n\n[SUSPECTED FIXTURE SCHEDULE PAGES: ${pageNums}]\nCombined content (${scheduleFullText.length} characters) is too large to extract automatically. Screenshot these pages and add them as image sources for accurate extraction.`;
+    mode = 'manual-fallback';
+  }
+
+  console.log('[extractPdfText] ' + pdf.numPages + ' total pages, ' + schedulePages.length + ' schedule-suspect pages, mode=' + mode + ', ' + result.length + ' characters returned');
+  return result;
 }
 
 // ── IndexedDB ─────────────────────────────────────────────────────────────────
