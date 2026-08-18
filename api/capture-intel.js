@@ -138,7 +138,7 @@ async function synthesizeWithGroq(prompt) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${GROQ_KEY}` },
       body: JSON.stringify({
-        model: 'llama-3.3-70b-versatile',
+        model: 'openai/gpt-oss-120b',
         messages: [{ role: 'user', content: prompt }],
         temperature: 0.2,
         max_tokens: 1400,
