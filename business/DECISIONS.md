@@ -553,3 +553,38 @@ If a genuinely huge drawing set (well beyond 100k chars) causes a Groq
 response to hit `max_tokens: 2000` and get truncated, that will surface
 as a "Failed to parse AI response as JSON" error, not a length-limit
 error — a different bug, revisit `max_tokens` if seen.
+## Decision 028 — Groq Model Migration: llama-3.3-70b-versatile Deprecated
+
+**Date:** August 18, 2026
+**Status:** Locked
+
+**Problem:** PI intake (`api/intake.js`) started returning `500 Internal Server
+Error` with message "The model `llama-3.3-70b-versatile` does not exist or
+you do not have access to it." Discovered while testing the fixture-schedule
+hybrid extraction feature (Decision 027 follow-on work) — unrelated to that
+feature, but blocked verifying it end-to-end.
+
+**Root cause:** Groq deprecated `llama-3.3-70b-versatile` on June 17, 2026
+(per Groq's official deprecations page), recommending migration to
+`openai/gpt-oss-120b` or `qwen/qwen3.6-27b`. This broke every Bobert
+pipeline hardcoding that model string — confirmed both `api/intake.js`
+(PI fixture/bid intake) and `api/capture-intel.js` (MI synthesis, Decision
+026) were affected. Both had been silently broken since the deprecation
+took effect; the failure only surfaced now because PI intake was
+exercised directly today.
+
+**Fix:** Migrated both files' `model:` field from `llama-3.3-70b-versatile`
+to `openai/gpt-oss-120b` (Groq's recommended general-purpose replacement,
+chosen over `qwen/qwen3.6-27b` for closer behavioral parity with
+structured-JSON-schema extraction tasks). Commits `87ce368` (intake.js)
+and `23db274` (capture-intel.js).
+
+**Open item:** No other files were checked for the same hardcoded model
+string beyond these two. If any other Groq-calling code exists in the
+repo, it should be audited for the same deprecated reference.
+
+**Lesson:** A third-party model deprecation can silently break production
+functionality with no code change on our side. Worth periodically checking
+Groq's deprecations page (https://console.groq.com/docs/deprecations) for
+any model names referenced in the repo, rather than discovering it via a
+live failure.
