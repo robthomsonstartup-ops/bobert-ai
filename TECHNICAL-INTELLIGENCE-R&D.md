@@ -297,3 +297,12 @@ Make validated knowledge increasingly useful across future work.
 **Park this concept. Do not build yet.**
 
 Continue market research, competitive research, data/licensing research, and workflow discovery until a narrow, high-value first use case is identified.
+
+
+## First testable slice (locked Aug 17, 2026)
+
+**Architecture pattern:** Same shape as MI's lens system -- one shared physics/standards layer (spacing, uniformity, photometric distribution, code-driven minimums) that applies across all verticals, with vertical-specific application judgment layered on top later. Not a rebuild per vertical -- an extension.
+
+**The cold-start problem:** The expert-judgment flywheel needs validated corrections to get good, but nothing earns trust to be used seriously until it's already good. The way out is starting with something checkable against physical/mathematical ground truth, not subjective design judgment -- no human validation loop required to know if the system got it right.
+
+**First slice: flag physically-implausible fixture/space/mounting combinations.** E.g. does a fixture's stated lumen output make physical sense for the space and mounting height given in a drawing. Pure math, verifiable independently, small enough to build directly against PI's existing structured extraction output. The 'second set of eyes' design-review use case is a later stage, not the starting point.
