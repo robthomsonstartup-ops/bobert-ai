@@ -148,8 +148,8 @@ export default async function handler(req, res) {
   if (!text || !text.trim()) {
     return res.status(400).json({ error: 'No text provided' });
   }
-  if (text.length > 20000) {
-    return res.status(400).json({ error: 'Text too long — please trim to under 20,000 characters' });
+  if (text.length > 100000) {
+    return res.status(400).json({ error: 'Text too long — please trim to under 100,000 characters' });
   }
 
   try {
