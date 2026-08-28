@@ -1,0 +1,106 @@
+{
+  "record_id": "fixture_burlington_kelvin_001",
+  "captured_at": "2026-08-27T22:36:00-04:00",
+  "inputs": [
+    {
+      "type": "screenshot",
+      "source": "Apollo",
+      "captured_by": "user"
+    }
+  ],
+  "entities": {
+    "accounts": [
+      {
+        "name": "Burlington Stores",
+        "type": "account",
+        "source": "Apollo screenshot",
+        "confidence": "high"
+      }
+    ],
+    "contacts": [
+      {
+        "name": "Kelvin Mullins",
+        "type": "contact",
+        "source": "Apollo screenshot",
+        "confidence": "high"
+      }
+    ],
+    "projects": [],
+    "organizations": [],
+    "locations": [
+      {
+        "name": "Fort Worth, Texas",
+        "type": "location",
+        "source": "Apollo screenshot",
+        "confidence": "high"
+      }
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "c1",
+      "text": "Kelvin Mullins is Senior Director, Construction at Burlington Stores.",
+      "status": "verified",
+      "confidence": "high",
+      "evidence_ids": ["ev_screenshot"],
+      "notes": "Visible in the captured Apollo contact record."
+    },
+    {
+      "claim_id": "c2",
+      "text": "Kelvin Mullins is located in Fort Worth, Texas.",
+      "status": "verified",
+      "confidence": "high",
+      "evidence_ids": ["ev_screenshot"],
+      "notes": "Visible in the captured Apollo contact record."
+    },
+    {
+      "claim_id": "c3",
+      "text": "Kelvin's influence over lighting specification or purchasing has not been established.",
+      "status": "unknown",
+      "confidence": "not_applicable",
+      "evidence_ids": ["ev_screenshot"],
+      "notes": "The screenshot establishes his construction title, not his lighting buying authority."
+    },
+    {
+      "claim_id": "c4",
+      "text": "Kelvin may be a relevant construction contact for a national multi-site retailer.",
+      "status": "inferred",
+      "confidence": "medium",
+      "evidence_ids": ["ev_screenshot"],
+      "notes": "This is a targeting hypothesis, not an externally usable fact."
+    }
+  ],
+  "signals": [],
+  "evidence": [
+    {
+      "evidence_id": "ev_screenshot",
+      "type": "capture",
+      "source": "Apollo screenshot provided by user",
+      "url": null,
+      "supports": "Contact identity, title, company, location, and visible Apollo company-insight context.",
+      "captured_at": "2026-08-27T22:36:00-04:00"
+    }
+  ],
+  "research_questions": [
+    {
+      "question": "How does Burlington structure construction and lighting specification across its store program?",
+      "priority": "high",
+      "status": "open",
+      "reason": "Determines whether Kelvin is the right path and where LPA CSI should enter."
+    },
+    {
+      "question": "Who controls lighting specification, procurement, and electrical contractor relationships at Burlington?",
+      "priority": "high",
+      "status": "open",
+      "reason": "Do not assume the construction leader owns lighting decisions."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Research Burlington construction and procurement structure before outbound messaging.",
+      "reason": "The screenshot establishes a relevant contact but does not establish the buying path.",
+      "evidence_ids": ["ev_screenshot"],
+      "status": "recommended"
+    }
+  ]
+}
