@@ -83,3 +83,20 @@ Example:
 ## MVP principle
 
 Build the intelligence layer independently from external platform integrations. Apollo, HubSpot, email, web research, and future services are tools Bobert can use. They are not Bobert's operating system.
+
+## Account workspace contract
+
+The account workspace is the destination for durable intelligence. A capture should be able to become a reviewable record containing:
+
+- account identity and identity confidence
+- contacts and roles
+- projects and locations
+- claims with evidence
+- signals with dates and evidence
+- procurement / specification relationships
+- open research questions
+- recommended actions
+- completed actions and outcomes
+- corrections and lessons learned
+
+The workspace should make it obvious which information is **known**, **supported**, **inferred**, **unknown**, or **conflicting**. It should never require the user to remember where a fact came from.
