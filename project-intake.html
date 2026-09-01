@@ -25,8 +25,40 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
 function status(t,k=''){const e=$('status');e.className='status '+k;e.textContent=t;}
 function setCount(id,n){$(id).textContent=n;}
-async function loadPdfLib(){if(pdfjs)return pdfjs;status('Loading PDF reader…');pdfjs=await import(PDFJS_URL);if(!pdfjs.GlobalWorkerOptions)throw new Error('PDF reader loaded without GlobalWorkerOptions');pdfjs.GlobalWorkerOptions.workerSrc=PDFJS_WORKER_URL;return pdfjs;}
-async function readPdf(file){const lib=await loadPdfLib();const data=new Uint8Array(await file.arrayBuffer());if(data.length<5)throw new Error(`PDF file is empty or could not be read (${file.name})`);const header=new TextDecoder().decode(data.slice(0,5));if(header!=='%PDF-')throw new Error(`${file.name} does not contain a valid PDF header`);const loadingTask=lib.getDocument({data});const doc=await loadingTask.promise;const pages=[];for(let i=1;i<=doc.numPages;i++){status(`Reading ${file.name} · page ${i} of ${doc.numPages}…`);const p=await doc.getPage(i);const tc=await p.getTextContent();const text=tc.items.map(x=>x.str||'').join(' ').replace(/\s+/g,' ').trim();pages.push({page:i,text});}if(!pages.length)throw new Error(`${file.name} opened but contained no pages`);return{name:file.name,pages};}
+async function loadPdfLib(){
+  if(pdfjs)return pdfjs;
+  status('Loading PDF reader…');
+  try{pdfjs=await import(PDFJS_URL);}catch(err){throw new Error('The PDF reader could not load. Check the internet connection and reload Bobert.');}
+  if(!pdfjs?.getDocument)throw new Error('PDF reader loaded without getDocument.');
+  if(pdfjs.GlobalWorkerOptions)pdfjs.GlobalWorkerOptions.workerSrc=PDFJS_WORKER_URL;
+  return pdfjs;
+}
+async function readPdf(file){
+  const lib=await loadPdfLib();
+  const data=new Uint8Array(await file.arrayBuffer());
+  if(data.length<5)throw new Error(`PDF file is empty or could not be read (${file.name})`);
+  const header=new TextDecoder().decode(data.slice(0,5));
+  if(header!=='%PDF-')throw new Error(`${file.name} does not contain a valid PDF header`);
+  let doc;
+  try{
+    const loadingTask=lib.getDocument({data,disableWorker:true,useWorkerFetch:false,isEvalSupported:false});
+    doc=await loadingTask.promise;
+  }catch(err){
+    const msg=err?.message||String(err);
+    if(/password|encrypted/i.test(msg))throw new Error(`${file.name} is password protected. Remove the password and upload it again.`);
+    throw new Error(`${file.name} could not be opened by the PDF reader: ${msg}`);
+  }
+  const pages=[];
+  for(let i=1;i<=doc.numPages;i++){
+    status(`Reading ${file.name} · page ${i} of ${doc.numPages}…`);
+    const p=await doc.getPage(i);
+    const tc=await p.getTextContent({disableCombineTextItems:false});
+    const text=tc.items.map(x=>x.str||'').join(' ').replace(/\s+/g,' ').trim();
+    pages.push({page:i,text});
+  }
+  if(!pages.length)throw new Error(`${file.name} opened but contained no pages`);
+  return{name:file.name,pages};
+}
 async function readText(file){return{name:file.name,pages:[{page:1,text:await file.text()}]};}
 function classify(text){const t=text.toLowerCase();const tags=[];if(/lighting|fixture|luminaire|lamp|photometric|illumination/.test(t))tags.push('lighting');if(/fixture schedule|lighting schedule|schedule of fixtures/.test(t))tags.push('fixture schedule');if(/reflected ceiling|r\.c\.p\.|ceiling plan/.test(t))tags.push('ceiling plan');if(/electrical|power plan|one-line|single line/.test(t))tags.push('electrical');if(/specification|division 26|26 51|26 09|controls/.test(t))tags.push('specs / controls');if(/responsibility|furnish|install|contractor scope/.test(t))tags.push('scope / responsibility');if(/addendum|revision|revision date/.test(t))tags.push('revision / addendum');if(/architect|designer|engineer|project manager|owner/.test(t))tags.push('people / firms');return tags;}
 function extractEmails(text){return [...new Set((text.match(/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi)||[]))];}
