@@ -124,7 +124,6 @@ function candidates(f){
  ?{family:'ConTech CTL84C',catalog:'CTL84C2M3CD B',beam:'28° fixed medium',output:'Approx. 976 lm at 90+ CRI',cri:'90+',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam 28° vs 25°','Calculated high-CRI output differs from nominal basis']}
  :{family:'ConTech CTL84C',catalog:'CTL84C2F3CD B',beam:'44° fixed flood',output:'Approx. 1080 lm at 90+ CRI',cri:'90+',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam 44° vs 40°','Confirm delivered output with current IES']};
  const adjustable={family:'ConTech CTL844A',catalog:'CTL844A3D B',beam:'13°–80° adjustable',output:'1100 lm nominal',cri:'83 typical',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam must be field-set','Lower CRI than fixed high-CRI option']};
- adjustable.output='1100 lm nominal';adjustable.cri='83 typical';
  return [fixed,adjustable];
 }
 
@@ -134,14 +133,16 @@ $('build').onclick=()=>{
    let cs=candidates(f);if(pref==='output')cs=[cs[1],cs[0]];
    return `<div class="fixture"><div class="fixture-head"><div><h3>${esc(f.tag)} · ${esc(f.catalog)}</h3><p class="muted">${f.qty} fixtures · ${f.beam}° · 3000K · 1100 lm · black</p></div><span class="tag good">Fixture class locked</span></div>
    <div class="notice"><strong>Category gate passed:</strong> specified and candidates are integrated LED track heads. Products from other fixture classes are excluded.</div>
-   ${cs.map((c,ci)=>`<div class="candidate"><div class="candidate-head"><div><strong>${esc(c.family)}</strong><div><code>${esc(c.catalog)}</code></div></div><button class="selectCandidate ${ci===0?'primary':''}" data-fi="${fi}" data-ci="${c===candidates(f)[0]?0:1}">Use this option</button></div><div class="compare"><div class="metric">Fixture class<strong>Exact</strong></div><div class="metric">Distribution<strong>${esc(c.beam)}</strong></div><div class="metric">Output<strong>${esc(c.output)}</strong></div><div class="metric">CRI<strong>${esc(c.cri)}</strong></div><div class="metric">CCT<strong>3000K exact</strong></div><div class="metric">Finish<strong>Black exact</strong></div><div class="metric">Voltage<strong>120V exact</strong></div><div class="metric">Track<strong>${esc(c.track)}</strong></div></div><div class="source">Differences: ${c.differences.map(esc).join(' · ')} · Source status: pilot rule library; current factory verification required.</div></div>`).join('')}</div>`;
+   ${cs.map((c,ci)=>`<div class="candidate"><div class="candidate-head"><div><strong>${esc(c.family)}</strong><div><code>${esc(c.catalog)}</code></div></div><button class="selectCandidate ${ci===0?'primary':''}" data-fi="${fi}" data-family="${esc(c.family)}" data-catalog="${esc(c.catalog)}">Use this option</button></div><div class="compare"><div class="metric">Fixture class<strong>Exact</strong></div><div class="metric">Distribution<strong>${esc(c.beam)}</strong></div><div class="metric">Output<strong>${esc(c.output)}</strong></div><div class="metric">CRI<strong>${esc(c.cri)}</strong></div><div class="metric">CCT<strong>3000K exact</strong></div><div class="metric">Finish<strong>Black exact</strong></div><div class="metric">Voltage<strong>120V exact</strong></div><div class="metric">Track<strong>${esc(c.track)}</strong></div></div><div class="source">Differences: ${c.differences.map(esc).join(' · ')} · Source status: pilot rule library; current factory verification required.</div></div>`).join('')}</div>`;
  }).join('');
  $('comparePanel').classList.remove('hidden');
- document.querySelectorAll('.selectCandidate').forEach(b=>b.onclick=()=>selectCandidate(Number(b.dataset.fi),Number(b.dataset.ci)));
+ document.querySelectorAll('.selectCandidate').forEach(b=>b.onclick=()=>selectCandidate(Number(b.dataset.fi),b.dataset.catalog));
 };
 
-function selectCandidate(fi,ci){
- const f=confirmed[fi],c=candidates(f)[ci];
+function selectCandidate(fi,catalog){
+ const f=confirmed[fi];
+ const c=candidates(f).find(x=>x.catalog===catalog);
+ if(!c)return;
  bom=bom.filter(x=>x.tag!==f.tag);bom.push({...f,alternate:c});
  renderBom();
 }
