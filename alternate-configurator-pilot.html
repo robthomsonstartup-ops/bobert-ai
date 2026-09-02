@@ -123,7 +123,7 @@ function candidates(f){
  const fixed=f.beam===25
  ?{family:'ConTech CTL84C',catalog:'CTL84C2M3CD B',beam:'28° fixed medium',output:'Approx. 976 lm at 90+ CRI',cri:'90+',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam 28° vs 25°','Calculated high-CRI output differs from nominal basis']}
  :{family:'ConTech CTL84C',catalog:'CTL84C2F3CD B',beam:'44° fixed flood',output:'Approx. 1080 lm at 90+ CRI',cri:'90+',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam 44° vs 40°','Confirm delivered output with current IES']};
- const adjustable={family:'ConTech CTL844A',catalog:'CTL844A3D B',beam:'13°–80° adjustable',output:'1100 lm nominal /  दावा 117 incertidumbre',cri:'_placeholder_',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam must be field-set','Lower CRI than fixed high-CRI option']};
+ const adjustable={family:'ConTech CTL844A',catalog:'CTL844A3D B',beam:'13°–80° adjustable',output:'1100 lm nominal',cri:'83 typical',track:'Native ConTech LT/LT2',status:'Review',differences:['Beam must be field-set','Lower CRI than fixed high-CRI option']};
  adjustable.output='1100 lm nominal';adjustable.cri='83 typical';
  return [fixed,adjustable];
 }
