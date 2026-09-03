@@ -1,0 +1,41 @@
+{
+  "project": {
+    "name": "Potbelly Sandwich Works: 29281 Katy Fwy #110, Houston, TX 77094",
+    "project_number": "26-006",
+    "issue": "95CD SET",
+    "issue_date": "06/08/2026",
+    "drawing_set": "026-06-09_95-CD-Set - Reviewed MB.pdf",
+    "page_count": 54
+  },
+  "source_derived_facts": [
+    "The drawing set identifies Potbelly Sandwich Works and the project address.",
+    "The set contains E3.0 Lighting Plan and E5.0 Lighting Schedules.",
+    "The set identifies Bob Conwell and email contacts including Amy Pettie at Potbelly and Bob Conwell at NewQuest.",
+    "The lighting schedule contains fixture tags, quantities, types, manufacturers, descriptions, models, lamps, furnish/install responsibility, voltage, wattage and comments.",
+    "A lighting responsibility note states that light fixtures are furnished by the owner, installed by the general contractor, and wired by the electrical contractor unless otherwise noted.",
+    "The electrical notes reference E5.0 for the complete lighting schedule and identify GC responsibility for relays at track lighting."
+  ],
+  "fixture_schedule_sample": [
+    {"tag":"L100","qty":10,"type":"Decorative Pendant","manufacturer":"Olde Brick Lighting","model":"PC-RYTTENBERG-10","lamp":"SATCO S21712 5W A19 LED CLEAR","furnish":"PC","install":"GC","volts":"120v","watts":"75w Max","note":"Delivers with lighting package"},
+    {"tag":"L102","qty":4,"type":"Antique Globe Fixture","manufacturer":"Custom by PSW","model":"Custom","lamp":"Philips 9.5A19/2200-2700 DIM","furnish":"PSW","install":"GC","volts":"120v","watts":"14","note":"Delivers with warehouse shipment"},
+    {"tag":"L104","qty":2,"type":"Wall Sconce - Toilet Room","manufacturer":"Progress","model":"P300395-31M","lamp":"SATCO S21712 5W A19 LED CLEAR","furnish":"VD","install":"GC","volts":"120v","watts":"60w","note":"Delivers with lighting package"},
+    {"tag":"L109","qty":3,"type":"Cylinder Pendant","manufacturer":"Quanta Lighting","model":"CI602-BK-120V","lamp":"Philips 567909 10PAR38/LED/930/F40/DIM/GULW/T20","furnish":"VD","install":"GC","volts":"120/277","note":"Delivers with lighting package"},
+    {"tag":"L200","qty":9,"type":"Ceiling Mounted Toilet Room Fixture","manufacturer":"Craftmade","model":"X3114-FB","lamp":"SATCO S21712 5W A19 LED CLEAR","furnish":"VD","install":"GC","volts":"120v","watts":"60w"},
+    {"tag":"L207","qty":14,"type":"LED Track Head (Menu)","manufacturer":"Solais","model":"XD20-25C-30K-1100-BK-J","lamp":"Philips 471078 12PAR30S/EXPERTCOLOR","furnish":"VD","install":"GC","volts":"120v","watts":"75w Max","note":"Refer to plans for placement; delivers with lighting package"},
+    {"tag":"L208","qty":18,"type":"LED Track Head (Wall Flood)","manufacturer":"Solais","model":"XD20-40C-30K-1100-BK-J","lamp":"Philips 471086 12PAR30S/EXPERTCOLOR","furnish":"VD","install":"GC","volts":"120v","watts":"75w Max","note":"Refer to plans for placement; delivers with lighting package"},
+    {"tag":"L300","qty":4,"type":"Recessed Downlight","manufacturer":"Elite LED Lighting","model":"REL537-950L-DIMTR-120-CCT-WWH/ROUGHPLATE MX96123 // 13P38WD30FL","furnish":"VD","install":"GC","volts":"120v","watts":"90w Max","note":"Delivers with lighting package"},
+    {"tag":"L302","qty":3,"type":"Recessed 2 x 4","manufacturer":"RAB","model":"EZPAN2X4-50YN/D10 EDGELIT","furnish":"VD","install":"GC","volts":"120/277","watts":"30/40/50","note":"Delivers with lighting package"},
+    {"tag":"L305","qty":3,"type":"Recessed 2 x 2","manufacturer":"RAB","model":"EZPAN2X2-40YN/D10 EDGELIT","furnish":"VD","install":"GC","volts":"120/277","watts":"20/30/40","note":"Delivers with lighting package"},
+    {"tag":"L400","qty":1,"type":"Ceiling Fan","manufacturer":"Minka Aire","model":"MOJO LED 52in F522L-CL","furnish":"VD","install":"GC","note":"Delivers with lighting package"},
+    {"tag":"L500","qty":7,"type":"Emergency Light","manufacturer":"Cooper","model":"APEL Series","furnish":"VD","install":"GC","volts":"120v","note":"Delivers with lighting package"},
+    {"tag":"L502","qty":6,"type":"Emergency Exit Sign with Lights","manufacturer":"Cooper","model":"ALLPRO APCH7R","furnish":"VD","install":"GC","volts":"120v","note":"Delivers with lighting package"}
+  ],
+  "quote_questions": [
+    "Identify the electrical contractor and confirm the person responsible for the lighting quote.",
+    "Confirm whether the owner-furnished lighting package is being quoted through LPA CSI and who controls the purchase.",
+    "Verify complete fixture schedule quantities and any fixture tags not represented in the sample extraction.",
+    "Confirm controls scope, relay requirements and any controls equipment that must be priced.",
+    "Confirm addenda/revision status and bid due date.",
+    "Confirm freight, lead time and any approved-substitution requirements."
+  ]
+}

@@ -2,6 +2,9 @@
   "name": "bobert-ai",
   "version": "1.0.0",
   "description": "Bobert — Field Intelligence Platform",
+  "scripts": {
+    "start": "node scripts/local-server.mjs"
+  },
   "dependencies": {
     "stripe": "^14.0.0"
   }

@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bobert Intelligence Record",
+  "type": "object",
+  "required": ["record_id", "captured_at", "inputs", "entities", "claims", "research_questions", "recommended_actions"],
+  "properties": {
+    "record_id": {"type": "string"},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "source"],
+        "properties": {
+          "type": {"enum": ["screenshot", "email", "url", "article", "note", "document", "manual_entry"]},
+          "source": {"type": "string"},
+          "source_url": {"type": "string"},
+          "captured_by": {"type": "string"}
+        }
+      }
+    },
+    "entities": {
+      "type": "object",
+      "properties": {
+        "accounts": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+        "contacts": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+        "projects": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+        "organizations": {"type": "array", "items": {"$ref": "#/$defs/entity"}},
+        "locations": {"type": "array", "items": {"$ref": "#/$defs/entity"}}
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim_id", "text", "status", "evidence_ids"],
+        "properties": {
+          "claim_id": {"type": "string"},
+          "text": {"type": "string"},
+          "status": {"enum": ["verified", "supported", "inferred", "unknown", "conflicting"]},
+          "confidence": {"enum": ["high", "medium", "low", "not_applicable"]},
+          "evidence_ids": {"type": "array", "items": {"type": "string"}},
+          "notes": {"type": "string"}
+        }
+      }
+    },
+    "signals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["signal", "status"],
+        "properties": {
+          "signal": {"type": "string"},
+          "status": {"enum": ["observed", "supported", "inferred", "unknown"]},
+          "evidence_ids": {"type": "array", "items": {"type": "string"}},
+          "date": {"type": "string"}
+        }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["evidence_id", "type", "source", "supports"],
+        "properties": {
+          "evidence_id": {"type": "string"},
+          "type": {"enum": ["capture", "company_site", "filing", "news", "job_posting", "project_record", "person_profile", "email", "user_note", "other"]},
+          "source": {"type": "string"},
+          "url": {"type": "string"},
+          "supports": {"type": "string"},
+          "captured_at": {"type": "string", "format": "date-time"}
+        }
+      }
+    },
+    "research_questions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["question", "priority", "status"],
+        "properties": {
+          "question": {"type": "string"},
+          "priority": {"enum": ["critical", "high", "normal", "low"]},
+          "status": {"enum": ["open", "researching", "answered", "blocked"]},
+          "reason": {"type": "string"}
+        }
+      }
+    },
+    "recommended_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["action", "reason", "status"],
+        "properties": {
+          "action": {"type": "string"},
+          "reason": {"type": "string"},
+          "evidence_ids": {"type": "array", "items": {"type": "string"}},
+          "status": {"enum": ["recommended", "approved", "completed", "rejected"]}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "entity": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": {"type": "string"},
+        "type": {"type": "string"},
+        "source": {"type": "string"},
+        "confidence": {"enum": ["high", "medium", "low"]}
+      }
+    }
+  }
+}
