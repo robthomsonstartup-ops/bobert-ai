@@ -1,0 +1,102 @@
+{
+  "manufacturer": "Current Lighting / Hubbell",
+  "series": "Viper Silicone Strike (VP-SS)",
+  "source_url": "https://cdn.currentlighting.com/site/specsheet/BEA_VIPERSPEC_Micro_Strike_Silicone_Strike.pdf",
+  "catalog_format": "VP-SS-{size}-{light_engine}-{cct_cri}-{distribution}{rotation?}-{voltage}-{mounting}-{color}-{control_options?}",
+  "example": "VP-SS-1-40L-75-4K7-4W-UNV-ASQU-BLT",
+  "note": "This sheet covers two optic platforms (Micro Strike 'MS' and Silicone Strike 'SS') with different light_engine tables; only Silicone Strike is decoded here to match the LSI comparison in SCHEMA-v0.md.",
+  "tokens": {
+    "size": {
+      "1": { "weight_lbs": 13.7 },
+      "2": { "weight_lbs": 16.0 },
+      "3": { "weight_lbs": 25.9 },
+      "4": { "weight_lbs": 30.8 }
+    },
+    "light_engine_silicone_strike": {
+      "40L-35":  { "watts": 35,  "lumens": 5500 },
+      "40L-50":  { "watts": 50,  "lumens": 7500 },
+      "40L-65":  { "watts": 65,  "lumens": 10000 },
+      "40L-80":  { "watts": 80,  "lumens": 12500 },
+      "40L-100": { "watts": 100, "lumens": 15000 },
+      "40L-120": { "watts": 120, "lumens": 17500 },
+      "40L-140": { "watts": 140, "lumens": 20000 },
+      "40L-170": { "watts": 170, "lumens": 22500 },
+      "40L-195": { "watts": 195, "lumens": 25000 },
+      "80L-75":  { "watts": 75,  "lumens": 12500 },
+      "80L-90":  { "watts": 90,  "lumens": 15000 },
+      "80L-105": { "watts": 105, "lumens": 17500 },
+      "80L-130": { "watts": 130, "lumens": 21000 },
+      "80L-155": { "watts": 155, "lumens": 24000 },
+      "80L-175": { "watts": 175, "lumens": 27000 },
+      "80L-205": { "watts": 205, "lumens": 30000 },
+      "80L-225": { "watts": 225, "lumens": 33000 },
+      "80L-250": { "watts": 250, "lumens": 36000 },
+      "80L-280": { "watts": 280, "lumens": 40000 },
+      "120L-190": { "watts": 190, "lumens": 30000 },
+      "120L-205": { "watts": 205, "lumens": 33000 },
+      "120L-230": { "watts": 230, "lumens": 36000 },
+      "120L-265": { "watts": 265, "lumens": 40000 },
+      "120L-295": { "watts": 295, "lumens": 44000 },
+      "120L-320": { "watts": 320, "lumens": 48000 },
+      "120L-355": { "watts": 355, "lumens": 52000 },
+      "120L-380": { "watts": 380, "lumens": 55000 },
+      "120L-420": { "watts": 420, "lumens": 60000 },
+      "180L-275": { "watts": 275, "lumens": 44000 },
+      "180L-295": { "watts": 295, "lumens": 48000 },
+      "180L-335": { "watts": 335, "lumens": 52000 },
+      "180L-360": { "watts": 360, "lumens": 55000 },
+      "180L-395": { "watts": 395, "lumens": 60000 },
+      "180L-435": { "watts": 435, "lumens": 65000 },
+      "180L-470": { "watts": 470, "lumens": 70000 },
+      "180L-510": { "watts": 510, "lumens": 75000 },
+      "180L-550": { "watts": 550, "lumens": 80000 },
+      "note": "watts/lumens shown are nominal ordering-guide values, not tested delivered lumens"
+    },
+    "cct_cri": {
+      "22K7": { "cct": 2200, "cri": 70 },
+      "27K7": { "cct": 2700, "cri": 70 },
+      "27K8": { "cct": 2700, "cri": 80 },
+      "3K7":  { "cct": 3000, "cri": 70 },
+      "3K8":  { "cct": 3000, "cri": 80 },
+      "35K8": { "cct": 3500, "cri": 80 },
+      "4K7":  { "cct": 4000, "cri": 70 },
+      "4K8":  { "cct": 4000, "cri": 80 },
+      "5K7":  { "cct": 5000, "cri": 70 },
+      "5K8":  { "cct": 5000, "cri": 80 }
+    },
+    "distribution": {
+      "2":   { "ies_type": "not printed on this consolidated sheet - needs per-SKU photometric report", "manufacturer_label": "Type 2" },
+      "3":   { "ies_type": "not printed on this consolidated sheet - needs per-SKU photometric report", "manufacturer_label": "Type 3" },
+      "4W":  { "ies_type": "not printed on this consolidated sheet - needs per-SKU photometric report", "manufacturer_label": "Type 4 Wide" },
+      "5QM": { "ies_type": "not printed on this consolidated sheet - needs per-SKU photometric report", "manufacturer_label": "Type 5 Square Medium" },
+      "5QW": { "ies_type": "not printed on this consolidated sheet - needs per-SKU photometric report", "manufacturer_label": "Type 5 Square Wide" }
+    },
+    "rotation": { "L": "optic rotation left", "R": "optic rotation right", "blank": "no rotation" },
+    "voltage": { "UNV": "120-277V", "120": "120V", "208": "208V", "240": "240V", "277": "277V", "347": "347V", "480": "480V" },
+    "mounting": {
+      "A": "arm mount, square pole/flat surface", "A_": "arm mount, round pole",
+      "ASQU": "universal arm mount, square pole", "A_U": "universal arm mount, round pole",
+      "AAU": "adjustable arm, universal drill pattern", "AA_U": "adjustable arm, round pole",
+      "ADU": "decorative upswept arm", "AD_U": "decorative upswept arm, round pole",
+      "MAF": "mast arm fitter, 2-3/8in OD", "K": "knuckle", "T": "trunnion",
+      "WB": "wall bracket, horizontal tenon with MAF", "WM": "wall mount, decorative upswept arm", "WA": "wall mount, adjustable arm"
+    },
+    "color": {
+      "BLT": "Black Matte Textured", "BLS": "Black Gloss Smooth", "DBT": "Dark Bronze Matte Textured",
+      "DBS": "Dark Bronze Gloss Smooth", "GTT": "Graphite Matte Textured", "LGS": "Light Grey Gloss Smooth",
+      "LGT": "Light Grey Gloss Textured", "PSS": "Platinum Silver Smooth", "WHT": "White Matte Textured",
+      "WHS": "White Gloss Smooth", "VGT": "Verde Green Textured"
+    },
+    "dimming": "0-10V standard; CD option extends dimming leads externally"
+  },
+  "fixed_specs": {
+    "ip_rating": "IP66 (Silicone Strike); IP65 (Micro Strike, not covered by this decoder)",
+    "impact_rating": "IK10 (Silicone Strike only)",
+    "vibration_rating": "1.5G (ANSI C136.31)",
+    "power_factor": ">0.90",
+    "thd_percent": "<20",
+    "certifications": ["UL1598", "CSA C22.2#250.0-24", "DLC (some Premium)", "Buy American Act / Trade Agreements Act", "FCC CFR Title 47 Part 15 Class A"],
+    "darksky_note": "meets IDA recommendations at 3000K CCT and 0deg tilt",
+    "warranty_years": 5
+  }
+}

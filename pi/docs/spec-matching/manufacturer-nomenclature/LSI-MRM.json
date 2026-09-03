@@ -1,0 +1,51 @@
+{
+  "manufacturer": "LSI Industries",
+  "series": "Mirada Medium (MRM)",
+  "source_url": "https://lsicorp.com/lighting/wp-content/uploads/sites/2/documents/products/MRM-Specsheet-061325.pdf",
+  "catalog_format": "MRM LED {lumen_package} SIL {distribution} {orientation?} {voltage} {controls?} DIM {cct} {cri} {control_accessory?} {finish} {louver_option?}",
+  "example": "MRM LED 36L SIL FTA UNV DIM 50 70CRI ALSCS04 BRZ IL",
+  "tokens": {
+    "lumen_package": {
+      "7L":  { "lumens": 7000,  "watts": 48  },
+      "9L":  { "lumens": 9000,  "watts": 62  },
+      "12L": { "lumens": 12000, "watts": 85  },
+      "18L": { "lumens": 18000, "watts": 135 },
+      "24L": { "lumens": 24000, "watts": 161 },
+      "30L": { "lumens": 30000, "watts": 213 },
+      "36L": { "lumens": 36000, "watts": 255 },
+      "42L": { "lumens": 42000, "watts": 314 },
+      "48L": { "lumens": 48000, "watts": 367 },
+      "55L": { "lumens": 55000, "watts": 438 },
+      "note": "nominal package; actual delivered lumens vary by distribution/CCT, see photometric table"
+    },
+    "distribution": {
+      "2":  { "ies_type": "Type II - Short" },
+      "3":  { "ies_type": "Type III - Short" },
+      "4":  { "ies_type": "Type IV - Very Short" },
+      "5W": { "ies_type": "Type VS - Short", "note": "not available with IL/IH louver options" },
+      "FT": { "ies_type": "Type IV - Short", "note": "Forward Throw" },
+      "FTA":{ "ies_type": "Type VS - Short", "note": "Forward Throw Automotive" },
+      "AM": { "ies_type": "Type III - Very Short", "note": "Automotive Merchandise" },
+      "LC": { "ies_type": "N/A", "note": "Left Corner; not available with IL/IH" },
+      "RC": { "ies_type": "N/A", "note": "Right Corner; not available with IL/IH" }
+    },
+    "orientation": { "L": "optics rotated left 90deg", "R": "optics rotated right 90deg", "blank": "standard" },
+    "voltage": { "UNV": "120-277V", "HV": "347-480V" },
+    "cct": { "50": 5000, "40": 4000, "35": 3500, "30": 3000, "27": 2700 },
+    "cri": { "70CRI": 70, "80CRI": 80, "note": "3500K and 2700K only available at 80CRI" },
+    "finish": { "BLK": "Black", "BRZ": "Dark Bronze", "GMG": "Gun Metal Gray", "GPT": "Graphite", "MSV": "Metallic Silver", "PLP": "Platinum Plus", "SVG": "Satin Verde Green", "WHT": "White" },
+    "louver_option": { "IH": "Integral Half Louver - moderate spill cutoff", "IL": "Integral Louver - sharp spill cutoff, not available with 5W/LC/RC" },
+    "dimming": "0-10V (10%-100%) standard, always present as 'DIM' token"
+  },
+  "fixed_specs": {
+    "ip_rating": "IP66",
+    "impact_rating": "IK10",
+    "vibration_rating": "3G (ANSI C136.31)",
+    "l80_life_hours": ">100000",
+    "power_factor": ">0.90",
+    "thd_percent": "<20",
+    "certifications": ["UL1598", "UL8750", "DLC", "RoHS", "Buy American Act", "Title 24 compliant (where applicable)"],
+    "darksky_note": "DarkSky approved only with 3000K or warmer CCT and fixed (non-adjustable) mounting",
+    "warranty_years": 5
+  }
+}
