@@ -1,0 +1,1 @@
+ALTER TABLE `fixtures` ADD `quantity_source` text DEFAULT 'pending' NOT NULL;

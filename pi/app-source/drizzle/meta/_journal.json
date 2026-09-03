@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1788374245246,
+      "tag": "0000_cynical_quasimodo",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1788388435313,
+      "tag": "0001_red_squadron_sinister",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1788389772544,
+      "tag": "0002_flippant_mariko_yashida",
+      "breakpoints": true
+    }
+  ]
+}

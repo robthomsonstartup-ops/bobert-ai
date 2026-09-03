@@ -1,0 +1,12 @@
+{
+  "source": "/workspace/scratch/485fad7b6fb8/upload/02-09-2026rt PWS Katy Hwy_Houston_TX.xlsx",
+  "output": "/workspace/scratch/485fad7b6fb8/outputs/valley-ford/Valley Ford of Huron - Drawing Truth Quote.xlsx",
+  "package_entries_changed": [
+    "xl/worksheets/sheet1.xml"
+  ],
+  "authorized_value_cells": 185,
+  "hidden_unused_rows": "48:65",
+  "styles_preserved": true,
+  "formulas_preserved": true,
+  "all_other_package_parts_byte_identical": true
+}

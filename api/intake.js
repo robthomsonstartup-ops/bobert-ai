@@ -1,4 +1,8 @@
 // api/intake.js
+// SUPERSEDED (Sept 2026): the fixture-schedule-to-quote job is now handled
+// by pi/app-source (see pi/STATUS.md). This file still handles bid-invite
+// email / RFP text intake and is left running as-is until the pi/ approach
+// is verified end-to-end and Rob signs off on retiring this.
 // Bobert Job Intake Engine — personal tool for CSI
 // Accepts: { text } — raw pasted bid invite email, RFP, or notes
 // Returns: structured intake JSON
