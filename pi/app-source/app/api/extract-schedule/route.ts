@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const truncated = text.slice(0, 100000);
+  const truncated = text.slice(0, 22000); // ~5.5k tokens, safe under Groq's 8k/min free-tier cap
 
   let groqResponse: Response;
   try {
