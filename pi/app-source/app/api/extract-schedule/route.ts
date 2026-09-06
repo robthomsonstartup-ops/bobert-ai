@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const truncated = text.slice(0, 22000); // ~5.5k tokens, safe under Groq's 8k/min free-tier cap
+  const truncated = text.slice(0, 24000); // ~6k tokens, safe under Groq's 8k/min free-tier cap; must match SCHEDULE_AUTO_EXTRACT_LIMIT in pdf-extract.ts
 
   let groqResponse: Response;
   try {

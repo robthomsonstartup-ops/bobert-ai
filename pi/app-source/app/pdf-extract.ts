@@ -45,18 +45,35 @@ const SCHEDULE_PHRASES = [
   "fixture schedule", "luminaire schedule", "lighting fixture schedule",
   "lighting schedule", "light fixture schedule",
 ];
+// Pages that clearly belong to a different discipline's schedule - if one of
+// these appears and no lighting phrase does, don't treat it as a lighting
+// schedule even if it happens to share generic header words (type,
+// description, voltage, etc. show up in panel/mechanical schedules too).
+const NEGATIVE_SCHEDULE_PHRASES = [
+  "panel schedule", "panelboard schedule", "circuit schedule",
+  "mechanical schedule", "equipment schedule", "plumbing fixture schedule",
+  "door schedule", "window schedule", "diffuser schedule",
+];
 const SCHEDULE_HEADER_WORDS = [
   "type", "manufacturer", "catalog", "description", "mounting",
   "voltage", "lamp", "wattage", "remarks", "symbol",
 ];
 const SCHEDULE_HEADER_MIN_MATCHES = 4;
-const SCHEDULE_AUTO_EXTRACT_LIMIT = 80000;
+// Must match the server's actual truncation budget in
+// app/api/extract-schedule/route.ts - if these drift apart, the UI can
+// report "auto" success while the server silently drops content past its
+// own limit. Keep in sync.
+const SCHEDULE_AUTO_EXTRACT_LIMIT = 24000;
 
-function isScheduleTablePage(lowerText: string): boolean {
-  const hasPhrase = SCHEDULE_PHRASES.some((p) => lowerText.indexOf(p) !== -1);
-  if (hasPhrase) return true;
+type PageMatchStrength = "strong" | "weak" | "none";
+
+function scheduleMatchStrength(lowerText: string): PageMatchStrength {
+  const hasPositivePhrase = SCHEDULE_PHRASES.some((p) => lowerText.indexOf(p) !== -1);
+  if (hasPositivePhrase) return "strong";
+  const hasNegativePhrase = NEGATIVE_SCHEDULE_PHRASES.some((p) => lowerText.indexOf(p) !== -1);
+  if (hasNegativePhrase) return "none"; // looks like a different discipline's schedule
   const headerMatches = SCHEDULE_HEADER_WORDS.filter((w) => lowerText.indexOf(w) !== -1);
-  return headerMatches.length >= SCHEDULE_HEADER_MIN_MATCHES;
+  return headerMatches.length >= SCHEDULE_HEADER_MIN_MATCHES ? "weak" : "none";
 }
 
 export type PdfExtractResult = {
@@ -75,17 +92,26 @@ export async function extractPdfScheduleText(file: File): Promise<PdfExtractResu
   const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
 
   let firstPageText = "";
-  const schedulePages: { num: number; text: string }[] = [];
+  const schedulePages: { num: number; text: string; strength: PageMatchStrength }[] = [];
 
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
     const content = await page.getTextContent();
     const pageText = content.items.map((item) => item.str).join(" ");
     if (i === 1) firstPageText = pageText;
-    if (isScheduleTablePage(pageText.toLowerCase())) schedulePages.push({ num: i, text: pageText });
+    const strength = scheduleMatchStrength(pageText.toLowerCase());
+    if (strength !== "none") schedulePages.push({ num: i, text: pageText, strength });
   }
 
-  const scheduleFullText = schedulePages.map((p) => `[Page ${p.num}]\n${p.text}`).join("\n\n");
+  // Strong (explicit "fixture schedule" title) matches go first so they're
+  // the ones that actually survive the server's truncation budget, instead
+  // of being crowded out by earlier weak/generic matches.
+  const ordered = [...schedulePages].sort((a, b) => {
+    if (a.strength === b.strength) return a.num - b.num;
+    return a.strength === "strong" ? -1 : 1;
+  });
+
+  const scheduleFullText = ordered.map((p) => `[Page ${p.num}${p.strength === "weak" ? " - unconfirmed match" : ""}]\n${p.text}`).join("\n\n");
   let result = `[Page 1]\n${firstPageText}`;
   let mode: PdfExtractResult["mode"] = "none";
 
@@ -93,10 +119,10 @@ export async function extractPdfScheduleText(file: File): Promise<PdfExtractResu
     result += "\n\n[No pages matched fixture schedule detection in this document]";
     mode = "none";
   } else if (scheduleFullText.length <= SCHEDULE_AUTO_EXTRACT_LIMIT) {
-    result += `\n\n[FIXTURE SCHEDULE CONTENT — pages ${schedulePages.map((p) => p.num).join(", ")}]\n${scheduleFullText}`;
+    result += `\n\n[FIXTURE SCHEDULE CONTENT — pages ${ordered.map((p) => p.num).join(", ")}]\n${scheduleFullText}`;
     mode = "auto";
   } else {
-    const pageNums = schedulePages.map((p) => p.num).join(", ");
+    const pageNums = ordered.map((p) => p.num).join(", ");
     result += `\n\n[SUSPECTED FIXTURE SCHEDULE PAGES: ${pageNums}]\nCombined content (${scheduleFullText.length} characters) is too large to extract automatically. Try a smaller PDF (just the schedule sheet) or paste the schedule text directly.`;
     mode = "manual-fallback";
   }
