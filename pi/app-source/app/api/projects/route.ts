@@ -15,6 +15,9 @@ export async function POST(request: Request) {
     scope: body.scope?.trim() ?? "", bidDueDate: body.bidDueDate ?? "", bidPlatform: body.bidPlatform?.trim() ?? "",
     planDate: body.planDate ?? "", packageStrategy: body.packageStrategy || "alternate",
     quantityMethod: body.quantityMethod || "manual", status: "intake",
+    eyebrow: body.eyebrow?.trim() || "FIELD INTAKE",
+    summary: body.summary?.trim() ?? "",
+    defaultSelectedFixtureType: body.defaultSelectedFixtureType?.trim() ?? "",
   }).returning();
   return Response.json(created, { status: 201 });
 }

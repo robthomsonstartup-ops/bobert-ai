@@ -1,0 +1,43 @@
+import { getDb } from "@/db";
+import { projects } from "@/db/schema";
+import { eq } from "drizzle-orm";
+
+export async function GET(_: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const [row] = await getDb().select().from(projects).where(eq(projects.id, Number(id)));
+  if (!row) return Response.json({ error: "Project not found" }, { status: 404 });
+  return Response.json(row);
+}
+
+export async function PATCH(request: Request, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
+  const body = (await request.json()) as Partial<{
+    name: string;
+    location: string;
+    customer: string;
+    scope: string;
+    bidDueDate: string;
+    bidPlatform: string;
+    packageStrategy: string;
+    quantityMethod: string;
+    status: string;
+    eyebrow: string;
+    summary: string;
+    defaultSelectedFixtureType: string;
+  }>;
+  const updates: Record<string, string> = {};
+  for (const key of [
+    "name", "location", "customer", "scope", "bidDueDate", "bidPlatform",
+    "packageStrategy", "quantityMethod", "status", "eyebrow", "summary",
+    "defaultSelectedFixtureType",
+  ] as const) {
+    if (body[key] !== undefined) updates[key] = String(body[key]);
+  }
+  if (Object.keys(updates).length === 0) {
+    return Response.json({ error: "No updatable fields provided" }, { status: 400 });
+  }
+  updates.updatedAt = new Date().toISOString();
+  const [updated] = await getDb().update(projects).set(updates).where(eq(projects.id, Number(id))).returning();
+  if (!updated) return Response.json({ error: "Project not found" }, { status: 404 });
+  return Response.json(updated);
+}

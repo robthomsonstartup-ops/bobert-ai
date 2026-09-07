@@ -22,6 +22,13 @@
       "when": 1788389772544,
       "tag": "0002_flippant_mariko_yashida",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1788749854198,
+      "tag": "0003_curious_wraith",
+      "breakpoints": true
     }
   ]
 }

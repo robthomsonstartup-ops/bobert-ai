@@ -13,6 +13,14 @@ export const projects = sqliteTable("projects", {
   packageStrategy: text("package_strategy").notNull().default("alternate"),
   quantityMethod: text("quantity_method").notNull().default("manual"),
   status: text("status").notNull().default("intake"),
+  // Header copy shown in the workspace top bar. Replaces the old
+  // project===\"valley\"?...:... conditionals in page.tsx — every project,
+  // demo/pilot or real, carries its own display copy as data.
+  eyebrow: text("eyebrow").notNull().default("FIELD INTAKE"),
+  summary: text("summary").notNull().default(""),
+  // Which fixture type row is selected by default when the project loads
+  // (e.g. "D1", "L109"). Empty string = no default selection.
+  defaultSelectedFixtureType: text("default_selected_fixture_type").notNull().default(""),
   createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 });
@@ -21,16 +29,39 @@ export const fixtures = sqliteTable("fixtures", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   projectId: integer("project_id").notNull().references(() => projects.id),
   fixtureType: text("fixture_type").notNull(),
+  area: text("area").notNull().default("Interior"), // "Interior" | "Exterior"
   specifiedManufacturer: text("specified_manufacturer").notNull().default(""),
   specifiedCatalog: text("specified_catalog").notNull().default(""),
   alternateManufacturer: text("alternate_manufacturer").notNull().default(""),
   alternateCatalog: text("alternate_catalog").notNull().default(""),
+  family: text("family").notNull().default(""),
   description: text("description").notNull().default(""),
   quantity: integer("quantity"),
   quantitySource: text("quantity_source").notNull().default("pending"),
-  reviewStatus: text("review_status").notNull().default("unverified"),
+  // "ready" | "review" | "factory" | "photometric" | "keep" — the
+  // configurator's 5-state ConfigStatus enum, stored directly (not a
+  // generic "unverified/verified" flag).
+  reviewStatus: text("review_status").notNull().default("review"),
+  exception: text("exception").notNull().default(""),
+  requirements: text("requirements", { mode: "json" })
+    .$type<string[]>()
+    .notNull()
+    .default([]),
+  outOfScope: integer("out_of_scope", { mode: "boolean" }).notNull().default(false),
   evidenceLabel: text("evidence_label").notNull().default(""),
   evidenceUrl: text("evidence_url").notNull().default(""),
+  updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
+export const vendorRules = sqliteTable("vendor_rules", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  matchLabel: text("match_label").notNull(),
+  targetManufacturer: text("target_manufacturer").notNull(),
+  // Comma-separated match terms, same shape the UI already collects
+  // (e.g. "Lightolier, Gardco"). Kept as a single text field rather than
+  // JSON since it's edited as one comma-separated input in the UI.
+  includesTerms: text("includes_terms").notNull(),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
   updatedAt: text("updated_at").notNull().default(sql`CURRENT_TIMESTAMP`),
 });
 
