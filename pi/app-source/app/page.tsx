@@ -22,7 +22,8 @@ type Project = {
   name: string;
   location: string;
   planDate: string;
-  customer: string;
+  customerId: number | null;
+  customerName: string | null;
   scope: string;
   bidDueDate: string;
   bidPlatform: string;
@@ -34,6 +35,11 @@ type Project = {
   defaultSelectedFixtureType: string;
   createdAt: string;
   updatedAt: string;
+};
+
+type Customer = {
+  id: number;
+  name: string;
 };
 
 type Fixture = {
@@ -93,6 +99,7 @@ async function apiRequest<T>(url: string, init?: RequestInit): Promise<T> {
 }
 
 const getProjects = () => apiRequest<Project[]>("/api/projects");
+const getCustomers = () => apiRequest<Customer[]>("/api/customers");
 const createProjectApi = (body: Record<string, string>) =>
   apiRequest<Project>("/api/projects", { method: "POST", body: JSON.stringify(body) });
 const patchProjectApi = (id: number, body: Record<string, string>) =>
@@ -120,6 +127,7 @@ export default function Home() {
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
   const [fixturesLoading, setFixturesLoading] = useState(false);
   const [vendorRules, setVendorRules] = useState<VendorRule[]>([]);
+  const [customers, setCustomers] = useState<Customer[]>([]);
 
   // --- UI-only state ---
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -130,6 +138,7 @@ export default function Home() {
   const [noticeType, setNoticeType] = useState<"success" | "warning">("success");
   const [showNewProject, setShowNewProject] = useState(false);
   const [newProjectName, setNewProjectName] = useState("");
+  const [newProjectCustomer, setNewProjectCustomer] = useState("");
   const [showAddFixture, setShowAddFixture] = useState(false);
   const [newFixture, setNewFixture] = useState({
     type: "", area: "Interior" as "Interior" | "Exterior", specified: "", specifiedCatalog: "", description: "", qty: 1,
@@ -155,13 +164,14 @@ export default function Home() {
     setNoticeType(type);
   }
 
-  // --- Initial load: project list + vendor rules ---
+  // --- Initial load: project list + vendor rules + customers ---
   useEffect(() => {
     (async () => {
       try {
-        const [projectRows, ruleRows] = await Promise.all([getProjects(), getVendorRules()]);
+        const [projectRows, ruleRows, customerRows] = await Promise.all([getProjects(), getVendorRules(), getCustomers()]);
         setProjects(projectRows);
         setVendorRules(ruleRows);
+        setCustomers(customerRows);
         if (projectRows.length > 0) selectProject(projectRows[0].id, projectRows);
       } catch (err) {
         notify(`Failed to load projects: ${(err as Error).message}`, "warning");
@@ -231,6 +241,20 @@ export default function Home() {
     () => Object.fromEntries((["ready", "review", "factory", "photometric", "keep"] as ConfigStatus[]).map((s) => [s, fixtures.filter((x) => x.reviewStatus === s).length])),
     [fixtures]
   );
+  // Groups the project picker by customer so the list stays navigable as
+  // project count grows — flat alphabetical-by-customer, with projects
+  // that have no customer assigned yet trailing in their own group.
+  const projectsByCustomer = useMemo(() => {
+    const groups = new Map<string, Project[]>();
+    for (const p of projects) {
+      const key = p.customerName ?? "";
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key)!.push(p);
+    }
+    const named = [...groups.entries()].filter(([k]) => k !== "").sort(([a], [b]) => a.localeCompare(b));
+    const unassigned = groups.get("") ?? [];
+    return unassigned.length > 0 ? [...named, ["No customer assigned", unassigned] as [string, Project[]]] : named;
+  }, [projects]);
   const preferredVendors = useMemo(() => {
     const base = [
       "LSI", "Coronet", "BEST Lighting", "Lumenture", "Juno", "Nora", "Columbia", "Cree", "Hubbell", "Lithonia",
@@ -318,15 +342,18 @@ export default function Home() {
       return;
     }
     try {
-      const created = await createProjectApi({ name, eyebrow: "FIELD INTAKE", summary: "" });
+      const created = await createProjectApi({ name, customerName: newProjectCustomer.trim(), eyebrow: "FIELD INTAKE", summary: "" });
       setProjects((p) => [created, ...p]);
       setNewProjectName("");
+      setNewProjectCustomer("");
       setShowNewProject(false);
       currentProjectIdRef.current = created.id;
       setProjectId(created.id);
       setFixtures([]);
       setSelectedId(null);
       setFilter("all");
+      // Refresh in case creating this project also created a brand-new customer.
+      getCustomers().then(setCustomers).catch(() => {});
       notify(`${name} created. Add fixtures below as you walk the job.`);
     } catch (err) {
       notify(`Failed to create project: ${(err as Error).message}`, "warning");
@@ -652,7 +679,11 @@ export default function Home() {
                 if (v) selectProject(Number(v));
               }}
             >
-              {projects.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+              {projectsByCustomer.map(([customerName, group]) => (
+                <optgroup key={customerName} label={customerName}>
+                  {group.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}
+                </optgroup>
+              ))}
               <option value="__new__">+ New project…</option>
             </select>
           </div>
@@ -676,8 +707,10 @@ export default function Home() {
         {showNewProject ? (
           <div className="notice page-notice" style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
             <Input placeholder="Project name (e.g. Main Street Dealership — Springfield)" value={newProjectName} onChange={(e) => setNewProjectName(e.target.value)} style={{ maxWidth: 360 }} />
+            <datalist id="known-customers">{customers.map((c) => <option key={c.id} value={c.name} />)}</datalist>
+            <Input placeholder="Customer (optional)" value={newProjectCustomer} onChange={(e) => setNewProjectCustomer(e.target.value)} list="known-customers" style={{ maxWidth: 220 }} />
             <Button onClick={addProject}>Create project</Button>
-            <Button variant="outline" onClick={() => { setShowNewProject(false); setNewProjectName(""); }}>Cancel</Button>
+            <Button variant="outline" onClick={() => { setShowNewProject(false); setNewProjectName(""); setNewProjectCustomer(""); }}>Cancel</Button>
           </div>
         ) : null}
 

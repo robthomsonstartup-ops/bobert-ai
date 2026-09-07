@@ -1,12 +1,22 @@
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
+export const customers = sqliteTable("customers", {
+  id: integer("id").primaryKey({ autoIncrement: true }),
+  name: text("name").notNull().unique(),
+  createdAt: text("created_at").notNull().default(sql`CURRENT_TIMESTAMP`),
+});
+
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   name: text("name").notNull(),
   location: text("location").notNull().default(""),
   planDate: text("plan_date").notNull().default(""),
-  customer: text("customer").notNull().default(""),
+  // Replaces the old free-text `customer` column, which existed in the
+  // schema from day one but was never actually written to by any UI
+  // code (confirmed — addProject only ever sent `name`). Nullable:
+  // quick field-entered projects may not have a customer assigned yet.
+  customerId: integer("customer_id").references(() => customers.id),
   scope: text("scope").notNull().default(""),
   bidDueDate: text("bid_due_date").notNull().default(""),
   bidPlatform: text("bid_platform").notNull().default(""),
