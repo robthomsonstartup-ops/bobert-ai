@@ -1,51 +1,872 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Bobert — Lighting Quoting. Rebuilt.</title>
-<meta name="description" content="Bobert. Lighting quoting, rebuilt.">
-<link rel="icon" href="/assets/icon.png" type="image/png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#020406;--panel:#071016;--white:#f7f9fb;--muted:#91a0ab;--red:#ff182b;--line:rgba(177,201,219,.17);--glow:rgba(255,24,43,.55);--cyan:#b8d9ec;--max:1440px}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--bg)}body{margin:0;background:radial-gradient(900px 650px at 72% 18%,rgba(255,24,43,.17),transparent 62%),radial-gradient(700px 500px at 10% 35%,rgba(20,75,110,.09),transparent 68%),var(--bg);color:var(--white);font-family:Inter,Arial,sans-serif;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.22;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);background-size:72px 72px;mask-image:linear-gradient(#000,transparent 86%)}
-.wrap{width:min(calc(100% - 72px),var(--max));margin:auto;position:relative;z-index:2}
-header{height:94px;position:fixed;z-index:50;top:18px;left:24px;right:24px;border:1px solid rgba(177,201,219,.2);border-radius:17px;background:rgba(2,6,9,.82);backdrop-filter:blur(24px);box-shadow:0 22px 75px rgba(0,0,0,.5),inset 0 0 30px rgba(255,255,255,.018)}.head{height:100%;padding:0 22px;display:flex;align-items:center;justify-content:space-between}.brandmark{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 0 18px rgba(255,24,43,.22))}.state{font-size:9px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#91a0ab;display:flex;align-items:center;gap:10px}.dot{width:7px;height:7px;border-radius:50%;background:#36d7a3;box-shadow:0 0 13px rgba(54,215,163,.8)}
-.hero{min-height:770px;padding:145px 0 36px;display:grid;grid-template-columns:.88fr 1.12fr;gap:20px;align-items:center;position:relative}.hero:after{content:"";position:absolute;left:-10vw;top:58%;width:68vw;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);opacity:.52;transform:rotate(-8deg);box-shadow:0 0 35px var(--glow)}
-.eyebrow,.kicker{display:flex;align-items:center;gap:11px;font-size:10px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#d7e0e6}.eyebrow:before,.kicker:before{content:"";width:4px;height:19px;background:var(--red);box-shadow:0 0 16px var(--glow)}
-h1{font-family:'Archivo Black',Impact,sans-serif;text-transform:uppercase;font-size:clamp(66px,7.3vw,116px);line-height:.86;letter-spacing:-.025em;margin:24px 0 0;font-weight:900;max-width:700px}h1 span{display:block;color:var(--red);text-shadow:0 0 36px rgba(255,24,43,.25)}.hero-copy{max-width:520px;margin:27px 0 0;color:#a7b2ba;font-size:15px;line-height:1.5}.hero-copy strong{color:#fff}.hero-note{margin-top:22px;color:#667783;font-size:8px;line-height:1.7;letter-spacing:.14em;text-transform:uppercase}.hero-note b{color:#bac6ce}
-.hero-art{height:600px;position:relative;display:flex;align-items:center;justify-content:center}.hero-art:before{content:"";position:absolute;width:650px;height:650px;border-radius:50%;background:radial-gradient(circle,rgba(255,24,43,.25),transparent 67%);filter:blur(28px)}.hero-art:after{content:"";position:absolute;inset:18% 0 0;background:linear-gradient(rgba(88,113,132,.09) 1px,transparent 1px),linear-gradient(90deg,rgba(88,113,132,.09) 1px,transparent 1px);background-size:42px 42px;transform:perspective(520px) rotateX(63deg);transform-origin:center bottom;mask-image:linear-gradient(transparent,black 25%,black 68%,transparent);opacity:.75}
-.visual-shell{position:relative;width:100%;height:100%;z-index:3}.core{position:absolute;left:52%;top:51%;transform:translate(-50%,-50%) rotate(-2deg);width:290px;height:290px;border:1px solid rgba(220,235,245,.36);background:linear-gradient(145deg,rgba(16,26,35,.94),rgba(3,7,11,.97));box-shadow:0 0 90px rgba(255,24,43,.24),inset 0 0 65px rgba(255,255,255,.025);clip-path:polygon(8% 0,92% 0,100% 8%,100% 92%,92% 100%,8% 100%,0 92%,0 8%);display:grid;place-items:center}.core:before{content:"";position:absolute;inset:26px;border:1px solid rgba(255,255,255,.08);clip-path:inherit}.core img{width:190px;height:190px;object-fit:contain;filter:drop-shadow(0 0 28px rgba(255,255,255,.2))}.corner{position:absolute;width:68px;height:68px;border-style:solid;border-color:#fff;opacity:.9}.tl{left:calc(52% - 205px);top:calc(51% - 198px);border-width:4px 0 0 4px}.tr{right:calc(48% - 205px);top:calc(51% - 198px);border-width:4px 4px 0 0;border-color:var(--red);box-shadow:0 0 20px var(--glow)}.br{right:calc(48% - 205px);bottom:calc(49% - 198px);border-width:0 4px 4px 0}.bl{left:calc(52% - 205px);bottom:calc(49% - 198px);border-width:0 0 4px 4px}
-.float{position:absolute;padding:15px;border:1px solid rgba(165,193,216,.28);background:rgba(5,11,16,.92);backdrop-filter:blur(15px);border-radius:9px;box-shadow:0 20px 55px rgba(0,0,0,.5),0 0 25px rgba(255,24,43,.05);z-index:5}.float .mini{color:#758592;font-size:7px;text-transform:uppercase;letter-spacing:.15em}.float strong{display:block;font-size:13px;margin-top:6px}.float small{display:block;margin-top:6px;color:#91a0aa;font-size:9px;line-height:1.5}.fp{left:1%;top:8%;width:205px;transform:rotate(-5deg)}.fv{right:1%;top:12%;width:205px;transform:rotate(5deg)}.ff{left:5%;bottom:9%;width:215px;transform:rotate(3deg)}.fm{right:3%;bottom:8%;width:220px;transform:rotate(-3deg)}.tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}.tags span{font-size:7px;color:#c2ccd3;border:1px solid rgba(154,181,205,.2);padding:5px 7px;border-radius:4px}.fixtures{display:flex;align-items:center;gap:14px;margin-top:10px;height:40px}.down{width:37px;height:20px;border:2px solid #d9e1e6;border-radius:50%;box-shadow:0 0 15px rgba(255,255,255,.18)}.cyl{width:14px;height:34px;border:2px solid #d9e1e6;border-radius:7px}.lin{width:82px;height:9px;border:2px solid #d9e1e6;border-radius:5px}.sq{width:20px;height:20px;border:2px solid #d9e1e6}.check{color:var(--red);font-weight:800}.list{margin-top:9px;display:grid;gap:7px}.list div{font-size:9px;color:#c5ced4}.scan{position:absolute;z-index:6;left:7%;right:4%;top:36%;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);box-shadow:0 0 17px var(--glow);animation:scan 4.8s ease-in-out infinite}.scan:before{content:"";position:absolute;left:52%;top:-3px;width:7px;height:7px;background:#fff;border-radius:50%;box-shadow:0 0 18px #fff,0 0 28px var(--red)}@keyframes scan{0%,100%{transform:translateY(-100px);opacity:0}45%,55%{opacity:.8}50%{transform:translateY(120px)}}
-.workflow{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(5,10,15,.94),rgba(2,5,8,.99));padding:24px 0 26px}.flow-label{font-size:9px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:#d1dbe2;margin-bottom:18px}.flow{display:grid;grid-template-columns:repeat(7,1fr)}.step{text-align:center;position:relative}.step:not(:last-child):after{content:"";position:absolute;top:20px;right:-4px;width:38%;height:1px;background:linear-gradient(90deg,#43515d,var(--red),#43515d);opacity:.65}.step-icon{width:42px;height:42px;margin:auto;display:grid;place-items:center;border:1px solid #536574;background:#071017;clip-path:polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%);color:#dce5eb;font-size:8px;font-weight:800;position:relative;z-index:2}.step:last-child .step-icon{border-color:var(--red);box-shadow:0 0 20px rgba(255,24,43,.25)}.step-name{margin-top:8px;font-size:9px;font-weight:800}.step-sub{margin-top:3px;color:#5f707d;font-size:7px}
-section{border-top:1px solid var(--line);padding:82px 0;position:relative}.section-title{font-family:'Archivo Black',Impact,sans-serif;text-transform:uppercase;font-size:clamp(42px,5vw,70px);line-height:.9;letter-spacing:-.02em;margin:13px 0 0}.intro{max-width:620px;color:#8998a4;font-size:13px;line-height:1.65;margin:15px 0 0}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:36px}.card{min-height:180px;padding:22px;background:linear-gradient(145deg,rgba(11,19,26,.95),rgba(3,7,11,.97));border:1px solid var(--line);border-radius:11px;position:relative;overflow:hidden}.card:after{content:"";position:absolute;right:-38px;bottom:-38px;width:105px;height:105px;border:1px solid rgba(255,24,43,.16);transform:rotate(45deg)}.num{font-size:8px;color:var(--red);font-weight:800;letter-spacing:.14em}.card h3{font-family:'Archivo Black',Impact,sans-serif;font-size:21px;margin:12px 0 0;text-transform:uppercase}.card p{font-size:11px;line-height:1.65;color:#84929d;margin:7px 0 0}.fixture-strip{position:absolute;bottom:18px;left:22px;right:22px;display:flex;align-items:center;gap:14px;opacity:.7}.memory{overflow:hidden;background:linear-gradient(180deg,#03070b,#071016)}.memory:before{content:"";position:absolute;inset:45% 0 0;background:repeating-linear-gradient(168deg,transparent 0 35px,rgba(255,24,43,.08) 36px 37px,transparent 38px 72px);transform:skewY(-5deg)}.memgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:70px;align-items:center}.quote{font-family:'Archivo Black',Impact,sans-serif;text-transform:uppercase;font-size:clamp(42px,4.5vw,64px);font-weight:900;line-height:.92;margin-top:18px}.quote span{color:var(--red)}.memitems{display:grid;grid-template-columns:1fr 1fr;gap:9px;position:relative}.memitem{padding:18px;border:1px solid var(--line);background:rgba(6,13,18,.9);border-radius:9px;font-size:11px}.memitem small{display:block;color:#63727e;font-size:7px;text-transform:uppercase;letter-spacing:.12em;margin-bottom:7px}.memitem:after{content:"✓";float:right;color:var(--red);font-weight:800}.coming{background:linear-gradient(180deg,#03070b,#060a0e)}.modules{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:35px}.module{min-height:150px;padding:20px;border:1px solid var(--line);background:linear-gradient(145deg,#09131b,#04080c);border-radius:11px;position:relative}.module.live{border-color:rgba(255,24,43,.5);box-shadow:inset 0 0 30px rgba(255,24,43,.035)}.module h3{font-family:'Archivo Black',Impact,sans-serif;font-size:19px;margin:0;text-transform:uppercase}.module p{color:#7f8d98;font-size:10px;line-height:1.55;margin:8px 0 0}.badge{position:absolute;bottom:17px;left:20px;font-size:7px;letter-spacing:.14em;text-transform:uppercase;color:#7f8e99}.live .badge{color:#ff626d}.module-icon{width:27px;height:27px;margin-bottom:13px;border:1px solid #4e6373;clip-path:polygon(25% 0,75% 0,100% 25%,100% 75%,75% 100%,25% 100%,0 75%,0 25%);display:grid;place-items:center;font-size:8px;color:#dbe5eb}.live .module-icon{border-color:var(--red);color:var(--red)}.vision{padding-bottom:70px}.visionbox{margin-top:30px;padding:26px;border:1px solid var(--line);border-radius:13px;background:linear-gradient(145deg,#0c151c,#05090d)}.network{display:flex;align-items:center;justify-content:center;gap:7px;flex-wrap:wrap}.network span{padding:8px 10px;border:1px solid var(--line);border-radius:5px;background:#091016;color:#d0d8de;font-size:8px;font-weight:800}.network b{color:var(--red)}.visionbox p{text-align:center;max-width:650px;margin:18px auto 0;color:#7e8c97;font-size:11px;line-height:1.6}footer{border-top:1px solid var(--line);padding:24px 0 38px;color:#596874;font-size:8px;letter-spacing:.14em;text-transform:uppercase}.foot{display:flex;justify-content:space-between}
-@media(max-width:1000px){.hero{grid-template-columns:1fr;min-height:auto;padding-top:130px}.hero-art{height:540px}.cards{grid-template-columns:1fr 1fr}.modules{grid-template-columns:1fr 1fr}.memgrid{grid-template-columns:1fr;gap:35px}}
-@media(max-width:620px){.wrap{width:calc(100% - 32px)}header{left:9px;right:9px;top:9px;height:72px}.brandmark{width:52px;height:52px}.state{font-size:7px}.hero{padding-top:110px}.hero-art{height:470px}.core{width:220px;height:220px}.core img{width:145px;height:145px}.corner{display:none}.float{padding:11px}.fp{left:0;top:3%;width:165px}.fv{right:0;top:6%;width:165px}.ff{left:0;bottom:4%;width:175px}.fm{right:0;bottom:4%;width:180px}.flow{grid-template-columns:repeat(2,1fr);row-gap:18px}.step:not(:last-child):after{display:none}.cards,.modules,.memitems{grid-template-columns:1fr}.section-title{font-size:45px}.foot{flex-direction:column;gap:8px}}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#030405">
+  <title>Bobert - Lighting Quoting. Rebuilt.</title>
+  <meta name="description" content="Bobert. Lighting quoting, rebuilt.">
+  <link rel="icon" href="/assets/icon.png" type="image/png">
+  <style>
+    :root {
+      --black: #030405;
+      --ink: #070a0e;
+      --white: #f1f8fc;
+      --blue: #a9e1fb;
+      --red: #f3212c;
+      --page: min(100% - 112px, 1410px);
+    }
+
+    * { box-sizing: border-box; }
+    html { background: var(--black); scroll-behavior: smooth; }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page { overflow: hidden; }
+
+    .hero {
+      position: relative;
+      min-height: 620px;
+      height: min(61vw, 625px);
+      overflow: hidden;
+      isolation: isolate;
+      border-bottom: 1px solid rgba(226, 246, 255, 0.12);
+      background: linear-gradient(100deg, #010203 0%, #060608 31%, #180408 59%, #030608 100%);
+    }
+
+    .hero::before,
+    .hero::after {
+      position: absolute;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+    }
+
+    .hero::before {
+      z-index: -2;
+      background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.97) 0%, rgba(2, 2, 4, 0.9) 28%, rgba(10, 3, 7, 0.35) 60%, rgba(0, 3, 5, 0.7) 100%),
+        repeating-linear-gradient(90deg, transparent 0 10.7%, rgba(127, 169, 194, 0.1) 10.78% 10.88%, transparent 10.95% 20%);
+    }
+
+    .hero::after {
+      z-index: -1;
+      opacity: 0.45;
+      background-image:
+        linear-gradient(rgba(188, 221, 241, 0.09) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(188, 221, 241, 0.07) 1px, transparent 1px);
+      background-size: 100% 108px, 144px 100%;
+      mask-image: linear-gradient(to bottom, transparent 0%, #000 23%, #000 79%, transparent 100%);
+    }
+
+    .frame-lines {
+      position: absolute;
+      z-index: 0;
+      top: -18%;
+      right: -4%;
+      width: 73%;
+      height: 48%;
+      transform: skewY(-12deg);
+      opacity: 0.76;
+      border-top: 2px solid rgba(220, 242, 255, 0.72);
+      border-bottom: 2px solid var(--red);
+      background: repeating-linear-gradient(145deg, transparent 0 7.5%, rgba(243, 33, 44, 0.72) 7.57% 7.76%, transparent 7.84% 14.7%);
+    }
+
+    .room-wall {
+      position: absolute;
+      z-index: 0;
+      top: 17%;
+      right: 2.4%;
+      width: 24%;
+      height: 51%;
+      transform: skewY(-9deg);
+      border: 1px solid rgba(183, 224, 246, 0.36);
+      box-shadow: inset 0 0 50px rgba(2, 7, 11, 0.94), 0 0 0 3px rgba(242, 31, 43, 0.13);
+    }
+
+    .beam {
+      position: absolute;
+      z-index: 2;
+      height: 2px;
+      background: var(--red);
+      box-shadow: 0 0 8px 2px rgba(243, 33, 44, 0.9), 0 0 32px 7px rgba(243, 33, 44, 0.28);
+      transform-origin: left center;
+    }
+
+    .beam-one { top: 38%; left: 27%; width: 72%; transform: rotate(17deg); }
+    .beam-two { top: 68%; left: -8%; width: 75%; transform: rotate(-3deg); }
+
+    .floor-light {
+      position: absolute;
+      z-index: 1;
+      right: 2%;
+      bottom: -4%;
+      width: 72%;
+      height: 51%;
+      opacity: 0.9;
+      transform: perspective(520px) rotateX(61deg) skewX(-9deg);
+      transform-origin: bottom;
+      background:
+        linear-gradient(90deg, transparent 6%, rgba(243, 33, 44, 0.96) 15%, transparent 15.7% 37%, rgba(230, 247, 255, 0.86) 37.25%, transparent 38% 58%, rgba(243, 33, 44, 0.94) 58.3%, transparent 59%),
+        repeating-linear-gradient(0deg, rgba(232, 249, 255, 0.14) 0 1px, transparent 1px 42px),
+        linear-gradient(to bottom, rgba(237, 248, 255, 0.16), transparent 62%);
+      filter: drop-shadow(0 0 16px rgba(243, 33, 44, 0.45));
+    }
+
+    .floor-grid {
+      position: absolute;
+      z-index: 3;
+      right: 4%;
+      bottom: -42%;
+      width: 82%;
+      height: 55%;
+      opacity: 0.65;
+      transform: perspective(410px) rotateX(63deg) rotateZ(-3deg);
+      transform-origin: bottom;
+      background-image:
+        linear-gradient(rgba(174, 222, 244, 0.22) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(174, 222, 244, 0.22) 1px, transparent 1px);
+      background-size: 61px 61px;
+      mask-image: linear-gradient(to bottom, transparent, #000 35%, #000);
+    }
+
+    .site-top {
+      position: absolute;
+      z-index: 10;
+      top: 30px;
+      left: max(58px, calc((100vw - 1410px) / 2));
+    }
+
+    .site-top img {
+      display: block;
+      width: 68px;
+      height: 68px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 12px rgba(249, 255, 255, 0.25));
+    }
+
+    .hero-copy {
+      position: absolute;
+      z-index: 8;
+      top: 19.6%;
+      left: max(58px, calc((100vw - 1410px) / 2));
+      width: min(34vw, 475px);
+    }
+
+    .eyebrow,
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0;
+      color: #e9f7ff;
+      font-size: clamp(9px, 0.75vw, 12px);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.2;
+    }
+
+    .eyebrow::before,
+    .section-label::before {
+      width: 3px;
+      height: 18px;
+      content: "";
+      background: var(--red);
+      box-shadow: 0 0 9px var(--red);
+    }
+
+    h1 {
+      margin: 32px 0 0;
+      color: #f3fbff;
+      font-family: "Arial Black", Impact, Arial, sans-serif;
+      font-size: clamp(52px, 4.55vw, 72px);
+      font-weight: 900;
+      letter-spacing: 0;
+      line-height: 1;
+      text-shadow: 0 0 13px rgba(229, 246, 255, 0.38);
+    }
+
+    h1 span { display: block; }
+    h1 span:last-child { color: var(--red); text-shadow: 0 0 18px rgba(243, 33, 44, 0.68); }
+
+    .subhead {
+      margin: clamp(32px, 3vw, 36px) 0 0;
+      padding-left: 18px;
+      border-left: 2px solid var(--red);
+      color: #ecf5f9;
+      font-size: clamp(10px, 0.9vw, 14px);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.5;
+    }
+
+    .system-stage {
+      position: absolute;
+      z-index: 5;
+      top: 4%;
+      right: 1.2%;
+      width: 67%;
+      height: 94%;
+    }
+
+    .panel {
+      position: absolute;
+      overflow: hidden;
+      border: 1px solid rgba(189, 224, 244, 0.5);
+      border-left-color: rgba(243, 33, 44, 0.96);
+      background: linear-gradient(128deg, rgba(6, 12, 19, 0.93), rgba(3, 6, 10, 0.76));
+      box-shadow: 0 0 0 1px rgba(243, 33, 44, 0.23), 0 15px 37px rgba(0, 0, 0, 0.5), inset 0 1px rgba(250, 254, 255, 0.13);
+      backdrop-filter: blur(7px);
+    }
+
+    .panel::after,
+    .workflow-shell::after,
+    .module::after {
+      position: absolute;
+      right: -1px;
+      bottom: -1px;
+      width: 34px;
+      height: 34px;
+      content: "";
+      border-right: 2px solid var(--red);
+      border-bottom: 2px solid var(--red);
+      filter: drop-shadow(0 0 5px rgba(243, 33, 44, 0.82));
+    }
+
+    .panel-header {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 13px 8px;
+      border-bottom: 1px solid rgba(191, 223, 242, 0.13);
+      color: rgba(229, 246, 255, 0.76);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .fixture-panel {
+      top: 5%;
+      left: 4.4%;
+      width: min(25vw, 310px);
+      height: min(20vw, 250px);
+      min-height: 174px;
+      transform: perspective(700px) rotateY(-6deg) rotateZ(1.8deg);
+    }
+
+    .fixture-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-auto-rows: 1fr;
+      gap: 7px;
+      padding: 10px;
+      height: calc(100% - 31px);
+    }
+
+    .fixture {
+      display: grid;
+      min-height: 0;
+      place-items: center;
+      gap: 4px;
+      border: 1px solid rgba(180, 218, 239, 0.08);
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .fixture span:last-child { color: #ebf4f9; font-size: 9px; line-height: 1; }
+
+    .fixture-shape {
+      position: relative;
+      display: block;
+      width: 29px;
+      height: 21px;
+      filter: drop-shadow(0 0 7px rgba(239, 248, 255, 0.6));
+    }
+
+    .downlight {
+      border: 7px solid #c2ced7;
+      border-top-width: 5px;
+      border-radius: 50%;
+      box-shadow: inset 0 3px 2px #343940, 0 5px 4px rgba(1, 1, 2, 0.8);
+    }
+
+    .cylinder {
+      width: 14px;
+      height: 26px;
+      border-radius: 50% 50% 25% 25%;
+      background: linear-gradient(90deg, #343e48, #e3e8ed 52%, #35404a);
+    }
+
+    .track {
+      width: 37px;
+      height: 8px;
+      border: 2px solid #b8c2ca;
+      transform: rotate(15deg);
+      background: #212a33;
+    }
+
+    .track::after {
+      position: absolute;
+      top: 5px;
+      left: 12px;
+      width: 11px;
+      height: 16px;
+      content: "";
+      border-radius: 2px 2px 50% 50%;
+      background: #dce5ec;
+    }
+
+    .linear {
+      width: 42px;
+      height: 9px;
+      transform: rotate(-24deg);
+      background: linear-gradient(90deg, #47515a, #fff, #65727d);
+      box-shadow: 0 0 9px rgba(232, 245, 255, 0.9);
+    }
+
+    .two-by-two {
+      width: 27px;
+      height: 27px;
+      transform: rotate(45deg);
+      border: 2px solid #bed5e3;
+      background: #e2edf4;
+      box-shadow: 0 0 8px #e9f8ff;
+    }
+
+    .optics {
+      width: 29px;
+      height: 21px;
+      border-radius: 50% 50% 42% 42%;
+      background: repeating-radial-gradient(ellipse at 50% 0%, #f7f8f8 0 2px, #7c8a95 3px 5px);
+    }
+
+    .schedule-panel {
+      top: 2%;
+      right: 12%;
+      display: grid;
+      grid-template-columns: 45% 55%;
+      width: min(29vw, 360px);
+      height: min(20vw, 250px);
+      min-height: 199px;
+      transform: perspective(800px) rotateY(7deg) rotateZ(-3deg);
+    }
+
+    .schedule-panel .panel-header { position: absolute; top: 0; right: 0; left: 0; }
+
+    .drawing {
+      position: relative;
+      align-self: end;
+      width: 82%;
+      height: 66%;
+      margin: 0 0 18px 13px;
+      border: 1px solid #8bc7df;
+      background-image:
+        linear-gradient(#a7d6e7 1px, transparent 1px),
+        linear-gradient(90deg, #a7d6e7 1px, transparent 1px);
+      background-size: 13px 13px;
+      box-shadow: 0 0 15px rgba(133, 219, 255, 0.3);
+    }
+
+    .drawing i { position: absolute; display: block; border: 1px solid #c7e9f7; }
+    .drawing i:nth-child(1) { inset: 14% 13% 54% 18%; }
+    .drawing i:nth-child(2) { inset: 45% 11% 18% 54%; }
+    .drawing i:nth-child(3) { inset: 42% 50% 38% 16%; }
+    .drawing i:nth-child(4) { inset: 64% 52% 11% 20%; }
+    .drawing i:nth-child(5) { inset: 20% 55% 58% 23%; }
+    .drawing i:nth-child(6) { inset: 29% 11% 27% 77%; }
+
+    .schedule-list {
+      display: grid;
+      align-content: end;
+      gap: 14px;
+      padding: 0 12px 20px 3px;
+      color: #edf7fc;
+      font-size: 10px;
+    }
+
+    .schedule-list span { display: flex; align-items: center; gap: 8px; }
+    .schedule-list b { color: var(--blue); font-size: 14px; font-weight: 400; }
+
+    .data-panel {
+      bottom: 16%;
+      left: 5%;
+      width: min(20vw, 250px);
+      height: min(15vw, 180px);
+      min-height: 148px;
+      transform: perspective(600px) rotateY(-6deg) rotateZ(2.7deg);
+    }
+
+    .data-row {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 7px 15px;
+      color: #f2f7fa;
+      font-size: 11px;
+    }
+
+    .data-row:first-of-type { padding-top: 14px; }
+
+    .cct-dot {
+      width: 19px;
+      height: 19px;
+      border: 2px solid #7dd7ff;
+      border-radius: 50%;
+      background: conic-gradient(#f7c255 0 37%, #bce6fb 37% 70%, #2f9bd4 70%);
+      box-shadow: 0 0 12px rgba(125, 215, 255, 0.8);
+    }
+
+    .lumen-mark { color: #d8f5ff; font-size: 25px; line-height: 16px; text-shadow: 0 0 8px #9de5ff; }
+
+    .line-icon {
+      position: relative;
+      display: inline-block;
+      width: 17px;
+      height: 17px;
+      border-top: 1px solid var(--blue);
+      border-bottom: 1px solid var(--blue);
+    }
+
+    .line-icon::before,
+    .line-icon::after {
+      position: absolute;
+      left: 0;
+      width: 17px;
+      height: 1px;
+      content: "";
+      background: var(--blue);
+    }
+
+    .line-icon::before { top: 4px; }
+    .line-icon::after { bottom: 4px; }
+    .ies-icon { display: inline-grid; width: 17px; height: 19px; place-items: center; border: 1px solid var(--blue); color: var(--blue); font-size: 7px; }
+
+    .memory-panel {
+      right: 8%;
+      bottom: 3%;
+      width: min(30vw, 370px);
+      height: min(18vw, 215px);
+      min-height: 177px;
+      transform: perspective(700px) rotateY(7deg) rotateZ(2deg);
+    }
+
+    .memory-list {
+      display: grid;
+      gap: 7px;
+      margin: 13px 0 0;
+      padding: 0 0 0 27px;
+      list-style: none;
+      color: #eff7fb;
+      font-size: 10px;
+    }
+
+    .memory-list li::before { margin-right: 7px; color: var(--red); content: "\2713"; }
+
+    .server-stack { position: absolute; right: 12px; bottom: 16px; width: 78px; height: 63px; }
+
+    .server-stack i {
+      position: absolute;
+      right: 0;
+      display: block;
+      width: 61px;
+      height: 25px;
+      border: 1px solid rgba(187, 219, 239, 0.6);
+      background: linear-gradient(100deg, #28333f, #05080e 46%, #3f1219);
+      box-shadow: -13px 9px 0 rgba(28, 38, 48, 0.7), inset 0 0 12px rgba(246, 27, 42, 0.2);
+    }
+
+    .server-stack i:nth-child(1) { bottom: 34px; }
+    .server-stack i:nth-child(2) { right: 8px; bottom: 18px; }
+    .server-stack i:nth-child(3) { right: 16px; bottom: 2px; }
+
+    .core-mark {
+      position: absolute;
+      top: 40%;
+      left: 41.5%;
+      width: min(17vw, 208px);
+      aspect-ratio: 1;
+      transform: translateX(-50%) rotateY(-4deg) rotateZ(1deg);
+      border: 1px solid rgba(243, 33, 44, 0.96);
+      background: rgba(8, 9, 11, 0.82);
+      box-shadow: 0 0 0 9px rgba(243, 33, 44, 0.1), 0 0 29px 7px rgba(243, 33, 44, 0.49), inset 0 0 66px #000;
+    }
+
+    .core-mark img {
+      position: absolute;
+      inset: 10%;
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      filter: drop-shadow(0 0 13px rgba(233, 249, 255, 0.94));
+    }
+
+    .corner { position: absolute; z-index: 2; width: 27%; height: 27%; }
+    .corner-tl { top: -9%; left: -9%; border-top: 9px solid #f4fbff; border-left: 9px solid #f4fbff; }
+    .corner-tr { top: -9%; right: -9%; border-top: 9px solid var(--red); border-right: 9px solid var(--red); }
+    .corner-bl { bottom: -9%; left: -9%; border-bottom: 9px solid #f4fbff; border-left: 9px solid #f4fbff; }
+    .corner-br { right: -9%; bottom: -9%; border-right: 9px solid #f4fbff; border-bottom: 9px solid #f4fbff; }
+
+    .stage-note { position: absolute; color: rgba(210, 234, 247, 0.56); font-size: 7px; font-weight: 700; letter-spacing: 0; }
+    .stage-note-one { top: 66%; left: 41%; }
+    .stage-note-two { right: 10%; bottom: 28%; }
+
+    .workflow-section {
+      position: relative;
+      z-index: 3;
+      padding: 0 max(58px, calc((100vw - 1410px) / 2));
+      background: linear-gradient(180deg, #05090d 0%, #020304 100%);
+    }
+
+    .workflow-shell {
+      position: relative;
+      display: grid;
+      gap: 17px;
+      min-height: 142px;
+      padding: 20px 28px;
+      border: 1px solid rgba(173, 209, 232, 0.3);
+      border-top: 0;
+      background: rgba(4, 8, 13, 0.74);
+      box-shadow: -10px 0 23px rgba(243, 33, 44, 0.13);
+    }
+
+    .workflow-shell::after { width: 26px; height: 26px; }
+
+    .workflow-steps {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .workflow-step {
+      position: relative;
+      display: grid;
+      min-width: 74px;
+      place-items: center;
+      gap: 7px;
+      color: #f1f7fa;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .step-icon {
+      display: grid;
+      width: 50px;
+      height: 50px;
+      place-items: center;
+      color: var(--blue);
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+      background: linear-gradient(135deg, rgba(192, 231, 250, 0.7), rgba(101, 143, 167, 0.4));
+    }
+
+    .step-icon b {
+      display: grid;
+      width: 46px;
+      height: 46px;
+      place-items: center;
+      clip-path: polygon(50% 0, 100% 25%, 100% 75%, 50% 100%, 0 75%, 0 25%);
+      background: #071017;
+      font-size: 10px;
+      font-weight: 700;
+      text-shadow: 0 0 5px rgba(155, 223, 255, 0.4);
+    }
+
+    .workflow-step:not(:last-child)::after {
+      position: absolute;
+      top: 25px;
+      left: calc(50% + 58px);
+      width: clamp(14px, 2.1vw, 33px);
+      height: 1px;
+      content: "";
+      background: var(--red);
+      box-shadow: 0 0 7px rgba(243, 33, 44, 0.65);
+    }
+
+    .workflow-step:not(:last-child)::before {
+      position: absolute;
+      z-index: 1;
+      top: 21px;
+      left: calc(50% + 84px);
+      width: 8px;
+      height: 8px;
+      content: "";
+      border-top: 1px solid var(--red);
+      border-right: 1px solid var(--red);
+      transform: rotate(45deg);
+    }
+
+    .modules-section {
+      position: relative;
+      min-height: 262px;
+      padding: 37px max(58px, calc((100vw - 1410px) / 2)) 56px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 10% 112%, rgba(255, 29, 40, 0.26), transparent 31%),
+        linear-gradient(180deg, #020304, #040304 58%, #080203);
+    }
+
+    .modules-section::before {
+      position: absolute;
+      bottom: -19%;
+      left: -6%;
+      width: 52%;
+      height: 91%;
+      content: "";
+      opacity: 0.58;
+      transform: perspective(380px) rotateX(59deg) rotateZ(-14deg);
+      background-image: radial-gradient(#ef1f2a 1px, transparent 1.3px);
+      background-size: 9px 9px;
+      mask-image: linear-gradient(90deg, #000, transparent 95%);
+    }
+
+    .module-grid {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 13px;
+      max-width: 960px;
+      margin: -19px 0 0 auto;
+    }
+
+    .module {
+      position: relative;
+      min-height: 166px;
+      padding: 19px 19px 17px;
+      overflow: hidden;
+      border: 1px solid rgba(170, 210, 231, 0.28);
+      border-left-color: rgba(243, 33, 44, 0.86);
+      background: linear-gradient(135deg, rgba(5, 13, 21, 0.95), rgba(6, 8, 11, 0.88));
+      box-shadow: inset 0 1px rgba(246, 253, 255, 0.09);
+    }
+
+    .module.active {
+      border-color: rgba(243, 33, 44, 0.88);
+      box-shadow: 0 0 24px rgba(243, 33, 44, 0.15), inset 0 1px rgba(246, 253, 255, 0.11);
+    }
+
+    .module-icon {
+      position: relative;
+      display: block;
+      width: 27px;
+      height: 27px;
+      margin-bottom: 12px;
+      color: var(--blue);
+      filter: drop-shadow(0 0 5px rgba(155, 223, 255, 0.38));
+    }
+
+    .module-icon::before,
+    .module-icon::after { position: absolute; content: ""; border: 1px solid currentColor; }
+    .module-icon::before { inset: 2px 6px 1px 4px; }
+    .module-icon::after { right: 2px; bottom: 2px; width: 9px; height: 9px; border-radius: 50%; background: #081018; }
+    .market::before { inset: 12px 2px 1px; border-width: 0 0 1px; box-shadow: 7px -8px 0 -6px currentColor, 14px -15px 0 -6px currentColor; }
+    .field::before { inset: 1px 7px 2px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+    .config::before { inset: 5px 1px; border-width: 1px 0; }
+    .config::after { right: 5px; bottom: 11px; width: 6px; height: 6px; border-radius: 50%; box-shadow: -10px 7px 0 -1px #081018; }
+
+    .module h2 {
+      margin: 0;
+      color: #f4f8fb;
+      font-size: clamp(12px, 1vw, 15px);
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.25;
+    }
+
+    .module p {
+      min-height: 33px;
+      margin: 7px 0 0;
+      color: rgba(225, 238, 246, 0.78);
+      font-size: 10px;
+      line-height: 1.3;
+    }
+
+    .module-state {
+      position: absolute;
+      bottom: 16px;
+      left: 19px;
+      color: rgba(210, 230, 240, 0.75);
+      font-size: 7px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .active .module-state { color: var(--red); }
+
+    @media (max-width: 1000px) {
+      .hero { height: auto; min-height: 900px; }
+      .hero-copy { top: 14%; width: 48%; }
+      .system-stage { top: 6%; right: -6%; width: 78%; height: 86%; }
+      .module-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: none; margin-top: 22px; }
+      .modules-section { min-height: 430px; }
+    }
+
+    @media (max-width: 700px) {
+      .hero { min-height: 965px; }
+      .site-top { top: 17px; left: 19px; }
+      .site-top img { width: 54px; height: 54px; }
+      .hero-copy { top: 11.5%; left: 21px; width: calc(100% - 42px); }
+      h1 { font-size: clamp(46px, 14vw, 78px); line-height: 0.87; }
+      .subhead { margin-top: 24px; font-size: 10px; }
+      .system-stage { top: 45%; right: 0; width: 100%; height: 52%; }
+      .fixture-panel { top: 1%; left: 2%; width: 49%; min-height: 141px; }
+      .fixture-grid { gap: 3px; padding: 5px; }
+      .fixture { min-height: 48px; }
+      .fixture span:last-child { font-size: 7px; }
+      .fixture-shape { transform: scale(0.75); }
+      .schedule-panel { top: 0; right: 2%; width: 46%; min-height: 141px; }
+      .schedule-list { gap: 7px; padding: 0 6px 12px 0; font-size: 7px; }
+      .drawing { margin: 0 0 11px 7px; }
+      .data-panel { bottom: 3%; left: 3%; width: 39%; min-height: 135px; }
+      .memory-panel { right: 2%; bottom: 3%; width: 48%; min-height: 135px; }
+      .panel-header { padding: 8px 9px 5px; font-size: 6px; }
+      .data-row { gap: 6px; padding: 5px 9px; font-size: 9px; }
+      .memory-list { gap: 4px; margin-top: 9px; padding-left: 15px; font-size: 7px; }
+      .server-stack { right: 6px; bottom: 6px; transform: scale(0.64); transform-origin: right bottom; }
+      .core-mark { top: 41%; left: 49%; width: 30%; }
+      .corner { border-width: 5px; }
+      .stage-note { display: none; }
+      .workflow-section { padding: 0 13px; }
+      .workflow-shell { padding: 20px 15px; }
+      .workflow-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px 6px; }
+      .workflow-step { min-width: 0; gap: 5px; font-size: 9px; }
+      .step-icon { width: 40px; height: 40px; }
+      .step-icon b { width: 36px; height: 36px; font-size: 8px; }
+      .workflow-step::before, .workflow-step::after { display: none; }
+      .modules-section { min-height: 0; padding: 34px 13px 43px; }
+      .module-grid { gap: 8px; }
+      .module { min-height: 177px; padding: 15px 13px; }
+      .module h2 { font-size: 11px; }
+      .module p { font-size: 9px; }
+      .module-state { bottom: 13px; left: 13px; font-size: 6px; }
+    }
+  </style>
 </head>
 <body>
-<header><div class="head"><img class="brandmark" src="/assets/bobert-mark-white.png" alt="Bobert"><div class="state"><span class="dot"></span>Lighting OS / Building</div></div></header>
-<main>
-<section class="hero"><div class="wrap" style="display:contents">
-<div><div class="eyebrow">Lighting Quoting Operating System</div><h1>Lighting<br><span>Quoting.</span>Rebuilt.</h1><p class="hero-copy">Built for the real work of <strong>lighting sales.</strong></p><div class="hero-note">RFQ <b>→</b> Fixture Data <b>→</b> Configuration <b>→</b> Verification <b>→</b> Quote</div></div>
-<div class="hero-art"><div class="visual-shell">
-<div class="float fp"><div class="mini">Lighting Types</div><div class="fixtures"><span class="down"></span><span class="cyl"></span><span class="lin"></span></div><div class="tags"><span>Downlight</span><span>Cylinder</span><span>Track</span><span>Linear</span><span>2x2</span></div></div>
-<div class="float fv"><div class="mini">Project Intelligence</div><strong>Fixture Schedule</strong><div class="list"><div><span class="check">✓</span> Catalog</div><div><span class="check">✓</span> Alternates</div><div><span class="check">✓</span> Verification</div></div></div>
-<div class="float ff"><div class="mini">Lighting Data</div><strong>CCT · Lumens · Optics</strong><div class="tags"><span>Controls</span><span>IES</span><span>Catalog</span></div></div>
-<div class="float fm"><div class="mini">Company Memory</div><strong>Knowledge That Stays.</strong><div class="list"><div><span class="check">✓</span> Preferred manufacturers</div><div><span class="check">✓</span> Approved alternates</div><div><span class="check">✓</span> Decisions</div></div></div>
-<div class="core"><img src="/assets/bobert-mark-white.png" alt="Bobert mark"></div><div class="corner tl"></div><div class="corner tr"></div><div class="corner br"></div><div class="corner bl"></div><div class="scan"></div>
-</div></div>
-</div></section>
+  <main class="page">
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="frame-lines" aria-hidden="true"></div>
+      <div class="room-wall" aria-hidden="true"></div>
+      <div class="beam beam-one" aria-hidden="true"></div>
+      <div class="beam beam-two" aria-hidden="true"></div>
+      <div class="floor-light" aria-hidden="true"></div>
+      <div class="floor-grid" aria-hidden="true"></div>
 
-<div class="workflow"><div class="wrap"><div class="flow-label">The Quoting Workflow</div><div class="flow">
-<div class="step"><div class="step-icon">RFQ</div><div class="step-name">RFQ</div><div class="step-sub">Project in</div></div><div class="step"><div class="step-icon">DWG</div><div class="step-name">Drawings</div><div class="step-sub">Read the plan</div></div><div class="step"><div class="step-icon">SPEC</div><div class="step-name">Specifications</div><div class="step-sub">Requirements</div></div><div class="step"><div class="step-icon">FIX</div><div class="step-name">Fixture Data</div><div class="step-sub">Structure it</div></div><div class="step"><div class="step-icon">CFG</div><div class="step-name">Configuration</div><div class="step-sub">Build it</div></div><div class="step"><div class="step-icon">✓</div><div class="step-name">Verification</div><div class="step-sub">Human review</div></div><div class="step"><div class="step-icon">Q</div><div class="step-name">Quote</div><div class="step-sub">Ready out</div></div>
-</div></div></div>
+      <div class="site-top">
+        <img src="/assets/bobert-mark-white.png" alt="Bobert">
+      </div>
 
-<section><div class="wrap"><div class="kicker">What Bobert Understands</div><h2 class="section-title">Lighting<br>Intelligence.</h2><p class="intro">Fixtures, specifications, relationships, alternates and the details that make a quote work.</p><div class="cards"><div class="card"><div class="num">01 / FIXTURE</div><h3>Fixture Data</h3><p>Downlights. Cylinders. Track. Linear. 2x2.</p><div class="fixture-strip"><span class="down"></span><span class="cyl"></span><span class="lin"></span><span class="sq"></span></div></div><div class="card"><div class="num">02 / PERFORMANCE</div><h3>Specifications</h3><p>CCT. Lumens. Optics. Controls. IES.</p></div><div class="card"><div class="num">03 / DECISION</div><h3>Alternates</h3><p>Catalog relationships. Preferred products. Verification.</p></div></div></div></section>
-<section class="memory"><div class="wrap"><div class="memgrid"><div><div class="kicker">Company Memory</div><div class="quote">Your company's<br><span>knowledge.</span><br>Working.</div></div><div class="memitems"><div class="memitem"><small>Manufacturers</small>Preferred products</div><div class="memitem"><small>Catalog</small>Relationships</div><div class="memitem"><small>Alternates</small>Approved paths</div><div class="memitem"><small>Decisions</small>What worked</div><div class="memitem"><small>Customers</small>Requirements</div><div class="memitem"><small>History</small>Project memory</div></div></div></div></section>
-<section class="coming"><div class="wrap"><div class="kicker">Coming Soon</div><h2 class="section-title">More of the<br>System.</h2><div class="modules"><div class="module"><div class="module-icon">PI</div><h3>Project Intake</h3><p>Turn opportunities into organized projects.</p><div class="badge">Coming Soon</div></div><div class="module"><div class="module-icon">MI</div><h3>Market Intelligence</h3><p>Know what's happening in your market.</p><div class="badge">Coming Soon</div></div><div class="module"><div class="module-icon">FI</div><h3>Field Intelligence</h3><p>Bring real world information back into the system.</p><div class="badge">Coming Soon</div></div><div class="module live"><div class="module-icon">CFG</div><h3>Lighting Configurator</h3><p>Build. Compare. Verify.</p><div class="badge">Now Building</div></div></div></div></section>
-<section class="vision"><div class="wrap"><div class="kicker">The Bigger Idea</div><h2 class="section-title">One System.<br>Growing With the Work.</h2><div class="visionbox"><div class="network"><span>Market</span><b>→</b><span>Opportunity</span><b>→</b><span>Project</span><b>→</b><span>Drawings</span><b>→</b><span>Configuration</span><b>→</b><span>Quote</span><b>→</b><span>Field</span><b>→</b><span>Memory</span></div><p>Every step creates information. Every decision adds context. The system gets better because the work stays connected.</p></div></div></section>
-</main><footer><div class="wrap foot"><span>Bobert.ai</span><span>Lighting Quoting. Rebuilt.</span></div></footer>
-</body></html>
+      <div class="hero-copy">
+        <p class="eyebrow">LIGHTING QUOTING OPERATING SYSTEM</p>
+        <h1 id="hero-heading"><span>LIGHTING</span><span>QUOTING.</span><span>REBUILT.</span></h1>
+        <p class="subhead">BUILT FOR THE REAL WORK<br>OF LIGHTING SALES.</p>
+      </div>
+
+      <div class="system-stage" aria-label="Bobert lighting quoting system overview">
+        <section class="panel fixture-panel">
+          <div class="panel-header"><span>FIXTURE LIBRARY</span><span>01</span></div>
+          <div class="fixture-grid">
+            <div class="fixture"><span class="fixture-shape downlight"></span><span>Downlight</span></div>
+            <div class="fixture"><span class="fixture-shape cylinder"></span><span>Cylinder</span></div>
+            <div class="fixture"><span class="fixture-shape track"></span><span>Track</span></div>
+            <div class="fixture"><span class="fixture-shape linear"></span><span>Linear</span></div>
+            <div class="fixture"><span class="fixture-shape two-by-two"></span><span>2x2</span></div>
+            <div class="fixture"><span class="fixture-shape optics"></span><span>Optics</span></div>
+          </div>
+        </section>
+
+        <section class="panel schedule-panel">
+          <div class="panel-header"><span>PROJECT CONTEXT</span><span>02</span></div>
+          <div class="drawing" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="schedule-list">
+            <span><b>&#9638;</b> Fixture Schedule</span>
+            <span><b>&#8801;</b> Catalog</span>
+            <span><b>&#8596;</b> Alternates</span>
+            <span><b>&#10003;</b> Verification</span>
+          </div>
+        </section>
+
+        <section class="panel data-panel">
+          <div class="panel-header"><span>FIXTURE DATA</span><span>03</span></div>
+          <div class="data-row"><span class="cct-dot"></span> CCT</div>
+          <div class="data-row"><span class="lumen-mark">*</span> Lumens</div>
+          <div class="data-row"><span class="line-icon"></span> Controls</div>
+          <div class="data-row"><span class="ies-icon">I</span> IES</div>
+        </section>
+
+        <section class="panel memory-panel">
+          <div class="panel-header"><span>COMPANY MEMORY</span><span>04</span></div>
+          <ul class="memory-list">
+            <li>Preferred Manufacturers</li>
+            <li>Catalog Relationships</li>
+            <li>Approved Alternates</li>
+            <li>Decisions</li>
+            <li>History</li>
+          </ul>
+          <div class="server-stack" aria-hidden="true"><i></i><i></i><i></i></div>
+        </section>
+
+        <div class="core-mark" aria-hidden="true">
+          <span class="corner corner-tl"></span>
+          <span class="corner corner-tr"></span>
+          <span class="corner corner-bl"></span>
+          <span class="corner corner-br"></span>
+          <img src="/assets/bobert-mark-white.png" alt="">
+        </div>
+        <span class="stage-note stage-note-one">INPUT / VERIFY / QUOTE</span>
+        <span class="stage-note stage-note-two">DECISIONS RETAINED</span>
+      </div>
+    </section>
+
+    <section class="workflow-section" aria-labelledby="workflow-heading">
+      <div class="workflow-shell">
+        <p class="section-label" id="workflow-heading">THE QUOTING WORKFLOW</p>
+        <div class="workflow-steps">
+          <div class="workflow-step"><span class="step-icon"><b>RFQ</b></span><span>RFQ</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>DWG</b></span><span>Drawings</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>SPEC</b></span><span>Specifications</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>FIX</b></span><span>Fixture Data</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>CFG</b></span><span>Configuration</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>&#10003;</b></span><span>Verification</span></div>
+          <div class="workflow-step"><span class="step-icon"><b>Q</b></span><span>Quote</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="modules-section" aria-labelledby="modules-heading">
+      <p class="section-label" id="modules-heading">COMING SOON</p>
+      <div class="module-grid">
+        <article class="module">
+          <span class="module-icon"></span>
+          <h2>Project Intake</h2>
+          <p>Turn opportunities into projects.</p>
+          <span class="module-state">COMING SOON</span>
+        </article>
+        <article class="module">
+          <span class="module-icon market"></span>
+          <h2>Market Intelligence</h2>
+          <p>Know what is happening in your market.</p>
+          <span class="module-state">COMING SOON</span>
+        </article>
+        <article class="module">
+          <span class="module-icon field"></span>
+          <h2>Field Intelligence</h2>
+          <p>Real-world insights, real-time.</p>
+          <span class="module-state">COMING SOON</span>
+        </article>
+        <article class="module active">
+          <span class="module-icon config"></span>
+          <h2>Lighting Configurator</h2>
+          <p>Build. Compare. Optimize.</p>
+          <span class="module-state">NOW BUILDING</span>
+        </article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
