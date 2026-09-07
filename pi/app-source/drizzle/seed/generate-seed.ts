@@ -26,15 +26,26 @@ function projectInsert(opts: {
   defaultSelectedFixtureType: string;
   status: string;
 }): string {
+  // SELECT ... WHERE NOT EXISTS instead of a plain VALUES insert: makes
+  // this safe to re-run. If a project with this name already exists,
+  // the SELECT returns no rows and nothing is inserted.
   return `INSERT INTO projects (name, location, eyebrow, summary, default_selected_fixture_type, status)
-VALUES (${esc(opts.name)}, ${esc(opts.location)}, ${esc(opts.eyebrow)}, ${esc(opts.summary)}, ${esc(opts.defaultSelectedFixtureType)}, ${esc(opts.status)});`;
+SELECT ${esc(opts.name)}, ${esc(opts.location)}, ${esc(opts.eyebrow)}, ${esc(opts.summary)}, ${esc(opts.defaultSelectedFixtureType)}, ${esc(opts.status)}
+WHERE NOT EXISTS (SELECT 1 FROM projects WHERE name = ${esc(opts.name)});`;
 }
 
 function fixtureInserts(projectName: string, rows: Fixture[]): string[] {
   return rows.map((x) => {
     const requirements = JSON.stringify(x.requirements ?? []);
+    // Guarded per (project, fixtureType) pair, not "any fixture exists
+    // for this project" — the latter self-defeats within a single run,
+    // since after the first sibling fixture inserts, later ones in the
+    // same script would see a fixture already exists and skip themselves.
+    // Assumes fixtureType is unique within each project's seed data
+    // (verified against configurator-data.ts before relying on this).
     return `INSERT INTO fixtures (project_id, fixture_type, area, specified_manufacturer, specified_catalog, alternate_manufacturer, alternate_catalog, family, description, quantity, quantity_source, review_status, exception, requirements, out_of_scope)
-VALUES ((SELECT id FROM projects WHERE name = ${esc(projectName)}), ${esc(x.type)}, ${esc(x.area)}, ${esc(x.specified)}, ${esc(x.specifiedCatalog)}, ${esc(x.alternate)}, ${esc(x.alternateCatalog ?? "")}, ${esc(x.family)}, ${esc(x.description)}, ${x.qty}, ${esc(x.qtySource)}, ${esc(x.status)}, ${esc(x.exception)}, ${esc(requirements)}, ${esc(!!x.outOfScope)});`;
+SELECT (SELECT id FROM projects WHERE name = ${esc(projectName)}), ${esc(x.type)}, ${esc(x.area)}, ${esc(x.specified)}, ${esc(x.specifiedCatalog)}, ${esc(x.alternate)}, ${esc(x.alternateCatalog ?? "")}, ${esc(x.family)}, ${esc(x.description)}, ${x.qty}, ${esc(x.qtySource)}, ${esc(x.status)}, ${esc(x.exception)}, ${esc(requirements)}, ${esc(!!x.outOfScope)}
+WHERE NOT EXISTS (SELECT 1 FROM fixtures f JOIN projects p ON f.project_id = p.id WHERE p.name = ${esc(projectName)} AND f.fixture_type = ${esc(x.type)});`;
   });
 }
 
@@ -42,7 +53,8 @@ function vendorRuleInserts(): string[] {
   return vendorRules.map(
     (r) =>
       `INSERT INTO vendor_rules (match_label, target_manufacturer, includes_terms)
-VALUES (${esc(r.match)}, ${esc(r.target)}, ${esc(r.includes)});`
+SELECT ${esc(r.match)}, ${esc(r.target)}, ${esc(r.includes)}
+WHERE NOT EXISTS (SELECT 1 FROM vendor_rules WHERE match_label = ${esc(r.match)});`
   );
 }
 

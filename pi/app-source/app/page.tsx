@@ -143,6 +143,13 @@ export default function Home() {
   const [pdfScan, setPdfScan] = useState<PdfScanResult | null>(null);
   const [selectedPages, setSelectedPages] = useState<number[]>([]);
 
+  // Tracks which project is *currently* selected, updated synchronously
+  // (unlike projectId state, which only updates on next render). Async
+  // fixture loads compare against this when they resolve — if the user
+  // has since switched projects, the stale response is discarded instead
+  // of overwriting the UI with the wrong project's fixtures.
+  const currentProjectIdRef = useRef<number | null>(null);
+
   function notify(text: string, type: "success" | "warning" = "success") {
     setNotice(text);
     setNoticeType(type);
@@ -169,16 +176,19 @@ export default function Home() {
     setFixturesLoading(true);
     try {
       const rows = await getFixtures(id);
+      if (currentProjectIdRef.current !== id) return; // stale — user switched projects since this call started
       setFixtures(rows);
     } catch (err) {
+      if (currentProjectIdRef.current !== id) return;
       notify(`Failed to load fixtures: ${(err as Error).message}`, "warning");
       setFixtures([]);
     } finally {
-      setFixturesLoading(false);
+      if (currentProjectIdRef.current === id) setFixturesLoading(false);
     }
   }
 
   function selectProject(id: number, projectList: Project[] = projects) {
+    currentProjectIdRef.current = id;
     setProjectId(id);
     setFilter("all");
     setNotice("");
@@ -191,14 +201,16 @@ export default function Home() {
     setFixturesLoading(true);
     try {
       const rows = await getFixtures(id);
+      if (currentProjectIdRef.current !== id) return; // stale — user switched projects since this call started
       setFixtures(rows);
       const preferred = rows.find((r) => r.fixtureType === defaultType);
       setSelectedId((preferred ?? rows[0])?.id ?? null);
     } catch (err) {
+      if (currentProjectIdRef.current !== id) return;
       notify(`Failed to load fixtures: ${(err as Error).message}`, "warning");
       setFixtures([]);
     } finally {
-      setFixturesLoading(false);
+      if (currentProjectIdRef.current === id) setFixturesLoading(false);
     }
   }
 
@@ -310,6 +322,7 @@ export default function Home() {
       setProjects((p) => [created, ...p]);
       setNewProjectName("");
       setShowNewProject(false);
+      currentProjectIdRef.current = created.id;
       setProjectId(created.id);
       setFixtures([]);
       setSelectedId(null);
