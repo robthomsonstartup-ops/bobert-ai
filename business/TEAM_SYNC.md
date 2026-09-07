@@ -16,7 +16,7 @@
 Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Signal mark, "Bobert" name — Decision 010). Two sectors (Decision 018):
 
 - **Bobert FI (Field Intelligence)** — LIVE, closed beta. Point your phone at a project, get GPS + AI-generated intel (developer, GC, contacts, routing note) in seconds. No billing/trial gating during beta (Decision 019) — full access, free, to gather accuracy feedback before charging anyone.
-- **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. Bid invite / RFP / screenshot / file / URL in, structured project summary + RFI checklist + generic deal draft out. Multi-source intake shipped July 29. No CRM integration yet — CS Illumination's stack is unknown. **Current focus: PI UI build-out and expediting multi-source-to-structured-output speed, eliminating manual entry.**
+- **Bobert PI (Project Intake)** — Lighting Alternate Configurator wired to real D1 persistence as of Sep 7, 2026 (Decision 029). Projects, fixtures, and vendor rules now persist in Cloudflare D1 instead of browser localStorage; deployed at `bobert-pi.bobert-ai.workers.dev`. Two real projects live in D1: Valley Ford of Huron FS2.0 (unconfigured, 30 fixture types) and Potbelly Sandwich Works (verified pilot baseline, 6 fixture types). Next: shared crosses database, confidence UI, real drawing extraction R&D.
 - **Public site as of July 30:** the homepage is being rebuilt (`marketing/SITE-PLAN-JULY30.md` v2.0) to present both sectors — FI live, PI described as "in development," no CTA. Confirmed directly by Rob.
 
 ---

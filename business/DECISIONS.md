@@ -588,3 +588,71 @@ functionality with no code change on our side. Worth periodically checking
 Groq's deprecations page (https://console.groq.com/docs/deprecations) for
 any model names referenced in the repo, rather than discovering it via a
 live failure.
+
+## Decision 029 — PI D1 Wire-Up: Schema, Migration, Seed, and Live Verification
+
+**Date:** September 7, 2026
+**Status:** Locked
+
+**Problem:** PI's data (projects, fixtures, vendor rules) lived entirely
+in browser localStorage. Nothing persisted across devices or browsers,
+and the D1/R2 infrastructure existed but was never wired into the app.
+
+**Fix:**
+- Extended `db/schema.ts`: added `area`, `family`, `exception`,
+  `requirements`, `outOfScope` to `fixtures`; `eyebrow`, `summary`,
+  `defaultSelectedFixtureType` to `projects`; new `vendor_rules` table.
+- Generated migration `0003` via `drizzle-kit`, then hand-corrected a
+  bug in the auto-generated SQL — it tried to copy the brand-new columns
+  from the old `fixtures` table during the SQLite table-recreation step,
+  which would have failed against real D1.
+- Wrote `drizzle/seed/generate-seed.ts` to generate seed SQL directly
+  from `configurator-data.ts` (source of truth) rather than
+  hand-transcribing Valley Ford's 30 fixtures / Potbelly's 6.
+- Extended the API surface: new `GET`/`PATCH /api/projects/[id]`, new
+  `GET`/`POST /api/vendor-rules`, extended fixture `PATCH`/`POST` to
+  cover every field the UI edits (was `quantity`/`reviewStatus` only)
+  and to accept batch inserts for PDF-extraction imports.
+- Rewired `app/page.tsx` off localStorage onto these routes; fixed a
+  pre-existing bug in the same pass (`resetToReview` was called by the
+  "Undo / reset" button but was never defined — the button was broken in
+  prod, unrelated to D1).
+- Commit `4905b76` on `pi/lighting-configurator-migration` (11 files,
+  1838 insertions / 177 deletions).
+
+**Verified live, not just locally:** all four migrations (`0000`–`0003`)
+and the seed applied cleanly against the real `bobert-pi-db` via
+`wrangler d1 execute --remote`. Row counts and schema confirmed via
+direct SQL queries against production. Deployed via `vinext deploy` to
+`https://bobert-pi.bobert-ai.workers.dev` and confirmed a newly-created
+project persists across a hard refresh — real proof of D1 persistence,
+not just a clean deploy log.
+
+**Infra issues found and fixed along the way** (both pre-existing, not
+introduced this session):
+1. The scaffold's `vite.config.ts` had hardcoded placeholder resource
+   names (`site-creator-d1`, `site-creator-r2`, and a literal unresolved
+   `SITE_CREATOR_PLACEHOLDER_DATABASE_ID` token) left over from before
+   the ChatGPT-workspace migration — never pointed at the real
+   `bobert-pi-db` / `bobert-pi-storage` resources. The first deploy
+   attempt failed on the bad D1 UUID and silently auto-provisioned a
+   stray, empty R2 bucket named `site-creator-r2`.
+2. `wrangler.jsonc` and `package.json` both hardcoded the worker name as
+   `site-creator-vinext-starter` — the first successful deploy went to
+   `https://site-creator-vinext-starter.bobert-ai.workers.dev`, a brand
+   new worker, not the live `bobert-pi` one linked from the homepage.
+   Corrected to `"bobert-pi"` and redeployed to the right URL.
+
+**Open items:**
+- Stray `site-creator-r2` R2 bucket (empty, created during the failed
+  first deploy attempt) still exists and should be deleted:
+  `npx wrangler r2 bucket delete site-creator-r2`.
+- Old localStorage data in any browser that already used the PI
+  configurator is now orphaned; no migration path provided, by design,
+  since Valley Ford and Potbelly are now real seeded D1 rows.
+
+**Lesson:** A scaffold migrated from another workspace (ChatGPT Apps SDK
+→ this repo) can carry hardcoded placeholder infrastructure names that
+look plausible but point nowhere real. Worth grep'ing new scaffolds for
+literal "PLACEHOLDER" tokens and default-sounding resource names before
+trusting a first deploy.
