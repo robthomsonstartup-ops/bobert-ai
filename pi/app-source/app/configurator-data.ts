@@ -4,6 +4,7 @@ export type Fixture = {
   type: string; area: "Interior" | "Exterior"; specified: string; specifiedCatalog: string;
   description: string; qty: number; qtySource: string; alternate: string; family: string;
   status: ConfigStatus; exception: string; requirements: string[]; alternateCatalog?: string;
+  outOfScope?: boolean;
 };
 
 const f = (type:string, area:"Interior"|"Exterior", specified:string, specifiedCatalog:string, description:string, qty:number, alternate:string, family:string, status:ConfigStatus, exception="", requirements:string[]=[]):Fixture =>
