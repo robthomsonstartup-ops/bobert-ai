@@ -18,8 +18,9 @@
 //
 // Environment variables:
 //   SALES_CAPTURE_SECRET   shared secret used by the Mac Shortcut
-//   HUBSPOT_ACCESS_TOKEN    HubSpot private app token
+//   HUBSPOT_ACCESS_TOKEN    HubSpot service key
 //   ANTHROPIC_API_KEY      Anthropic API key
+//   ANTHROPIC_WORKSPACE_ID Anthropic workspace ID for identity-linked keys
 //   ANTHROPIC_MODEL        optional; defaults to claude-sonnet-4-5
 
 const HUBSPOT = 'https://api.hubapi.com';
@@ -34,6 +35,7 @@ function requireConfig() {
   if (!process.env.SALES_CAPTURE_SECRET) missing.push('SALES_CAPTURE_SECRET');
   if (!process.env.HUBSPOT_ACCESS_TOKEN) missing.push('HUBSPOT_ACCESS_TOKEN');
   if (!process.env.ANTHROPIC_API_KEY) missing.push('ANTHROPIC_API_KEY');
+  if (!process.env.ANTHROPIC_WORKSPACE_ID) missing.push('ANTHROPIC_WORKSPACE_ID');
   return missing;
 }
 
@@ -131,6 +133,7 @@ Return valid JSON only with these fields:
     headers: {
       'x-api-key': process.env.ANTHROPIC_API_KEY,
       'anthropic-version': '2023-06-01',
+      'anthropic-workspace-id': process.env.ANTHROPIC_WORKSPACE_ID,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
