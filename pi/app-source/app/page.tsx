@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { scanPdfForSchedulePages, buildScheduleText, type PdfScanResult } from "./pdf-extract";
+import * as XLSX from "xlsx";
 
 // ---------------------------------------------------------------------------
 // Types — mirror db/schema.ts. Kept local to this file since it's currently
@@ -79,7 +80,6 @@ const STATUS_LABELS: Record<ConfigStatus, string> = {
   keep: "Keep specified",
 };
 
-const csvCell = (v: string | number) => `"${String(v).replaceAll('"', '""')}"`;
 
 // ---------------------------------------------------------------------------
 // API helpers
@@ -598,32 +598,55 @@ export default function Home() {
   }
 
   // --- Export ---
-  const bom = scopedRows.map((x) =>
-    [x.fixtureType, x.alternateManufacturer, x.alternateCatalog || "", x.family, x.description, x.quantity ?? 0, x.quantitySource, STATUS_LABELS[x.reviewStatus]].map(csvCell).join(",")
-  );
   const fileSlug = (activeProject?.name ?? "project").replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "");
 
   function download() {
-    const blob = new Blob([["TYPE", "MANUFACTURER", "CATALOG #", "FAMILY", "DESCRIPTION", "QTY", "QTY SOURCE", "STATUS"].map(csvCell).join(",") + "\n" + bom.join("\n")], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${fileSlug}-Alternate-BOM.csv`;
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const headers = ["TYPE", "AREA", "SPECIFIED MFR", "SPECIFIED CATALOG #", "ALT MANUFACTURER", "ALT CATALOG #", "DESCRIPTION", "QTY", "QTY SOURCE", "STATUS"];
+    const rows = fixtures.map((x) => [
+      x.fixtureType, x.area, x.specifiedManufacturer, x.specifiedCatalog,
+      x.alternateManufacturer || "", x.alternateCatalog || "",
+      x.description, x.quantity ?? 0, x.quantitySource,
+      STATUS_LABELS[x.reviewStatus] ?? x.reviewStatus,
+    ]);
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+    ws["!cols"] = [8,10,18,30,18,30,28,6,14,12].map((w) => ({ wch: w }));
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Drawing Truth BOM");
+    XLSX.writeFile(wb, `${fileSlug}-Drawing-Truth-BOM.xlsx`);
   }
 
   function createQuote() {
     if (!release) return;
-    const quoteRows = scopedRows.map((x) =>
-      [x.fixtureType, x.alternateManufacturer, x.alternateCatalog || x.specifiedCatalog, "", x.description, x.quantity ?? 0].map(csvCell).join(",")
-    );
-    const blob = new Blob([["TYPE", "MANUFACTURER", "CATALOG #", "DIM", "DESCRIPTION", "QTY"].map(csvCell).join(",") + "\n" + quoteRows.join("\n")], { type: "text/csv" });
-    const a = document.createElement("a");
-    a.href = URL.createObjectURL(blob);
-    a.download = `${fileSlug}-Company-Quote-Import.csv`;
-    a.click();
-    URL.revokeObjectURL(a.href);
-    setNotice("Released quote-import file created from approved alternates only.");
+    const TARGET_MARGIN = 0.25;
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet([]);
+    XLSX.utils.sheet_add_aoa(ws, [
+      [activeProject?.name ?? "Project"],
+      ["LPA CSI Quote Export", new Date().toLocaleDateString()],
+      [],
+      ["Target Margin", TARGET_MARGIN],
+      [],
+      ["TYPE", "MANUFACTURER", "CATALOG #", "DESCRIPTION", "QTY", "PRICE/EA", "EXT. AMOUNT"],
+    ], { origin: "A1" });
+    const dataStart = 7;
+    const quoteRows = scopedRows.map((x) => [
+      x.fixtureType,
+      x.alternateManufacturer || x.specifiedManufacturer,
+      x.alternateCatalog || x.specifiedCatalog,
+      x.description,
+      x.quantity ?? 0,
+      "",
+      "",
+    ]);
+    XLSX.utils.sheet_add_aoa(ws, quoteRows, { origin: `A${dataStart}` });
+    quoteRows.forEach((_, i) => {
+      const row = dataStart + i;
+      ws[`G${row}`] = { f: `E${row}*F${row}`, t: "n" };
+    });
+    ws["!cols"] = [8,18,30,32,6,10,12].map((w) => ({ wch: w }));
+    XLSX.utils.book_append_sheet(wb, ws, "Quote");
+    XLSX.writeFile(wb, `${fileSlug}-Quote.xlsx`);
+    setNotice("Quote Excel file created from approved alternates. Add pricing in column F.");
   }
 
   async function copy() {
@@ -656,9 +679,9 @@ export default function Home() {
         <p>LIGHTING INTELLIGENCE</p>
         <nav>
           <button className="active"><Lightbulb />Configurator</button>
-          <button><Library />Knowledge</button>
-          <button><ShieldCheck />Reviews</button>
-          <button><FileSpreadsheet />Exports</button>
+          <button onClick={() => setNotice("Program Knowledge — coming soon.")}><Library />Knowledge</button>
+          <button onClick={() => setNotice("Reviews — coming soon.")}><ShieldCheck />Reviews</button>
+          <button onClick={() => setNotice("Exports — coming soon.")}><FileSpreadsheet />Exports</button>
         </nav>
         <div className="side-note">
           <Sparkles />
@@ -897,7 +920,7 @@ export default function Home() {
                 ) : (
                   <div className="review-actions">
                     <Button variant="outline" onClick={() => resetToReview(active.id)}>Undo / reset</Button>
-                    <Button className="full" variant="outline" disabled><Check />Ready for BOM</Button>
+                    <Button variant="outline" onClick={download}><Download />Export BOM</Button>
                   </div>
                 )}
               </aside>
