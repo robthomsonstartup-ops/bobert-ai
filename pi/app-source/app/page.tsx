@@ -681,9 +681,9 @@ export default function Home() {
             alt="Bobert"
             className="brand-mark"
           />
-          bobert.ai
+          <span className="brand-name">bobert.ai</span>
+          <span className="brand-sub">LIGHTING INTELLIGENCE</span>
         </div>
-        <p>LIGHTING INTELLIGENCE</p>
         <nav>
           <button className="active"><Lightbulb />Configurator</button>
           <button onClick={() => setNotice("Program Knowledge — coming soon.")}><Library />Knowledge</button>
