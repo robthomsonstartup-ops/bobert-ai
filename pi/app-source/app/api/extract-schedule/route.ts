@@ -51,7 +51,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const truncated = text.slice(0, 24000); // ~6k tokens, safe under Groq's 8k/min free-tier cap; must match SCHEDULE_AUTO_EXTRACT_LIMIT in pdf-extract.ts
+  const truncated = text.slice(0, 16000); // ~6k tokens, safe under Groq's 8k/min free-tier cap; must match SCHEDULE_AUTO_EXTRACT_LIMIT in pdf-extract.ts
 
   let groqResponse: Response;
   try {
@@ -59,7 +59,7 @@ export async function POST(request: Request) {
       method: "POST",
       headers: { "Content-Type": "application/json", "Authorization": `Bearer ${GROQ_KEY}` },
       body: JSON.stringify({
-        model: "openai/gpt-oss-120b",
+        model: "llama-3.3-70b-versatile",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: truncated },

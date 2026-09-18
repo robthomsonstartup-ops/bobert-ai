@@ -484,7 +484,14 @@ export default function Home() {
 
   async function importOfficeCounts(file: File) {
     if (!projectId) return;
-    const text = await file.text();
+    let text: string;
+    if (file.name.toLowerCase().endsWith('.pdf')) {
+      const scan = await scanPdfForSchedulePages(file);
+      const allPages = scan.pages.map((pg) => pg.pageNumber);
+      text = await buildScheduleText(file, allPages);
+    } else {
+      text = await file.text();
+    }
     const lines = text.split(/\r?\n/).filter(Boolean);
     const updates: { fixtureId: number; quantity: number; quantitySource: string }[] = [];
     const nextRows = fixtures.map((row) => {
@@ -711,7 +718,7 @@ export default function Home() {
             </select>
           </div>
           <div className="top-actions">
-            <input ref={officeInput} hidden type="file" accept=".csv,.tsv,.txt" onChange={(e) => e.target.files?.[0] && importOfficeCounts(e.target.files[0])} />
+            <input ref={officeInput} hidden type="file" accept=".csv,.tsv,.txt,.pdf" onChange={(e) => e.target.files?.[0] && importOfficeCounts(e.target.files[0])} />
             <input ref={scheduleInput} hidden type="file" accept="application/pdf" onChange={(e) => { const f = e.target.files?.[0]; if (f) startScheduleScan(f); e.target.value = ""; }} />
             <Button variant="outline" onClick={() => scheduleInput.current?.click()} disabled={extracting || !projectId}><Upload />{extracting ? "Extracting…" : "Upload schedule (PDF)"}</Button>
             <Button variant="outline" onClick={() => officeInput.current?.click()} disabled={!projectId}><Upload />Import office counts</Button>
