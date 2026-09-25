@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bobert Intelligence</title>
+<style>
+  :root{font-family:Inter,system-ui,-apple-system,sans-serif;color:#171717;background:#f5f5f5}
+  *{box-sizing:border-box} body{margin:0}.wrap{max-width:1180px;margin:0 auto;padding:32px 20px}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}.brand{font-size:26px;font-weight:800}.tag{font-size:12px;padding:6px 10px;border:1px solid #ddd;border-radius:999px;background:#fff}
+  .hero{background:#111;color:#fff;border-radius:20px;padding:30px;margin-bottom:20px}.hero h1{margin:0 0 8px;font-size:34px}.hero p{margin:0;color:#cfcfcf;max-width:720px;line-height:1.5}
+  .grid{display:grid;grid-template-columns:1.25fr .75fr;gap:20px}@media(max-width:800px){.grid{grid-template-columns:1fr}}
+  .card{background:#fff;border:1px solid #e3e3e3;border-radius:16px;padding:20px}.drop{border:2px dashed #bbb;border-radius:14px;padding:36px;text-align:center;cursor:pointer}.drop.drag{border-color:#111;background:#fafafa}.drop strong{display:block;font-size:18px;margin-bottom:7px}
+  input[type=file]{display:none} textarea,input[type=url]{width:100%;border:1px solid #ccc;border-radius:10px;padding:12px;font:inherit;margin-top:10px}textarea{min-height:120px;resize:vertical}
+  .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}.btn{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:#111;color:#fff}.secondary{background:#eee;color:#111}.status{padding:14px;border-radius:10px;background:#f2f2f2;margin-top:14px;line-height:1.45}.queue{margin-top:14px}.job{padding:12px 0;border-bottom:1px solid #eee}.job:last-child{border-bottom:0}.muted{color:#777;font-size:13px}.stage{display:inline-block;font-size:11px;background:#eee;border-radius:5px;padding:3px 6px;margin-left:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header><div class="brand">BOBERT / Intelligence</div><div class="tag">OS FOUNDATION</div></header>
+<section class="hero"><h1>Start with evidence.</h1><p>Drop a screenshot, paste an email, add a URL, or capture a note. Bobert preserves the source first, then turns it into an intelligence job. No guessing. No silent assumptions.</p></section>
+<div class="grid">
+<main>
+<div class="card">
+<div id="drop" class="drop"><strong>Drop a screenshot or document here</strong><span class="muted">or click to choose a file</span><input id="file" type="file" accept="image/*,.pdf,.txt,.md,.csv,.doc,.docx"></div>
+<div class="row"><button class="btn secondary" id="emailBtn">Paste email</button><button class="btn secondary" id="urlBtn">Add URL</button><button class="btn secondary" id="noteBtn">Add note</button></div>
+<div id="extra"></div><div id="status" class="status">Ready. Your next capture becomes the starting evidence.</div>
+</div>
+<div class="card queue"><h3>Captured intelligence</h3><div id="queue"></div></div>
+</main>
+<aside>
+<div class="card"><h3>What happens next</h3>
+<p><b>01 Capture</b><br><span class="muted">Preserve the original evidence.</span></p>
+<p><b>02 Identify</b><br><span class="muted">Resolve the person, company, project and location.</span></p>
+<p><b>03 Extract</b><br><span class="muted">Separate facts, signals and unknowns.</span></p>
+<p><b>04 Expand</b><br><span class="muted">Research beyond the original input.</span></p>
+<p><b>05 Verify</b><br><span class="muted">Attach evidence before a claim becomes usable.</span></p>
+<p><b>06 Decide</b><br><span class="muted">Recommend the best next move.</span></p>
+<p><b>07 Act → Learn</b><br><span class="muted">Execute, record the outcome and improve the model.</span></p>
+</div>
+<div class="card" style="margin-top:20px"><h3>Core rule</h3><p>Verified and supported claims can feed external communication. Inferred or unknown information stays labeled until evidence changes its status.</p></div>
+</aside>
+</div>
+</div>
+<script src="intelligence/intake.js"></script>
+<script>
+const drop=document.querySelector('#drop'), file=document.querySelector('#file'), extra=document.querySelector('#extra'), status=document.querySelector('#status'), queue=document.querySelector('#queue');
+function render(){const jobs=BobertIntake.readQueue(); queue.innerHTML=jobs.length?jobs.slice(0,12).map(j=>`<div class="job"><b>${j.input.name||j.input.type}</b><span class="stage">${j.status}</span><div class="muted">${new Date(j.created_at).toLocaleString()} · ${j.job_id}</div></div>`).join(''):'<div class="muted">Nothing captured yet.</div>';}
+function capture(input){const job=BobertIntake.createJob(input);status.innerHTML=`<b>Captured.</b> ${job.job_id}<br><span class="muted">Original evidence is preserved. Research and verification are the next stages.</span>`;render();}
+drop.onclick=()=>file.click(); file.onchange=()=>{const f=file.files[0];if(f)capture({type:f.type.startsWith('image/')?'screenshot':'document',name:f.name,metadata:{mime:f.type,size:f.size}})};
+drop.ondragover=e=>{e.preventDefault();drop.classList.add('drag')};drop.ondragleave=()=>drop.classList.remove('drag');drop.ondrop=e=>{e.preventDefault();drop.classList.remove('drag');const f=e.dataTransfer.files[0];if(f)capture({type:f.type.startsWith('image/')?'screenshot':'document',name:f.name,metadata:{mime:f.type,size:f.size}})};
+function promptInput(label,type){extra.innerHTML=`<label>${label}<textarea id="inputText" autofocus></textarea><div class="row"><button class="btn primary" id="saveInput">Capture evidence</button></div></label>`;document.querySelector('#saveInput').onclick=()=>{const text=document.querySelector('#inputText').value.trim();if(text)capture({type,text,source:'user_paste'});};}
+document.querySelector('#emailBtn').onclick=()=>promptInput('Paste the complete email. Keep the original wording.','email');
+document.querySelector('#noteBtn').onclick=()=>promptInput('Capture your note or observation.','note');
+document.querySelector('#urlBtn').onclick=()=>{extra.innerHTML='<input id="inputUrl" type="url" placeholder="https://..." autofocus><div class="row"><button class="btn primary" id="saveUrl">Capture URL</button></div>';document.querySelector('#saveUrl').onclick=()=>{const url=document.querySelector('#inputUrl').value.trim();if(url)capture({type:'url',source_url:url});}};
+render();
+</script>
+</body></html>

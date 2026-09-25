@@ -1,0 +1,125 @@
+{
+  "record_id": "capture_burlington_kelvin_mullins_2026_08_27",
+  "captured_at": "2026-08-27T22:36:00-04:00",
+  "inputs": [
+    {
+      "type": "screenshot",
+      "source": "Apollo",
+      "captured_by": "Rob Thomson",
+      "source_url": "https://app.apollo.io/"
+    }
+  ],
+  "entities": {
+    "accounts": [
+      {"name": "Burlington Stores", "type": "account", "source": "Apollo screenshot", "confidence": "high"}
+    ],
+    "contacts": [
+      {"name": "Kelvin Mullins", "type": "contact", "source": "Apollo screenshot", "confidence": "high"}
+    ],
+    "projects": [],
+    "organizations": [],
+    "locations": [
+      {"name": "Fort Worth, Texas", "type": "contact_location", "source": "Apollo screenshot", "confidence": "high"}
+    ]
+  },
+  "claims": [
+    {
+      "claim_id": "c1",
+      "text": "Kelvin Mullins is Senior Director, Construction at Burlington Stores.",
+      "status": "verified",
+      "confidence": "high",
+      "evidence_ids": ["e1"]
+    },
+    {
+      "claim_id": "c2",
+      "text": "Kelvin Mullins is located in Fort Worth, Texas.",
+      "status": "verified",
+      "confidence": "high",
+      "evidence_ids": ["e1"]
+    },
+    {
+      "claim_id": "c3",
+      "text": "Kelvin Mullins's email is kelvin.mullins@burlington.com.",
+      "status": "verified",
+      "confidence": "high",
+      "evidence_ids": ["e1"]
+    },
+    {
+      "claim_id": "c4",
+      "text": "Burlington operates 1,212 locations as of fiscal 2025 and reported $11.5 billion in net sales.",
+      "status": "supported",
+      "confidence": "medium",
+      "evidence_ids": ["e1"],
+      "notes": "Visible company context in the Apollo screenshot; Bobert should independently verify material company facts before using them in outbound messaging."
+    },
+    {
+      "claim_id": "c5",
+      "text": "Kelvin Mullins influences lighting specification, purchasing, or vendor selection.",
+      "status": "unknown",
+      "confidence": "not_applicable",
+      "evidence_ids": []
+    }
+  ],
+  "signals": [
+    {
+      "signal": "National multi-site retailer with a construction leadership contact",
+      "status": "observed",
+      "evidence_ids": ["e1"]
+    },
+    {
+      "signal": "Construction leadership may be relevant to a multi-site lighting sales motion",
+      "status": "inferred",
+      "evidence_ids": ["e1"]
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "e1",
+      "type": "capture",
+      "source": "Apollo screenshot supplied by Rob Thomson",
+      "url": "https://app.apollo.io/",
+      "supports": "Identity, title, company, location, email, and visible Apollo company context",
+      "captured_at": "2026-08-27T22:36:00-04:00"
+    }
+  ],
+  "research_questions": [
+    {
+      "question": "How is Burlington's construction organization structured, and who owns lighting specification and sourcing?",
+      "priority": "critical",
+      "status": "open",
+      "reason": "The contact's construction title is established, but the buying path is not."
+    },
+    {
+      "question": "Is Burlington actively expanding, remodeling, or rolling out stores?",
+      "priority": "high",
+      "status": "open",
+      "reason": "Current construction activity is a stronger sales signal than company size alone."
+    },
+    {
+      "question": "Which GCs, architects, designers, and electrical contractors repeatedly participate in Burlington projects?",
+      "priority": "high",
+      "status": "open",
+      "reason": "The account may be better attacked through the actual project and EC network depending on the buying model."
+    },
+    {
+      "question": "Are there current job postings, project announcements, permits, bids, or other construction signals tied to Burlington?",
+      "priority": "high",
+      "status": "open",
+      "reason": "Find evidence of near-term work before prioritizing outreach."
+    }
+  ],
+  "recommended_actions": [
+    {
+      "action": "Research Burlington construction and lighting procurement structure before drafting outreach.",
+      "reason": "The screenshot establishes a potentially relevant contact but not the buying process.",
+      "evidence_ids": ["e1"],
+      "status": "recommended"
+    },
+    {
+      "action": "Do not state a lighting or procurement responsibility for Kelvin until supported by evidence.",
+      "reason": "That relationship is currently unknown.",
+      "evidence_ids": [],
+      "status": "recommended"
+    }
+  ]
+}
