@@ -680,3 +680,37 @@ trusting a first deploy.
 4. **Confidence flags in BOM descriptions:** Any line item where the quantity is estimated (not derived from circuiting math or DWG) must include a note in the description: "EC to field-verify quantity." Hard counts from circuiting table math carry no flag.
 
 **Triggered by:** Building Kidz St. John, IN takeoff session (Oct 1, 2026). First use of circuiting table wattage method for Tier 3 count derivation.
+
+---
+
+## Decision 031 — Project Intake Email: Standard Format + Trigger Point
+
+**Date:** 2026-10-01
+**Status:** Locked
+
+**Context:** First intake email to Andy Brubaker sent Oct 1, 2026 for Building Kidz St. John, IN. Email drafted with Claude, BCC'd to HubSpot (24280291@bcc.hubspot.com) for CRM logging. Established the format and trigger point for all future intake emails.
+
+**Decisions:**
+
+1. **Trigger point:** A project intake email is generated when a drawing set is uploaded and engaged — whether in Claude directly or on the Bobert platform. The intake is the handoff from "we're looking at this job" to "we're quoting it."
+
+2. **Email subject line format:** `Project Intake – [Job Name], [City, State]`
+
+3. **Standard email body fields (auto-populated by Bobert from drawing/plan data):**
+   - Job Name
+   - Location (full address)
+   - Customer / General Contractor name and address
+   - GC contact name, email, and cell
+   - Bid due date
+   - AI-generated quote filename (AIQ format) with attachment
+   - Pantera or plan link (if available)
+
+4. **AIQ prefix in email subject and quote filename must be consistent.** If the quote file is `26-10-01_AIQ_LPA_CSI_Proposal_-_Building_Kidz_St_John_IN.xlsx`, the email and HubSpot log both reference that exact filename so Andy's team can track it.
+
+5. **BCC to HubSpot is mandatory** on every outbound intake email: 24280291@bcc.hubspot.com. This logs the email to the CRM automatically.
+
+6. **Andy's team adds their initials and review before the quote is official.** The AIQ prefix signals internal origin; their initials signal their sign-off. Both coexist in the filename string.
+
+7. **Future automation target:** Bobert should auto-generate the intake email body from the plan set metadata at upload time — job name, GC, address, contact — so the only manual step is review and send.
+
+**Triggered by:** Building Kidz St. John intake email sent to Andy Brubaker, Oct 1, 2026.
