@@ -148,6 +148,21 @@ See `business/PROMPT-DEV-FI-JULY30-SITE-V2.md` — supersedes the two earlier FI
 
 ---
 
+## Quoting Pipeline (AI-Assisted Takeoffs) — Oct 1, 2026
+
+### Completed takeoffs this session
+- ✅ **Club Pilates Ellisville, MO — ALT quote** — `26-09-29_AIQ_LPA_CSI_Proposal_-_Club_Pilates_Ellisville_MO_ALT.xlsx` — delivered, Andy reviewing
+- ✅ **Building Kidz St. John, IN** — `26-10-01_AIQ_LPA_CSI_Proposal_-_Building_Kidz_St_John_IN.xlsx` — delivered, intake email sent to Andy Brubaker (cc Scott King, BCC HubSpot). GC: Capitol Construction Solutions / Brian Enyi. Bid due 10/08/26.
+
+### Process locked (Decision 030)
+- AIQ naming convention locked: `YY-MM-DD_AIQ_LPA_CSI_Proposal_-_[Project].xlsx`
+- DWG is now a standard request alongside PDF on every bid
+- Fixture count methodology: Tier 1 DWG → Tier 2 vector PDF → Tier 3 circuiting table wattage math
+- Confidence flags required in BOM for any estimated quantity
+
+### Still queued
+- 4 additional PlanHub jobs pending (not yet started)
+
 ## Blocked / Waiting
 
 | Item | Blocked by | Who unblocks |

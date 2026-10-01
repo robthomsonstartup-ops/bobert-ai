@@ -656,3 +656,27 @@ introduced this session):
 look plausible but point nowhere real. Worth grep'ing new scaffolds for
 literal "PLACEHOLDER" tokens and default-sounding resource names before
 trusting a first deploy.
+
+---
+
+## Decision 030 — Quoting Pipeline: DWG Standard + AIQ Naming Convention
+
+**Date:** 2026-10-01
+**Status:** Locked
+
+**Context:** Two lighting takeoffs completed this session (Club Pilates Ellisville ALT, Building Kidz St. John IN) using PDF-only plan sets. Fixture counts were derived from raster-image electrical sheets via visual read + circuiting table wattage math. Accuracy is acceptable for budget quoting but not production-reliable for life safety and controls quantities.
+
+**Decisions:**
+
+1. **DWG files are a standard deliverable request on every bid.** When requesting plans from a GC or EC, ask for the electrical DWG alongside the PDF. Framing: "We use it to verify fixture counts and review substitution options." This is a professional ask, not unusual for a lighting vendor. If the GC cannot provide it, note that as a project risk flag.
+
+2. **The AIQ naming convention is locked for all AI-generated quotes.** Format: `YY-MM-DD_AIQ_LPA_CSI_Proposal_-_[Project Name].xlsx`. "AIQ" flags the file as AI-generated for internal tracking. Andy Brubaker and the sales team apply their own initials/review before the quote leaves LPA CSI officially.
+
+3. **Fixture count methodology (in priority order):**
+   - **Tier 1 (DWG available):** Parse with `ezdxf`, count block insertions by fixture type on the lighting layer. Exact, automated.
+   - **Tier 2 (vector PDF):** Parse with `pymupdf`/`pdfplumber`, extract text and geometry. Reliable for well-structured exports.
+   - **Tier 3 (raster PDF only):** Extract fixture schedule + lighting circuiting table wattages from E-series sheets. Divide circuit watts by fixture wattage per E-schedule to get hard counts per room. Life safety and controls quantities remain estimated and are flagged for EC field-verification in the quote description column.
+
+4. **Confidence flags in BOM descriptions:** Any line item where the quantity is estimated (not derived from circuiting math or DWG) must include a note in the description: "EC to field-verify quantity." Hard counts from circuiting table math carry no flag.
+
+**Triggered by:** Building Kidz St. John, IN takeoff session (Oct 1, 2026). First use of circuiting table wattage method for Tier 3 count derivation.
