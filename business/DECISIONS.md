@@ -588,3 +588,53 @@ functionality with no code change on our side. Worth periodically checking
 Groq's deprecations page (https://console.groq.com/docs/deprecations) for
 any model names referenced in the repo, rather than discovering it via a
 live failure.
+
+## Decision 029 — bobert.ai Becomes the Parent Company Site; Digital Programs Added as a Division
+
+**Date:** October 18, 2026
+**Owner:** Rob (Founder/CEO), approved in session ("go ahead and change the home page")
+**Status:** Locked
+
+**Decision:** Bobert is a platform company with separate product divisions,
+not a single construction product. The bobert.ai home page is now the
+parent page and links out to each division:
+
+- **Bobert Digital Programs** (`/programs`) — official websites for high
+  school sports programs ("Your Program. Your Players. Your Story.").
+  First program: Center Grove baseball prototype (separate deploy).
+- **Bobert Field Tools** (`/field`) — FI, PI and MI, unchanged. The former
+  home page content moved here as is.
+
+**What this changes and what it doesn't:**
+- Amends Decision 025's "homepage is a general overview/portal" to cover
+  multiple divisions, not only the construction tools. Decision 025's gating
+  and single-domain rules are unchanged.
+- Decision 021's construction beachhead still governs Field Tools. It does
+  not apply to Digital Programs, which has its own customer (coaches,
+  booster clubs, athletic directors).
+- Previous home page archived at `archive/home-2026-10-18.html`; the older,
+  unlinked `field.html` archived at `archive/field-2026-10-18.html`.
+  `robots.txt` keeps `/archive/` out of search.
+
+**Shared site template:** `assets/bobert-site.css` holds the layout and
+brand tokens (`--brand`, `--brand-2`, `--brand-ink`) for every new page.
+A school's site sets those three tokens to its colors; nothing else changes.
+Two surface themes: `theme-bobert` (near-black, company pages) and
+`theme-programs` (deep navy, Digital Programs and school sites).
+
+**Copy rules for Digital Programs pages:**
+- No pricing published until Rob signs off on numbers (packages shown
+  without prices).
+- No real school, logo or player shown publicly until the school has given
+  written logo permission and the data-source review is done. The sample
+  program on `/programs` is fictional.
+- MaxPreps is not described as a data source anywhere public.
+
+**No new spend.** Static pages on the existing Vercel project (Decision 013).
+
+**Open items:**
+- `hello@bobert.ai` is the contact on both pages. Confirm the mailbox
+  exists and is monitored, or change the address.
+- The Field Tools beta signup form (`handleSignup` on `/field`) only
+  shows a confirmation and does not store or send the email address.
+  Signups have been going nowhere since it shipped.

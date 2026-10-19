@@ -17,7 +17,8 @@ Bobert AI is the platform; Bobert is the brand (domain bobert.ai, "B" Corner Sig
 
 - **Bobert FI (Field Intelligence)** — LIVE, closed beta. Point your phone at a project, get GPS + AI-generated intel (developer, GC, contacts, routing note) in seconds. No billing/trial gating during beta (Decision 019) — full access, free, to gather accuracy feedback before charging anyone.
 - **Bobert PI (Project Intake)** — LIVE, personal-use tool for Rob at CS Illumination. Bid invite / RFP / screenshot / file / URL in, structured project summary + RFI checklist + generic deal draft out. Multi-source intake shipped July 29. No CRM integration yet — CS Illumination's stack is unknown. **Current focus: PI UI build-out and expediting multi-source-to-structured-output speed, eliminating manual entry.**
-- **Public site as of July 30:** the homepage is being rebuilt (`marketing/SITE-PLAN-JULY30.md` v2.0) to present both sectors — FI live, PI described as "in development," no CTA. Confirmed directly by Rob.
+- **Public site as of October 18 (Decision 029):** bobert.ai is now the Bobert parent page with two divisions. Bobert Digital Programs at `/programs` (high school program websites, now booking demos) and Bobert Field Tools at `/field` (the former home page, FI/PI/MI unchanged). Old home page archived in `archive/`. Shared template: `assets/bobert-site.css`.
+- **Public site as of July 30 (superseded by Decision 029):** the homepage is being rebuilt (`marketing/SITE-PLAN-JULY30.md` v2.0) to present both sectors — FI live, PI described as "in development," no CTA. Confirmed directly by Rob.
 
 ---
 

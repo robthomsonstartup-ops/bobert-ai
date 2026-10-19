@@ -39,7 +39,8 @@ def warn(rule, f, msg): warnings.append((rule, f, msg))
 def html_files():
     out = []
     for p in glob.glob(os.path.join(ROOT, "**", "*.html"), recursive=True):
-        if "node_modules" in p or "/.git/" in p:
+        # archive/ holds frozen copies of retired pages (not served as live pages)
+        if "node_modules" in p or "/.git/" in p or "/archive/" in p:
             continue
         out.append(p)
     return sorted(out)
