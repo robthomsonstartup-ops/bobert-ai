@@ -12,10 +12,14 @@
        --brand-ink:  #FFFFFF;   text that sits ON --brand (white or near-black)
      }
 
-   Two surface themes are available via the <body> class:
-     .theme-bobert    near-black, for Bobert company pages (default)
-     .theme-programs  deep navy, for Digital Programs and school sites
-   Everything else (layout, cards, buttons, type) stays the same.
+   Each Bobert product has its OWN look (Decision 029, amended). This file is
+   shared plumbing (layout, spacing, components, mobile). A product picks its
+   look with a <body> class:
+     .theme-bobert       near-black + red, Bobert AI company pages and Field Intelligence
+     .theme-programhome  light, scoreboard type, Program Home (default navy/gold;
+                         every program site swaps in its own colors)
+     .theme-programs     deep navy (kept for reference; FieldPass-style)
+   The Bobert wordmark is the one element every product carries.
    ========================================================================== */
 
 :root {
@@ -295,3 +299,116 @@ section + section { border-top: 1px solid var(--line); }
 }
 
 .package .tag { align-self: flex-start; }
+
+/* ==========================================================================
+   Program Home look: light, editorial, scoreboard headings
+   ========================================================================== */
+body.theme-programhome {
+  --brand: #0B2A5B;
+  --brand-2: #C8A24A;
+  --brand-ink: #FFFFFF;
+  --bg: #F6F3EC;
+  --surface: #FFFFFF;
+  --surface-2: #F1EDE4;
+  --line: rgba(20, 24, 33, 0.10);
+  --line-strong: rgba(20, 24, 33, 0.22);
+  --text: #141821;
+  --muted: rgba(20, 24, 33, 0.70);
+  --dim: rgba(20, 24, 33, 0.50);
+}
+body.theme-programhome h1,
+body.theme-programhome h2,
+.ph-type {
+  font-family: "Barlow Condensed", Inter, sans-serif;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.005em;
+  line-height: 0.98;
+}
+body.theme-programhome h1 { font-size: clamp(48px, 8vw, 92px); }
+body.theme-programhome h2 { font-size: clamp(36px, 5.4vw, 58px); }
+body.theme-programhome h1 em, body.theme-programhome h2 em { color: var(--brand-2); }
+body.theme-programhome .eyebrow, body.theme-programhome .eyebrow::before { color: var(--brand); }
+body.theme-programhome .eyebrow::before { background: var(--brand-2); }
+body.theme-programhome .hero { background:
+  linear-gradient(180deg, color-mix(in srgb, var(--brand) 7%, transparent), transparent 70%); }
+body.theme-programhome .hero::before { display: none; }
+body.theme-programhome .card { box-shadow: 0 1px 2px rgba(20, 24, 33, .05); }
+body.theme-programhome .card:hover { border-color: color-mix(in srgb, var(--brand) 35%, transparent); }
+body.theme-programhome .preview { box-shadow: 0 24px 60px rgba(11, 42, 91, .18); }
+body.theme-programhome .cta-band {
+  background: var(--brand); border-color: var(--brand); color: var(--brand-ink);
+}
+body.theme-programhome .cta-band p { color: color-mix(in srgb, var(--brand-ink) 82%, transparent); }
+body.theme-programhome .cta-band .btn { background: var(--brand-2); color: #141821; }
+body.theme-programhome .site-footer { background: var(--surface-2); }
+.ph-logo { display: flex; align-items: baseline; gap: 10px; text-decoration: none; color: var(--text); }
+.ph-logo .ph-type { font-size: 30px; line-height: 1; }
+.ph-logo .ph-type b { color: var(--brand-2); font-weight: 800; }
+.by-bobert { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--dim); text-decoration: none; }
+.by-bobert img { height: 18px; width: auto; }
+
+/* Two-path chooser (high school vs travel/club) */
+.paths { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+@media (max-width: 760px) { .paths { grid-template-columns: minmax(0, 1fr); } }
+.path { border-top: 4px solid var(--brand); }
+.path.alt { border-top-color: var(--brand-2); }
+.path h3 { font-size: 24px; }
+
+/* ==========================================================================
+   Product cards on the Bobert AI home page: each card wears its product's look
+   ========================================================================== */
+.product {
+  --p-bg: #141414; --p-surface: rgba(255,255,255,.06); --p-text: #FFFFFF;
+  --p-muted: rgba(255,255,255,.68); --p-accent: #DC2626; --p-ink: #FFFFFF;
+  display: flex; flex-direction: column; border-radius: 22px; overflow: hidden;
+  background: var(--p-bg); color: var(--p-text); border: 1px solid rgba(255,255,255,.10);
+  min-height: 100%;
+}
+.product-head { padding: 28px 28px 0; }
+.product-name { font-size: 30px; font-weight: 900; letter-spacing: -0.02em; line-height: 1.05; margin-top: 16px; }
+.product-tagline { margin-top: 8px; font-weight: 700; color: var(--p-accent); }
+.product-body { padding: 14px 28px 0; color: var(--p-muted); font-size: 16px; }
+.product ul { list-style: none; margin: 16px 0 0; padding: 0 28px; display: grid; gap: 9px; }
+.product li { position: relative; padding-left: 22px; color: var(--p-muted); font-size: 15px; }
+.product li::before { content: ""; position: absolute; left: 0; top: 8px; width: 9px; height: 9px; border-radius: 3px; background: var(--p-accent); }
+.product-foot { margin-top: auto; padding: 26px 28px 28px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.product .btn { background: var(--p-accent); color: var(--p-ink); }
+.product-who { font-size: 13px; color: var(--p-muted); }
+.product .tag { border-color: color-mix(in srgb, var(--p-text) 25%, transparent); color: var(--p-muted); }
+.product .tag-live { border-color: var(--p-accent); color: var(--p-accent); }
+
+.product--programhome {
+  --p-bg: #F6F3EC; --p-text: #141821; --p-muted: rgba(20,24,33,.70);
+  --p-accent: #0B2A5B; --p-ink: #FFFFFF; border-color: #F6F3EC;
+}
+.product--programhome .product-name { font-family: "Barlow Condensed", Inter, sans-serif; font-weight: 800; text-transform: uppercase; font-size: 38px; letter-spacing: 0; }
+.product--programhome .product-name b { color: #C8A24A; font-weight: 800; }
+.product--programhome .product-tagline { color: #0B2A5B; }
+.product--fieldpass {
+  --p-bg: #07111D; --p-text: #F0F6FF; --p-muted: rgba(232,241,251,.68);
+  --p-accent: #1DB954; --p-ink: #07111D; border-color: rgba(29,185,84,.25);
+}
+.product--fieldpass .product-name { font-family: Geist, Inter, sans-serif; }
+.product--field {
+  --p-bg: #0A0A0A; --p-text: #FFFFFF; --p-muted: rgba(255,255,255,.66);
+  --p-accent: #DC2626; --p-ink: #FFFFFF; border-color: rgba(220,38,38,.35);
+}
+
+/* ---------- Sell sheet (home page) ---------- */
+.glance { gap: 14px; }
+.glance-item {
+  border-left: 3px solid var(--brand); padding: 4px 0 4px 16px;
+}
+.glance-item b { display: block; font-size: 40px; font-weight: 900; line-height: 1; letter-spacing: -0.02em; }
+.glance-item span { display: block; margin-top: 6px; color: var(--muted); font-size: 15px; }
+.example-card { padding: 28px; }
+.example-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.example-head .ph-type { font-size: 26px; line-height: 1; }
+.example-head .ph-type b { color: #C8A24A; font-weight: 800; }
+.example-title { margin-top: 22px; font-size: 26px; font-weight: 800; letter-spacing: -0.01em; }
+.example-sub { margin-top: 4px; color: var(--muted); font-size: 15px; }
+.contact-text {
+  font-size: clamp(20px, 2.6vw, 26px); font-weight: 800; letter-spacing: -0.01em;
+  padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line-strong); background: var(--surface);
+}

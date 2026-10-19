@@ -638,3 +638,27 @@ Two surface themes: `theme-bobert` (near-black, company pages) and
 - The Field Tools beta signup form (`handleSignup` on `/field`) only
   shows a confirmation and does not store or send the email address.
   Signups have been going nowhere since it shipped.
+
+### Decision 029 — Amendment 1 (October 18, 2026, same day, Rob's sign-off in session)
+
+**Bobert AI is positioned as a digital product studio.** The home page is a
+front-facing sell sheet: an overview of the company and its three products,
+with **no links out to any product** for now. Product links get added as each
+product's next steps are decided.
+
+**Three products, each with its own name and look.** The Bobert wordmark is the
+only element every product carries ("a Bobert AI product").
+
+| Product | What it is | Look |
+| --- | --- | --- |
+| Program Home | Official digital home for any sports program: high school, travel and club. Full site, or an extension on the program's existing website. | Light, scoreboard type, navy and gold by default; each program site uses its own colors |
+| FieldPass | Network for youth baseball programs: post availability, find opponents, book games and doubleheaders, rent fields. Separate repo. | Its own navy and green |
+| Field Intelligence | FI, PI and MI for construction and lighting sales (`/field`). | Bobert black and red |
+
+- "Bobert Digital Programs" is retired as a product name; the product is **Program Home**.
+- Center Grove baseball is shown on the sell sheet as the Program Home example
+  (text only: no school logo, no link). Its site lives on its own domain.
+- `/programs` stays up as the Program Home page but is not linked from the home page.
+- `assets/bobert-site.css` is shared plumbing only. Each product picks its look with a
+  body class (`theme-bobert`, `theme-programhome`). This replaces the original
+  029 wording that every page shares one look.

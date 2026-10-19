@@ -3,33 +3,36 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bobert Digital Programs | Your Program. Your Players. Your Story.</title>
-  <meta name="description" content="The official digital home for your high school sports program: roster, player profiles, schedule, stats, history, records and alumni, in your colors. We build it and keep it current." />
-  <meta property="og:title" content="Bobert Digital Programs | Your Program. Your Players. Your Story." />
-  <meta property="og:description" content="The official digital home for your high school sports program, built from your own records and kept current all season." />
+  <title>Program Home | Your Program. Your Players. Your Story.</title>
+  <meta name="description" content="Program Home is the official digital home for any sports program, from high school teams to travel and club organizations. Rosters, player profiles, stats, history and alumni, in your colors, kept current all season." />
+  <meta property="og:title" content="Program Home | Your Program. Your Players. Your Story." />
+  <meta property="og:description" content="The official digital home for your program. A full site, or added to the website you already have. A Bobert AI product." />
   <meta property="og:url" content="https://bobert.ai/programs" />
-  <meta name="theme-color" content="#07111D" />
+  <meta name="theme-color" content="#F6F3EC" />
   <link rel="icon" href="/assets/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/bobert-site.css" />
   <!--
-    TEMPLATE NOTE: a school's own site uses this same stylesheet and sets its
-    colors here, e.g.
-    <style>:root { --brand: #0B2A5B; --brand-2: #C8A24A; --brand-ink: #FFFFFF; }</style>
+    TEMPLATE NOTE: a program's own Program Home site uses the same stylesheet and
+    body class, and sets its colors here, e.g.
+    <style>:root, body.theme-programhome { --brand: #7A0019; --brand-2: #FFCC33; --brand-ink: #FFFFFF; }</style>
   -->
 </head>
-<body class="theme-programs">
+<body class="theme-programhome">
 
 <nav class="site-nav" aria-label="Main">
   <div class="wrap">
-    <a class="nav-brand" href="/" aria-label="Bobert home"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="160" height="40" /><span class="nav-division">Digital Programs</span></a>
+    <div style="display:flex;align-items:center;gap:14px;min-width:0">
+      <a class="ph-logo" href="/programs" aria-label="Program Home"><span class="ph-type">Program <b>Home</b></span></a>
+      <a class="by-bobert" href="/" aria-label="A Bobert AI product">by <img src="/assets/bobert-wordmark-dark.png" alt="Bobert" width="72" height="18" /></a>
+    </div>
     <div class="nav-links">
+      <a href="#who">Who it’s for</a>
       <a href="#included">What’s included</a>
-      <a href="#how">How it works</a>
-      <a href="#packages">Packages</a>
+      <a href="#options">Options</a>
       <a class="btn" href="#demo">Request a demo</a>
     </div>
   </div>
@@ -40,22 +43,22 @@
   <header class="hero">
     <div class="wrap hero-split">
       <div>
-        <span class="eyebrow">Bobert Digital Programs</span>
+        <span class="eyebrow">The official home for your program</span>
         <h1>Your Program. Your Players. Your <em>Story.</em></h1>
-        <p class="lead">The official digital home for your high school program. Roster, player profiles, schedule and results, stats, history, records and alumni, all in one place and in your colors. We build it. We keep it current. You coach.</p>
+        <p class="lead">Rosters, player profiles, schedule and results, stats, history and alumni, all in one place and in your colors. As a full site, or added to the website you already have. We set it up, and we keep it current.</p>
         <div class="hero-actions">
           <a class="btn" href="#demo">Request a demo</a>
-          <a class="btn btn-ghost" href="#included">See what’s included</a>
+          <a class="btn btn-ghost" href="#who">See how it fits your program</a>
         </div>
-        <p class="hero-note">Now booking founding programs for the 2027 season. Baseball first, softball next.</p>
+        <p class="hero-note">For high school programs and travel and club organizations. Booking founding programs for 2027.</p>
       </div>
 
       <div>
-        <div class="preview" id="preview" aria-label="Sample program site, shown in school colors">
+        <div class="preview" id="preview" aria-label="Sample program site, shown in program colors">
           <div class="preview-top">
             <div class="preview-school">
               <div class="preview-crest" aria-hidden="true">S</div>
-              <div><b>Sample High School Baseball</b><span>Official program site · Est. 1965</span></div>
+              <div><b>Sample Program Baseball</b><span>Official program site · Est. 1965</span></div>
             </div>
           </div>
           <div class="preview-tabs" aria-hidden="true">
@@ -64,7 +67,7 @@
           <div class="preview-body">
             <div class="preview-player">
               <div class="preview-num" aria-hidden="true">7</div>
-              <div><b>Alex Carter</b><span>SS / RHP · Class of 2027 · 3-year varsity</span></div>
+              <div><b>Alex Carter</b><span>SS / RHP · Class of 2027 · 3 seasons</span></div>
             </div>
             <div class="preview-stats">
               <div class="preview-stat"><b>.382</b><span>AVG</span></div>
@@ -72,16 +75,16 @@
               <div class="preview-stat"><b>1.84</b><span>ERA</span></div>
             </div>
             <div class="preview-history">
-              <div class="preview-row"><b>2026</b><span>24–6 · Sectional champions</span></div>
-              <div class="preview-row"><b>2025</b><span>19–10 · Conference runner-up</span></div>
-              <div class="preview-row"><b>2024</b><span>22–8 · Regional champions</span></div>
+              <div class="preview-row"><b>2026</b><span>24–6 · Champions</span></div>
+              <div class="preview-row"><b>2025</b><span>19–10 · Runner-up</span></div>
+              <div class="preview-row"><b>2024</b><span>22–8 · Champions</span></div>
             </div>
           </div>
         </div>
-        <div class="swatches" role="group" aria-label="Try it in different school colors">
-          <span>Try school colors:</span>
-          <button class="swatch" type="button" aria-pressed="true"  aria-label="Red and black"   style="--a:#DC2626;--b:#1A1A1A" data-brand="#DC2626" data-brand2="#1A1A1A" data-ink="#FFFFFF"></button>
-          <button class="swatch" type="button" aria-pressed="false" aria-label="Navy and gold"   style="--a:#0B2A5B;--b:#C8A24A" data-brand="#0B2A5B" data-brand2="#C8A24A" data-ink="#FFFFFF"></button>
+        <div class="swatches" role="group" aria-label="Try it in different program colors">
+          <span>Try your colors:</span>
+          <button class="swatch" type="button" aria-pressed="true"  aria-label="Navy and gold"   style="--a:#0B2A5B;--b:#C8A24A" data-brand="#0B2A5B" data-brand2="#C8A24A" data-ink="#FFFFFF"></button>
+          <button class="swatch" type="button" aria-pressed="false" aria-label="Red and black"   style="--a:#B91C1C;--b:#1A1A1A" data-brand="#B91C1C" data-brand2="#1A1A1A" data-ink="#FFFFFF"></button>
           <button class="swatch" type="button" aria-pressed="false" aria-label="Green and white" style="--a:#14532D;--b:#F0F0F0" data-brand="#14532D" data-brand2="#F0F0F0" data-ink="#FFFFFF"></button>
           <button class="swatch" type="button" aria-pressed="false" aria-label="Purple and gold" style="--a:#4C1D95;--b:#C8A24A" data-brand="#4C1D95" data-brand2="#C8A24A" data-ink="#FFFFFF"></button>
         </div>
@@ -89,26 +92,47 @@
     </div>
   </header>
 
+  <section id="who" aria-labelledby="who-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Who it’s for</span>
+        <h2 id="who-title">Built for any program.</h2>
+        <p>Same product, two kinds of programs. Pick the one that sounds like you.</p>
+      </div>
+      <div class="paths">
+        <div class="card path">
+          <h3>High school programs</h3>
+          <p>A professional home for the program, with every season, record and graduating class in one place. Usually funded by the booster club or local sponsors.</p>
+          <ul class="checks" style="margin-top:18px">
+            <li>Program history and alumni by class</li>
+            <li>School logo used with the school’s approval</li>
+            <li>Sponsor section that helps cover the cost</li>
+          </ul>
+        </div>
+        <div class="card path alt">
+          <h3>Travel and club organizations</h3>
+          <p>Every team and age group under one roof, with player profiles that follow kids from team to team. Added to your existing website, or a full site of its own.</p>
+          <ul class="checks" style="margin-top:18px">
+            <li>All your teams and age groups in one place</li>
+            <li>Works with the parent sign-off you already collect</li>
+            <li>Lives on your own domain, under your brand</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section aria-labelledby="problem-title">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">The problem</span>
         <h2 id="problem-title">Your program’s story is scattered.</h2>
-        <p>Stats live on one site, the schedule on another, video somewhere else, and the history in a coach’s binder. None of it belongs to the program, and players disappear from view the day they graduate.</p>
+        <p>Stats in one app, the schedule somewhere else, video in a third place, and the history in somebody’s binder. None of it belongs to the program, and players disappear from view when they move on.</p>
       </div>
       <div class="grid grid-3">
-        <div class="card">
-          <h3>No single home</h3>
-          <p>Families, recruits and alumni hunt across five places to find one answer.</p>
-        </div>
-        <div class="card">
-          <h3>History gets lost</h3>
-          <p>Records, past seasons and great players fade when a coach or volunteer moves on.</p>
-        </div>
-        <div class="card">
-          <h3>No time to maintain it</h3>
-          <p>Coaches coach. A site that depends on a weekly volunteer goes stale by May.</p>
-        </div>
+        <div class="card"><h3>No single home</h3><p>Families, recruits and alumni hunt across five places to find one answer.</p></div>
+        <div class="card"><h3>History gets lost</h3><p>Records, past seasons and great players fade when a coach or volunteer moves on.</p></div>
+        <div class="card"><h3>No time to keep it up</h3><p>Coaches coach. A site that depends on a weekly volunteer goes stale by midseason.</p></div>
       </div>
     </div>
   </section>
@@ -117,49 +141,86 @@
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">What’s included</span>
-        <h2 id="included-title">Everything your program already has, finally in one place.</h2>
-        <p>Built from your program’s own records. Not a recruiting site, not an admin tool. Your program’s official home.</p>
+        <h2 id="included-title">Everything your program already has. In one place you own.</h2>
+        <p>We load your rosters and records to start. After that, your staff can update it through a simple form built around how your program works, or we handle it for you.</p>
       </div>
       <div class="grid grid-4">
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18.5 14.8c1.6.8 2.7 2.5 3 5.2"/></svg></div>
-          <h3>Roster &amp; player profiles</h3>
-          <p>Permanent profiles that follow each player from freshman year to alumni.</p>
+          <h3>Rosters &amp; player profiles</h3><p>Permanent profiles that follow each player through every season.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div>
-          <h3>Schedule &amp; results</h3>
-          <p>Every game, every score, updated through the season.</p>
+          <h3>Schedule &amp; results</h3><p>Every game, tournament and score, updated through the season.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
-          <h3>Stats &amp; records</h3>
-          <p>Season stats and all-time program records, kept accurate.</p>
+          <h3>Stats &amp; records</h3><p>Season stats and all-time program records, kept accurate.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 7v5l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
-          <h3>Season history</h3>
-          <p>Past seasons, titles and teams, as far back as your records go.</p>
+          <h3>Season history</h3><p>Past seasons, titles and teams, as far back as your records go.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10L12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></div>
-          <h3>Alumni by class</h3>
-          <p>Every graduating class, so former players stay part of the program.</p>
+          <h3>Alumni</h3><p>Every class or team that came through, so former players stay part of it.</p>
         </div>
         <div class="card">
-          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h10M7 13h10M7 17h6"/></svg></div>
-          <h3>News</h3>
-          <p>Verified program news, tagged to the players in it.</p>
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+          <h3>Your own entry form</h3><p>Rosters, results and stats entered by your staff, set up the way your program works.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="2"/><path d="M21 16l-5-5-8 8"/></svg></div>
-          <h3>Photos</h3>
-          <p>Team and game photos from your program and families.</p>
+          <h3>News &amp; photos</h3><p>Program news and photos, tagged to the players in them.</p>
         </div>
         <div class="card">
-          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4 6.7 19.1l1-5.8-4.2-4.1 5.9-.9z"/></svg></div>
-          <h3>Coaching staff</h3>
-          <p>Your staff, their records and the program’s coaching history.</p>
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></div>
+          <h3>Your domain</h3><p>On your own web address, under your name and your colors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="options" aria-labelledby="options-title">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Options</span>
+        <h2 id="options-title">Three ways to set it up.</h2>
+        <p>A one-time setup plus an annual subscription. Organizations with several teams pay per organization, not per team. Founding programs get locked-in pricing.</p>
+      </div>
+      <div class="grid grid-3">
+        <div class="card package featured">
+          <span class="tag tag-live">Already have a website?</span>
+          <div class="name">Extension</div>
+          <p class="for">Rosters, profiles, stats and history added to the site you already have.</p>
+          <ul class="checks">
+            <li>Lives on your domain, like teams.yourprogram.com</li>
+            <li>Matches your logo and colors</li>
+            <li>Every team and age group included</li>
+            <li>Kept current through the season</li>
+          </ul>
+        </div>
+        <div class="card package">
+          <span class="tag">Full site</span>
+          <div class="name">Program Site</div>
+          <p class="for">A complete program website on its own domain.</p>
+          <ul class="checks">
+            <li>Everything in Extension</li>
+            <li>Home page, news, photos and staff</li>
+            <li>Sponsor section</li>
+            <li>Your own entry form for staff updates</li>
+          </ul>
+        </div>
+        <div class="card package">
+          <span class="tag">For tradition programs</span>
+          <div class="name">Legacy</div>
+          <p class="for">For programs with decades worth telling.</p>
+          <ul class="checks">
+            <li>Everything in Program Site</li>
+            <li>Full season history and all-time records</li>
+            <li>Alumni across every year</li>
+            <li>Weekly in-season updates handled for you</li>
+          </ul>
         </div>
       </div>
     </div>
@@ -169,48 +230,13 @@
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">How it works</span>
-        <h2 id="how-title">Minutes a season for you. The rest is on us.</h2>
+        <h2 id="how-title">Minutes a season for you.</h2>
       </div>
       <div class="grid grid-4 steps">
-        <div class="card step">
-          <h3>Short call</h3>
-          <p>Twenty minutes with the coach and booster club to see what the program has and wants.</p>
-        </div>
-        <div class="card step">
-          <h3>We build it</h3>
-          <p>From your rosters, scorebooks and program records. Your colors, your logo with the school’s approval.</p>
-        </div>
-        <div class="card step">
-          <h3>You approve it</h3>
-          <p>Nothing goes live until the coach signs off and family consent rules are in place.</p>
-        </div>
-        <div class="card step">
-          <h3>We keep it current</h3>
-          <p>Send us the scorebook export each week. Stats, results and news stay up to date.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section aria-labelledby="who-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Built for</span>
-        <h2 id="who-title">Coaches, booster clubs and athletic directors.</h2>
-      </div>
-      <div class="grid grid-3">
-        <div class="card">
-          <h3>Head coaches</h3>
-          <p>A professional home for the program you built, with zero weekly upkeep. Something to show recruits’ families and every player who comes through.</p>
-        </div>
-        <div class="card">
-          <h3>Booster clubs</h3>
-          <p>A site worth sponsoring. A sponsor section lets local businesses help cover the cost, and the program keeps any surplus.</p>
-        </div>
-        <div class="card">
-          <h3>Athletic directors</h3>
-          <p>The school approves logo use, nothing publishes without consent rules, and no student contact information ever appears.</p>
-        </div>
+        <div class="card step"><h3>Short call</h3><p>Twenty minutes to see what your program has and what you want it to show.</p></div>
+        <div class="card step"><h3>We load it</h3><p>Your rosters, schedules, stats and records, set up in your colors and on your domain.</p></div>
+        <div class="card step"><h3>You approve it</h3><p>Nothing goes live until you sign off and the family consent rules are in place.</p></div>
+        <div class="card step"><h3>It stays current</h3><p>Your staff updates it through your entry form, or we handle it every week.</p></div>
       </div>
     </div>
   </section>
@@ -219,61 +245,16 @@
     <div class="wrap grid grid-2" style="align-items:start; gap:44px">
       <div class="section-head" style="margin-bottom:0">
         <span class="eyebrow">Families first</span>
-        <h2 id="privacy-title">Built with student privacy in mind.</h2>
-        <p>These sites are about real kids. We treat their information that way.</p>
+        <h2 id="privacy-title">Built with player privacy in mind.</h2>
+        <p>These sites are about real kids. We work inside the sign-off your families already give you, and we’ll give you the consent wording to use.</p>
       </div>
       <ul class="checks">
-        <li><strong>Directory-level information by default.</strong> Name, number, position, class year and stats.</li>
-        <li><strong>Enhanced profiles need a parent’s signed consent.</strong> Headshots, bios and highlights only with permission.</li>
+        <li><strong>Basic roster info, covered by your registration sign-off.</strong> Name, number, position, team, grad year and stats.</li>
+        <li><strong>Anything more, a parent opts in.</strong> Headshots, bios, highlights and commitments only with permission.</li>
         <li><strong>Never published:</strong> home address, phone, personal email, birthdate, grades or health information.</li>
         <li><strong>Removal on request.</strong> A parent can have their player’s information taken down, quickly.</li>
-        <li><strong>Built from your records.</strong> Rosters and stats come from the program, with its permission.</li>
+        <li><strong>Your records, your program.</strong> You own your data and your domain.</li>
       </ul>
-    </div>
-  </section>
-
-  <section id="packages" aria-labelledby="packages-title">
-    <div class="wrap">
-      <div class="section-head">
-        <span class="eyebrow">Packages</span>
-        <h2 id="packages-title">Three ways to start.</h2>
-        <p>A one-time setup plus an annual subscription, usually paid by the booster club or covered by sponsors. Founding programs get locked-in pricing.</p>
-      </div>
-      <div class="grid grid-3">
-        <div class="card package">
-          <span class="tag">Starter</span>
-          <div class="name">Digital Program</div>
-          <p class="for">For programs that want a clean, current home.</p>
-          <ul class="checks">
-            <li>Current roster and player cards</li>
-            <li>Schedule, results and season stats</li>
-            <li>Coaching staff, news and photos</li>
-            <li>Your colors and your own web address</li>
-          </ul>
-        </div>
-        <div class="card package featured">
-          <span class="tag tag-live">Most programs</span>
-          <div class="name">Digital Program + Player Profiles</div>
-          <p class="for">For programs that want every player remembered.</p>
-          <ul class="checks">
-            <li>Everything in Starter</li>
-            <li>Permanent career profiles for every player</li>
-            <li>Program records page</li>
-            <li>Three seasons of history</li>
-          </ul>
-        </div>
-        <div class="card package">
-          <span class="tag">Legacy</span>
-          <div class="name">Complete Program + History + Alumni</div>
-          <p class="for">For tradition programs with decades worth telling.</p>
-          <ul class="checks">
-            <li>Everything in Player Profiles</li>
-            <li>Full season history and all-time records</li>
-            <li>Alumni by graduating class</li>
-            <li>Weekly in-season updates handled for you</li>
-          </ul>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -282,9 +263,9 @@
       <div class="cta-band">
         <div>
           <h2 id="demo-title">See it with your program’s name on it.</h2>
-          <p>We’re booking a small group of founding programs for the 2027 season. Send us your school and sport, and we’ll set up a 20-minute demo built around your program.</p>
+          <p>Send us your program and sport, and we’ll set up a 20-minute demo built around you.</p>
         </div>
-        <a class="btn" href="mailto:hello@bobert.ai?subject=Digital%20Programs%20demo&amp;body=School%3A%0ASport%3A%0AYour%20role%3A%0ABest%20way%20to%20reach%20you%3A">Request a demo</a>
+        <a class="btn" href="mailto:hello@bobert.ai?subject=Program%20Home%20demo&amp;body=Program%20or%20organization%3A%0ASport%3A%0AYour%20role%3A%0ADo%20you%20have%20a%20website%20now%3F%0ABest%20way%20to%20reach%20you%3A">Request a demo</a>
       </div>
     </div>
   </section>
@@ -293,14 +274,17 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <a class="footer-brand" href="/" aria-label="Bobert home"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="136" height="34" /></a>
+    <a class="ph-logo" href="/programs" aria-label="Program Home"><span class="ph-type" style="font-size:24px">Program <b>Home</b></span></a>
     <div class="footer-links">
-      <a href="/">Bobert home</a>
-      <a href="/field">Field Tools</a>
+      <a href="#who">Who it’s for</a>
+      <a href="#options">Options</a>
       <a href="#privacy">Privacy approach</a>
       <a href="mailto:hello@bobert.ai">Contact</a>
     </div>
-    <p class="footer-legal">Bobert Digital Programs is a Bobert product. Sample program shown is fictional. © 2026 Bobert. All rights reserved.</p>
+    <p class="footer-legal" style="display:flex;flex-wrap:wrap;align-items:center;gap:8px">
+      <a class="footer-brand" href="/" aria-label="Bobert AI home"><img src="/assets/bobert-wordmark-dark.png" alt="Bobert" width="88" height="22" style="height:22px" /></a>
+      <span>Program Home is a Bobert AI product. Sample program shown is fictional. © 2026 Bobert. All rights reserved.</span>
+    </p>
   </div>
 </footer>
 

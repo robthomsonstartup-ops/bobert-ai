@@ -3,29 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bobert | Digital products, built with AI</title>
-  <meta name="description" content="Bobert builds focused web products with AI doing the heavy lifting: official websites for high school sports programs, and field intelligence tools for construction and lighting sales." />
-  <meta property="og:title" content="Bobert | Digital products, built with AI" />
-  <meta property="og:description" content="Official websites for high school sports programs, and field intelligence tools for construction sales. One platform, built with AI." />
+  <title>Bobert AI | Digital product studio</title>
+  <meta name="description" content="Bobert AI is a digital product studio building AI-powered products for the people who do the work: Program Home for sports programs, FieldPass for youth baseball scheduling, and Field Intelligence for construction and lighting sales." />
+  <meta property="og:title" content="Bobert AI | Digital product studio" />
+  <meta property="og:description" content="AI-powered digital products for the people who do the work. Program Home, FieldPass and Field Intelligence." />
   <meta property="og:url" content="https://bobert.ai" />
   <meta name="theme-color" content="#0A0A0A" />
   <link rel="icon" href="/assets/favicon.png" type="image/png" />
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800&family=Geist:wght@600;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/bobert-site.css" />
+  <!--
+    SELL SHEET MODE (Decision 029, amended Oct 18 2026): this page is an overview only.
+    No links out to products. Product links get added per next steps as each one launches.
+  -->
 </head>
 <body class="theme-bobert">
 
-<nav class="site-nav" aria-label="Main">
+<nav class="site-nav" aria-label="Sections">
   <div class="wrap">
-    <a class="nav-brand" href="/" aria-label="Bobert home"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="160" height="40" /></a>
+    <span class="nav-brand" aria-label="Bobert AI"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="160" height="40" /></span>
     <div class="nav-links">
-      <a href="/programs">Digital Programs</a>
-      <a href="/field">Field Tools</a>
-      <a href="#contact">Contact</a>
-      <a class="btn" href="/programs">See Digital Programs</a>
+      <a href="#products">Products</a>
+      <a href="#example">Example</a>
+      <a href="#how">How we work</a>
+      <a class="btn" href="#contact">Contact</a>
     </div>
   </div>
 </nav>
@@ -34,12 +38,14 @@
 
   <header class="hero">
     <div class="wrap">
-      <span class="eyebrow">Bobert AI</span>
-      <h1>Digital products that do the <em>busywork</em>, so you don’t have to.</h1>
-      <p class="lead">Bobert builds focused web products for specific people, with AI handling the gathering, sorting and keeping-current that usually eats your evenings. One platform. Different products for different jobs.</p>
-      <div class="hero-actions">
-        <a class="btn" href="/programs">High school programs</a>
-        <a class="btn btn-ghost" href="/field">Construction &amp; lighting sales</a>
+      <span class="eyebrow">Bobert AI · Digital product studio</span>
+      <h1>We build AI-powered products for the people who <em>do the work.</em></h1>
+      <p class="lead">Bobert AI builds focused digital products for specific industries. Each product is made for one kind of customer, with its own name and its own look. Underneath, they share one platform, with AI handling the gathering, sorting and keeping-current that usually eats people’s evenings.</p>
+
+      <div class="grid grid-3 glance" style="margin-top:44px;max-width:900px">
+        <div class="glance-item"><b>3</b><span>Products built</span></div>
+        <div class="glance-item"><b>2</b><span>Industries: sports and construction</span></div>
+        <div class="glance-item"><b>1</b><span>Shared platform underneath</span></div>
       </div>
     </div>
   </header>
@@ -47,66 +53,126 @@
   <section id="products" aria-labelledby="products-title">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow">What we build</span>
-        <h2 id="products-title">Two products today. Built on one platform.</h2>
-        <p>Each product is built for one kind of customer and does one job well. Pick the one that fits you.</p>
+        <span class="eyebrow">Our products</span>
+        <h2 id="products-title">Three products. Three kinds of customers.</h2>
+        <p>Each one solves a single job its customer is tired of doing by hand.</p>
       </div>
 
-      <div class="grid grid-2">
-        <article class="card division">
-          <div><span class="tag tag-live">Now booking demos</span></div>
-          <h3>Bobert Digital Programs</h3>
-          <p class="tagline">Your Program. Your Players. Your Story.</p>
-          <p>The official digital home for a high school sports program, in your colors. We build it from your program’s own records and keep it current through the season.</p>
+      <div class="grid grid-3">
+        <article class="product product--programhome">
+          <div class="product-head">
+            <span class="tag tag-live">Prototype built · booking demos</span>
+            <div class="product-name">Program <b>Home</b></div>
+            <p class="product-tagline">Your Program. Your Players. Your Story.</p>
+          </div>
+          <p class="product-body">The official digital home for any sports program. Rosters, player profiles, results, stats, history and alumni, in the program’s colors and on its own domain. Delivered as a full site, or added to the website the program already has.</p>
           <ul>
-            <li>Roster and permanent player profiles</li>
-            <li>Schedule, results and stats</li>
-            <li>Season history, records and alumni by class</li>
-            <li>News, photos and coaching staff</li>
+            <li>High school programs</li>
+            <li>Travel and club organizations</li>
+            <li>Built from the program’s records, kept current all season</li>
+            <li>Staff can update it through their own entry form</li>
           </ul>
-          <div class="actions">
-            <a class="btn" href="/programs">Explore Digital Programs</a>
+          <div class="product-foot">
+            <span class="product-who">For coaches, booster clubs and club directors</span>
           </div>
         </article>
 
-        <article class="card division">
-          <div><span class="tag">Closed beta</span></div>
-          <h3>Bobert Field Tools</h3>
-          <p class="tagline">See what others drive past.</p>
-          <p>For the people who help build things: lighting and electrical, contractors, manufacturers’ reps and suppliers. Catch the project in the field, process the bid at the desk.</p>
+        <article class="product product--fieldpass">
+          <div class="product-head">
+            <span class="tag tag-live">Built</span>
+            <div class="product-name">FieldPass</div>
+            <p class="product-tagline">Find your next game.</p>
+          </div>
+          <p class="product-body">A network for youth baseball programs. Teams sign up, post their open dates, find opponents, book games and doubleheaders, and rent field space, all in one place.</p>
           <ul>
-            <li>Field Intelligence: photo, GPS and a note, saved in seconds</li>
-            <li>Project Intake: bid invites turned into a clean summary</li>
+            <li>Post availability and discover opponents</li>
+            <li>Book games and doubleheaders</li>
+            <li>Rent field space</li>
+            <li>Connect with teams and new groups forming in the city</li>
+          </ul>
+          <div class="product-foot">
+            <span class="product-who">For teams, programs and leagues</span>
+          </div>
+        </article>
+
+        <article class="product product--field">
+          <div class="product-head">
+            <span class="tag">Closed beta</span>
+            <div class="product-name">Field Intelligence</div>
+            <p class="product-tagline">See what others drive past.</p>
+          </div>
+          <p class="product-body">For the people who help build things: lighting and electrical, contractors, manufacturers’ reps and suppliers. Catch the project in the field, and process the bid at the desk.</p>
+          <ul>
+            <li>Field capture: photo, GPS and a note in seconds</li>
+            <li>Project Intake: a bid invite turned into a clean summary</li>
             <li>Market Intelligence: is this company worth the call?</li>
           </ul>
-          <div class="actions">
-            <a class="btn btn-ghost" href="/field">Explore Field Tools</a>
+          <div class="product-foot">
+            <span class="product-who">For construction and lighting sales</span>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section aria-labelledby="how-title">
+  <section id="example" aria-labelledby="example-title">
+    <div class="wrap hero-split" style="align-items:start">
+      <div>
+        <span class="eyebrow">Example build · Program Home</span>
+        <h2 id="example-title">Center Grove Baseball.</h2>
+        <p class="lead" style="font-size:18px">Our first Program Home build is a working prototype for the Center Grove High School baseball program in Greenwood, Indiana, on its own domain. It shows what any program gets: its whole story in one place that the program owns.</p>
+        <ul class="checks" style="margin-top:26px">
+          <li><strong>21 seasons of history</strong>, back to the 2004–05 season</li>
+          <li><strong>Permanent player profiles</strong> that stay with each player after graduation</li>
+          <li><strong>Alumni by graduating class</strong></li>
+          <li><strong>Rosters, schedules, results and stats</strong> loaded from the program’s records</li>
+          <li><strong>Verified news</strong> tagged to the players in it, plus photos</li>
+          <li><strong>Built as a template:</strong> the next program is new data, not new code</li>
+        </ul>
+      </div>
+      <div class="card example-card" aria-label="What the Center Grove build includes">
+        <div class="example-head">
+          <span class="ph-type">Program <b>Home</b></span>
+          <span class="tag">Example</span>
+        </div>
+        <div class="example-title">Center Grove Baseball</div>
+        <div class="example-sub">Greenwood, Indiana · Own domain</div>
+        <div class="preview-stats" style="margin-top:18px">
+          <div class="preview-stat"><b>21</b><span>Seasons</span></div>
+          <div class="preview-stat"><b>2004</b><span>History from</span></div>
+          <div class="preview-stat"><b>1</b><span>Home for all of it</span></div>
+        </div>
+        <div class="preview-history" style="margin-top:12px">
+          <div class="preview-row"><b>Roster</b><span>Current team and staff</span></div>
+          <div class="preview-row"><b>Players</b><span>Permanent profiles</span></div>
+          <div class="preview-row"><b>Seasons</b><span>Results and stats by year</span></div>
+          <div class="preview-row"><b>Alumni</b><span>Every graduating class</span></div>
+          <div class="preview-row"><b>News</b><span>Tagged to players</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="how" aria-labelledby="how-title">
     <div class="wrap">
       <div class="section-head">
         <span class="eyebrow">How we work</span>
-        <h2 id="how-title">Same platform underneath. Built around you on top.</h2>
+        <h2 id="how-title">One studio. Built around each customer.</h2>
       </div>
       <div class="grid grid-3">
         <div class="card">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 17.5h7M17.5 14v7"/></svg>
           </div>
-          <h3>One platform, many products</h3>
-          <p>A new customer is new data, not new code. That keeps every product fast to set up and easy to keep running.</p>
+          <h3>Built for one customer at a time</h3>
+          <p>Every product starts with one kind of person and one job they’re tired of doing. It gets its own name and look so it feels made for them, because it was.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.9 4.6L18.5 9l-4.6 1.9L12 15.5l-1.9-4.6L5.5 9l4.6-1.4z"/><path d="M19 15l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg>
           </div>
           <h3>AI does the heavy lifting</h3>
-          <p>Reading documents, pulling records together and keeping things current. The tedious part is ours. The decisions stay yours.</p>
+          <p>Reading documents, pulling records together and keeping things current. The tedious part is ours. The decisions stay with the customer.</p>
         </div>
         <div class="card">
           <div class="icon" aria-hidden="true">
@@ -123,10 +189,10 @@
     <div class="wrap">
       <div class="cta-band">
         <div>
-          <h2 id="contact-title">Want to see one in action?</h2>
-          <p>Tell us a little about your program or your territory and we’ll set up a short demo.</p>
+          <h2 id="contact-title">Interested in one of our products?</h2>
+          <p>We’re working with a small group of early customers in each product. Reach out and we’ll set up a short demo of the one that fits you.</p>
         </div>
-        <a class="btn" href="mailto:hello@bobert.ai?subject=Bobert%20demo%20request">Email hello@bobert.ai</a>
+        <div class="contact-text">hello@bobert.ai</div>
       </div>
     </div>
   </section>
@@ -135,14 +201,9 @@
 
 <footer class="site-footer">
   <div class="wrap">
-    <a class="footer-brand" href="/" aria-label="Bobert home"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="136" height="34" /></a>
-    <div class="footer-links">
-      <a href="/programs">Digital Programs</a>
-      <a href="/field">Field Tools</a>
-      <a href="/changelog">What’s shipped</a>
-      <a href="mailto:hello@bobert.ai">Contact</a>
-    </div>
-    <p class="footer-legal">© 2026 Bobert. All rights reserved.</p>
+    <span class="footer-brand" aria-label="Bobert AI"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="136" height="34" /></span>
+    <p class="muted" style="font-size:14px">Program Home · FieldPass · Field Intelligence</p>
+    <p class="footer-legal">Bobert AI is a digital product studio. © 2026 Bobert. All rights reserved.</p>
   </div>
 </footer>
 
