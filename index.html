@@ -13,35 +13,38 @@
   <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800&family=Geist:wght@600;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Barlow+Condensed:wght@700;800&family=Geist:wght@400;600;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/bobert-site.css" />
   <!--
-    SELL SHEET MODE (Decision 029, amended Oct 18 2026): this page is an overview only.
-    No links out to products. Product links get added per next steps as each one launches.
+    SELL SHEET MODE (Decision 029, amended Oct 18 2026): overview only.
+    Links stay on this page (jumps to each product's section). No links out to
+    products until each product's next steps are decided.
+    Each product section is a "world" with its own look: .world--programhome,
+    .world--fieldpass, .world--field (see assets/bobert-site.css).
   -->
 </head>
 <body class="theme-bobert">
 
 <nav class="site-nav" aria-label="Sections">
   <div class="wrap">
-    <span class="nav-brand" aria-label="Bobert AI"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="160" height="40" /></span>
+    <a class="nav-brand" href="#top" aria-label="Back to top"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="160" height="40" /></a>
     <div class="nav-links">
-      <a href="#products">Products</a>
-      <a href="#example">Example</a>
-      <a href="#how">How we work</a>
+      <a href="#program-home">Program Home</a>
+      <a href="#fieldpass">FieldPass</a>
+      <a href="#field-intelligence">Field Intelligence</a>
       <a class="btn" href="#contact">Contact</a>
     </div>
   </div>
 </nav>
 
-<main>
+<main id="top">
 
+  <!-- ================= Studio overview ================= -->
   <header class="hero">
     <div class="wrap">
       <span class="eyebrow">Bobert AI · Digital product studio</span>
       <h1>We build AI-powered products for the people who <em>do the work.</em></h1>
       <p class="lead">Bobert AI builds focused digital products for specific industries. Each product is made for one kind of customer, with its own name and its own look. Underneath, they share one platform, with AI handling the gathering, sorting and keeping-current that usually eats people’s evenings.</p>
-
       <div class="grid grid-3 glance" style="margin-top:44px;max-width:900px">
         <div class="glance-item"><b>3</b><span>Products built</span></div>
         <div class="glance-item"><b>2</b><span>Industries: sports and construction</span></div>
@@ -55,9 +58,8 @@
       <div class="section-head">
         <span class="eyebrow">Our products</span>
         <h2 id="products-title">Three products. Three kinds of customers.</h2>
-        <p>Each one solves a single job its customer is tired of doing by hand.</p>
+        <p>Each one solves a single job its customer is tired of doing by hand. Pick one to see how it works.</p>
       </div>
-
       <div class="grid grid-3">
         <article class="product product--programhome">
           <div class="product-head">
@@ -65,94 +67,245 @@
             <div class="product-name">Program <b>Home</b></div>
             <p class="product-tagline">Your Program. Your Players. Your Story.</p>
           </div>
-          <p class="product-body">The official digital home for any sports program. Rosters, player profiles, results, stats, history and alumni, in the program’s colors and on its own domain. Delivered as a full site, or added to the website the program already has.</p>
-          <ul>
-            <li>High school programs</li>
-            <li>Travel and club organizations</li>
-            <li>Built from the program’s records, kept current all season</li>
-            <li>Staff can update it through their own entry form</li>
-          </ul>
+          <p class="product-body">The official digital home for any sports program, from high school teams to travel and club organizations.</p>
           <div class="product-foot">
-            <span class="product-who">For coaches, booster clubs and club directors</span>
+            <span class="product-who">For coaches, boosters and club directors</span>
+            <a class="jump" href="#program-home">See Program Home ↓</a>
           </div>
         </article>
-
         <article class="product product--fieldpass">
           <div class="product-head">
             <span class="tag tag-live">Built</span>
             <div class="product-name">FieldPass</div>
             <p class="product-tagline">Find your next game.</p>
           </div>
-          <p class="product-body">A network for youth baseball programs. Teams sign up, post their open dates, find opponents, book games and doubleheaders, and rent field space, all in one place.</p>
-          <ul>
-            <li>Post availability and discover opponents</li>
-            <li>Book games and doubleheaders</li>
-            <li>Rent field space</li>
-            <li>Connect with teams and new groups forming in the city</li>
-          </ul>
+          <p class="product-body">A network for youth baseball programs to find opponents, book games and doubleheaders, and rent fields.</p>
           <div class="product-foot">
             <span class="product-who">For teams, programs and leagues</span>
+            <a class="jump" href="#fieldpass">See FieldPass ↓</a>
           </div>
         </article>
-
         <article class="product product--field">
           <div class="product-head">
             <span class="tag">Closed beta</span>
             <div class="product-name">Field Intelligence</div>
             <p class="product-tagline">See what others drive past.</p>
           </div>
-          <p class="product-body">For the people who help build things: lighting and electrical, contractors, manufacturers’ reps and suppliers. Catch the project in the field, and process the bid at the desk.</p>
-          <ul>
-            <li>Field capture: photo, GPS and a note in seconds</li>
-            <li>Project Intake: a bid invite turned into a clean summary</li>
-            <li>Market Intelligence: is this company worth the call?</li>
-          </ul>
+          <p class="product-body">Field capture, project intake and market intelligence for the people who sell into construction.</p>
           <div class="product-foot">
             <span class="product-who">For construction and lighting sales</span>
+            <a class="jump" href="#field-intelligence">See Field Intelligence ↓</a>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <section id="example" aria-labelledby="example-title">
-    <div class="wrap hero-split" style="align-items:start">
-      <div>
-        <span class="eyebrow">Example build · Program Home</span>
-        <h2 id="example-title">Center Grove Baseball.</h2>
-        <p class="lead" style="font-size:18px">Our first Program Home build is a working prototype for the Center Grove High School baseball program in Greenwood, Indiana, on its own domain. It shows what any program gets: its whole story in one place that the program owns.</p>
-        <ul class="checks" style="margin-top:26px">
-          <li><strong>21 seasons of history</strong>, back to the 2004–05 season</li>
-          <li><strong>Permanent player profiles</strong> that stay with each player after graduation</li>
-          <li><strong>Alumni by graduating class</strong></li>
-          <li><strong>Rosters, schedules, results and stats</strong> loaded from the program’s records</li>
-          <li><strong>Verified news</strong> tagged to the players in it, plus photos</li>
-          <li><strong>Built as a template:</strong> the next program is new data, not new code</li>
-        </ul>
+  <!-- ================= Product 01: Program Home ================= -->
+  <section class="world world--programhome" id="program-home" aria-labelledby="ph-title">
+    <div class="wrap">
+      <div class="world-label">Product 01 · a Bobert AI product</div>
+      <div class="world-split">
+        <div>
+          <div class="ph-name">Program <b>Home</b></div>
+          <h2 id="ph-title" style="margin-top:18px">Your Program. Your Players. Your <em>Story.</em></h2>
+          <p class="lead">The official digital home for a sports program. Rosters, player profiles, schedule and results, stats, history, records and alumni, all in one place, in the program’s colors and on its own domain. We set it up from the program’s records, and it stays current all season.</p>
+          <ul class="checks" style="margin-top:24px">
+            <li><strong>A full site</strong>, or <strong>added to the website the program already has</strong></li>
+            <li><strong>An entry form</strong> built around how the program works, so staff can update it themselves</li>
+            <li><strong>Families first:</strong> works with the sign-off programs already collect</li>
+          </ul>
+        </div>
+        <div>
+          <div class="preview" id="ph-preview" aria-label="Sample program site, shown in program colors">
+            <div class="preview-top">
+              <div class="preview-school">
+                <div class="preview-crest" aria-hidden="true">S</div>
+                <div><b>Sample Program Baseball</b><span>Official program site · Est. 1965</span></div>
+              </div>
+            </div>
+            <div class="preview-tabs" aria-hidden="true">
+              <span class="on">Roster</span><span>Schedule</span><span>Stats</span><span>History</span><span>Alumni</span>
+            </div>
+            <div class="preview-body">
+              <div class="preview-player">
+                <div class="preview-num" aria-hidden="true">7</div>
+                <div><b>Alex Carter</b><span>SS / RHP · Class of 2027 · 3 seasons</span></div>
+              </div>
+              <div class="preview-stats">
+                <div class="preview-stat"><b>.382</b><span>AVG</span></div>
+                <div class="preview-stat"><b>31</b><span>RBI</span></div>
+                <div class="preview-stat"><b>1.84</b><span>ERA</span></div>
+              </div>
+              <div class="preview-history">
+                <div class="preview-row"><b>2026</b><span>24–6 · Champions</span></div>
+                <div class="preview-row"><b>2025</b><span>19–10 · Runner-up</span></div>
+                <div class="preview-row"><b>2024</b><span>22–8 · Champions</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="swatches" role="group" aria-label="Try it in different program colors">
+            <span>Try program colors:</span>
+            <button class="swatch" type="button" aria-pressed="true"  aria-label="Navy and gold"   style="--a:#0B2A5B;--b:#C8A24A" data-brand="#0B2A5B" data-brand2="#C8A24A"></button>
+            <button class="swatch" type="button" aria-pressed="false" aria-label="Red and black"   style="--a:#B91C1C;--b:#1A1A1A" data-brand="#B91C1C" data-brand2="#1A1A1A"></button>
+            <button class="swatch" type="button" aria-pressed="false" aria-label="Green and white" style="--a:#14532D;--b:#F0F0F0" data-brand="#14532D" data-brand2="#F0F0F0"></button>
+            <button class="swatch" type="button" aria-pressed="false" aria-label="Purple and gold" style="--a:#4C1D95;--b:#C8A24A" data-brand="#4C1D95" data-brand2="#C8A24A"></button>
+          </div>
+        </div>
       </div>
-      <div class="card example-card" aria-label="What the Center Grove build includes">
-        <div class="example-head">
-          <span class="ph-type">Program <b>Home</b></span>
-          <span class="tag">Example</span>
+
+      <div class="sub-head">Built for any program</div>
+      <div class="paths">
+        <div class="card path">
+          <h3>High school programs</h3>
+          <p>A professional home for the program, with every season, record and graduating class in one place. Usually funded by the booster club or local sponsors.</p>
         </div>
-        <div class="example-title">Center Grove Baseball</div>
-        <div class="example-sub">Greenwood, Indiana · Own domain</div>
-        <div class="preview-stats" style="margin-top:18px">
-          <div class="preview-stat"><b>21</b><span>Seasons</span></div>
-          <div class="preview-stat"><b>2004</b><span>History from</span></div>
-          <div class="preview-stat"><b>1</b><span>Home for all of it</span></div>
-        </div>
-        <div class="preview-history" style="margin-top:12px">
-          <div class="preview-row"><b>Roster</b><span>Current team and staff</span></div>
-          <div class="preview-row"><b>Players</b><span>Permanent profiles</span></div>
-          <div class="preview-row"><b>Seasons</b><span>Results and stats by year</span></div>
-          <div class="preview-row"><b>Alumni</b><span>Every graduating class</span></div>
-          <div class="preview-row"><b>News</b><span>Tagged to players</span></div>
+        <div class="card path alt">
+          <h3>Travel and club organizations</h3>
+          <p>Every team and age group under one roof, with profiles that follow players from team to team. Added to the organization’s existing website, or a full site of its own.</p>
         </div>
       </div>
+
+      <div class="sub-head">Three ways to set it up</div>
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="option-price">Already have a website?</div>
+          <h3>Extension</h3>
+          <p>Rosters, profiles, stats and history added to the program’s existing site, on its own domain, kept current.</p>
+        </div>
+        <div class="card">
+          <div class="option-price">Full site</div>
+          <h3>Program Site</h3>
+          <p>A complete program website: home page, news, photos, staff, sponsors and a staff entry form.</p>
+        </div>
+        <div class="card">
+          <div class="option-price">For tradition programs</div>
+          <h3>Legacy</h3>
+          <p>Everything in Program Site, plus full season history, all-time records and alumni across every year.</p>
+        </div>
+      </div>
+
+      <div class="sub-head">Example build: Center Grove Baseball</div>
+      <div class="world-split" style="align-items:start">
+        <div>
+          <p class="muted">Our first Program Home build is a working prototype for the Center Grove High School baseball program in Greenwood, Indiana, on its own domain. It shows what any program gets: its whole story in one place that the program owns.</p>
+          <ul class="checks" style="margin-top:22px">
+            <li><strong>21 seasons of history</strong>, back to the 2004–05 season</li>
+            <li><strong>Permanent player profiles</strong> that stay with each player after graduation</li>
+            <li><strong>Alumni by graduating class</strong></li>
+            <li><strong>Rosters, schedules, results and stats</strong> loaded from the program’s records</li>
+            <li><strong>Verified news</strong> tagged to the players in it, plus photos</li>
+            <li><strong>Built as a template:</strong> the next program is new data, not new code</li>
+          </ul>
+        </div>
+        <div class="card" style="padding:28px">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+            <span class="ph-name" style="font-size:28px">Program <b>Home</b></span><span class="tag">Example</span>
+          </div>
+          <div style="margin-top:20px;font-size:26px;font-weight:800">Center Grove Baseball</div>
+          <div class="muted" style="font-size:15px;margin-top:4px">Greenwood, Indiana · Own domain</div>
+          <div class="preview-stats" style="margin-top:18px">
+            <div class="preview-stat"><b>21</b><span>Seasons</span></div>
+            <div class="preview-stat"><b>2004</b><span>History from</span></div>
+            <div class="preview-stat"><b>1</b><span>Home for it all</span></div>
+          </div>
+          <div class="preview-history" style="margin-top:12px">
+            <div class="preview-row"><b>Players</b><span>Permanent profiles</span></div>
+            <div class="preview-row"><b>Seasons</b><span>Results and stats by year</span></div>
+            <div class="preview-row"><b>Alumni</b><span>Every graduating class</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="world-back"><a href="#products">↑ Back to all products</a></p>
     </div>
   </section>
 
+  <!-- ================= Product 02: FieldPass ================= -->
+  <section class="world world--fieldpass" id="fieldpass" aria-labelledby="fp-title">
+    <div class="wrap">
+      <div class="world-label">Product 02 · a Bobert AI product</div>
+      <div class="world-split">
+        <div>
+          <span class="eyebrow">FieldPass</span>
+          <h2 id="fp-title" style="margin-top:16px">Find your next <em>game.</em></h2>
+          <p class="lead">A network for youth baseball programs. Teams sign up, post their open dates, find opponents, book games and doubleheaders, and rent field space. No more group texts and spreadsheets to fill a weekend.</p>
+          <ul class="checks" style="margin-top:24px">
+            <li><strong>Post availability</strong> and get matched with teams at your level</li>
+            <li><strong>Book games and doubleheaders</strong> in a few taps</li>
+            <li><strong>Rent field space</strong> from programs that have it</li>
+            <li><strong>Connect</strong> with teams and new groups forming in your city</li>
+          </ul>
+        </div>
+        <div class="fp-board" aria-label="Sample FieldPass open dates board">
+          <div class="fp-board-head"><b>Open dates near you</b><span class="fp-pill">14U · 25 mi</span></div>
+          <div class="fp-game">
+            <div class="fp-date"><span>Sat</span><b>11</b></div>
+            <div><strong>Doubleheader · 14U</strong><small>Home team has field · 10:00 AM</small></div>
+            <span class="fp-action">Request</span>
+          </div>
+          <div class="fp-game">
+            <div class="fp-date"><span>Sun</span><b>12</b></div>
+            <div><strong>Single game · 14U</strong><small>Neutral site · 1:00 PM</small></div>
+            <span class="fp-action ghost">Details</span>
+          </div>
+          <div class="fp-game">
+            <div class="fp-date"><span>Wed</span><b>15</b></div>
+            <div><strong>Field available · 2 hrs</strong><small>Turf infield · lights</small></div>
+            <span class="fp-action ghost">Rent</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-3 fp-steps" style="margin-top:64px">
+        <div class="card"><span class="num">1</span><h3>Post your open dates</h3><p>Tell the network when you need games and where you can play.</p></div>
+        <div class="card"><span class="num">2</span><h3>Find an opponent</h3><p>See teams at your level with matching dates, close by.</p></div>
+        <div class="card"><span class="num">3</span><h3>Book it</h3><p>Lock in the game, the doubleheader or the field. Everyone gets the details.</p></div>
+      </div>
+      <p class="world-back"><a href="#products">↑ Back to all products</a></p>
+    </div>
+  </section>
+
+  <!-- ================= Product 03: Field Intelligence ================= -->
+  <section class="world world--field" id="field-intelligence" aria-labelledby="fi-title">
+    <div class="wrap">
+      <div class="world-label">Product 03 · a Bobert AI product</div>
+      <div class="world-split">
+        <div>
+          <span class="eyebrow">Field Intelligence</span>
+          <h2 id="fi-title" style="margin-top:16px">See what others drive past.</h2>
+          <p class="lead">For the people who help build things: lighting and electrical, contractors, manufacturers’ reps and suppliers. Opportunity gets lost twice, once on the road and again in the inbox. Field Intelligence handles both.</p>
+          <div class="fi-stats">
+            <div><b>&lt;10s</b><span>Capture, curb to saved</span></div>
+            <div><b>GPS</b><span>Every capture tagged</span></div>
+            <div><b>1</b><span>Photo, the rest fills in</span></div>
+          </div>
+        </div>
+        <div class="fi-capture" aria-label="Sample field capture">
+          <div class="viewfinder mono">CAPTURE · PARKED</div>
+          <div class="fi-meta mono">
+            <span class="hot">● Saved</span><span>GPS tagged</span><span>Follow up: Fri</span>
+          </div>
+          <div class="fi-rows">
+            <div><b>Project</b><span>3-story medical office</span></div>
+            <div><b>Stage</b><span>Site work, pre-electrical</span></div>
+            <div><b>Opportunity</b><span>Lighting package not yet spec’d</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-3" style="margin-top:64px">
+        <div class="card"><span class="eyebrow">01 / Field</span><h3>Field capture</h3><p>Photo, GPS and a note, saved before you leave the curb, with the project details pulled in for you.</p></div>
+        <div class="card"><span class="eyebrow">02 / Desk</span><h3>Project Intake</h3><p>Drop in a bid invite, PDF or screenshot. Get a clean summary, the gaps to ask about, and a draft to work from.</p></div>
+        <div class="card"><span class="eyebrow">03 / Market</span><h3>Market Intelligence</h3><p>Name a company and see whether it’s worth the call, with the signals that back it up.</p></div>
+      </div>
+      <div class="fi-meta mono" style="margin-top:28px">
+        <span>Lighting &amp; electrical</span><span>Contractors &amp; subs</span><span>Manufacturers’ reps</span><span>Suppliers &amp; distributors</span>
+      </div>
+      <p class="world-back"><a href="#products">↑ Back to all products</a></p>
+    </div>
+  </section>
+
+  <!-- ================= Studio ================= -->
   <section id="how" aria-labelledby="how-title">
     <div class="wrap">
       <div class="section-head">
@@ -202,10 +355,29 @@
 <footer class="site-footer">
   <div class="wrap">
     <span class="footer-brand" aria-label="Bobert AI"><img src="/assets/bobert-wordmark-white.png" alt="Bobert" width="136" height="34" /></span>
-    <p class="muted" style="font-size:14px">Program Home · FieldPass · Field Intelligence</p>
-    <p class="footer-legal">Bobert AI is a digital product studio. © 2026 Bobert. All rights reserved.</p>
+    <div class="footer-links">
+      <a href="#program-home">Program Home</a>
+      <a href="#fieldpass">FieldPass</a>
+      <a href="#field-intelligence">Field Intelligence</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <p class="footer-legal">Bobert AI is a digital product studio. Sample teams and projects shown are fictional, except the Center Grove example. © 2026 Bobert. All rights reserved.</p>
   </div>
 </footer>
+
+<script>
+  (function () {
+    var preview = document.getElementById('ph-preview');
+    var buttons = document.querySelectorAll('.swatch');
+    buttons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        preview.style.setProperty('--brand', btn.dataset.brand);
+        preview.style.setProperty('--brand-2', btn.dataset.brand2);
+        buttons.forEach(function (b) { b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'); });
+      });
+    });
+  })();
+</script>
 
 </body>
 </html>

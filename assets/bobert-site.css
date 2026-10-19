@@ -412,3 +412,133 @@ body.theme-programhome .site-footer { background: var(--surface-2); }
   font-size: clamp(20px, 2.6vw, 26px); font-weight: 800; letter-spacing: -0.01em;
   padding: 12px 20px; border-radius: 12px; border: 1px solid var(--line-strong); background: var(--surface);
 }
+
+/* ==========================================================================
+   Product "worlds" on the sell sheet: each product section wears its own look.
+   Tokens are scoped to the section, so shared components (.card, .eyebrow,
+   .checks, .btn) pick up each product's personality automatically.
+   ========================================================================== */
+section.world { padding: 110px 0; border-top: 0; position: relative; overflow: hidden; background: var(--bg); color: var(--text); }
+.world .section-head { margin-bottom: 40px; }
+.world-label {
+  display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 700;
+  letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 22px;
+}
+.world-label img { height: 18px; width: auto; }
+.world-split { display: grid; grid-template-columns: 1.05fr .95fr; gap: 56px; align-items: center; }
+@media (max-width: 960px) { .world-split { grid-template-columns: minmax(0, 1fr); gap: 40px; } }
+.world .sub-head { font-size: 22px; font-weight: 800; margin: 56px 0 18px; }
+
+/* --- Program Home: light, editorial, scoreboard type --- */
+.world--programhome {
+  --brand: #0B2A5B; --brand-2: #C8A24A; --brand-ink: #FFFFFF;
+  --bg: #F6F3EC; --surface: #FFFFFF; --surface-2: #F1EDE4;
+  --line: rgba(20,24,33,.10); --line-strong: rgba(20,24,33,.22);
+  --text: #141821; --muted: rgba(20,24,33,.70); --dim: rgba(20,24,33,.50);
+}
+.world--programhome h2, .world--programhome .sub-head, .world--programhome .ph-name {
+  font-family: "Barlow Condensed", Inter, sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: 0; line-height: .98;
+}
+.world--programhome h2 { font-size: clamp(42px, 6.4vw, 76px); }
+.world--programhome h2 em { color: var(--brand-2); font-style: normal; }
+.world--programhome .sub-head { font-size: 30px; }
+.world--programhome .eyebrow::before { background: var(--brand-2); }
+.world--programhome .card { box-shadow: 0 1px 2px rgba(20,24,33,.05); }
+.world--programhome .preview { box-shadow: 0 24px 60px rgba(11,42,91,.18); }
+.ph-name { font-size: 44px; }
+.ph-name b { color: var(--brand-2); font-weight: 800; }
+.world--programhome .path { border-top: 4px solid var(--brand); }
+.world--programhome .path.alt { border-top-color: var(--brand-2); }
+.option-price { margin-top: 10px; font-size: 13px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .06em; }
+
+/* --- FieldPass: night game, green, app-like and rounded --- */
+.world--fieldpass {
+  --brand: #1DB954; --brand-2: #22C55E; --brand-ink: #07111D;
+  --bg: #07111D; --surface: #0D1C2E; --surface-2: #10233A;
+  --line: rgba(240,246,255,.08); --line-strong: rgba(240,246,255,.18);
+  --text: #F0F6FF; --muted: rgba(232,241,251,.68); --dim: rgba(232,241,251,.42);
+  font-family: Geist, Inter, sans-serif;
+  background:
+    radial-gradient(700px 420px at 85% 10%, rgba(29,185,84,.16), transparent 70%),
+    radial-gradient(600px 400px at 0% 100%, rgba(29,185,84,.08), transparent 70%),
+    var(--bg);
+}
+.world--fieldpass h2 { font-family: Geist, Inter, sans-serif; font-weight: 900; letter-spacing: -0.035em; font-size: clamp(40px, 6vw, 68px); }
+.world--fieldpass h2 em { color: var(--brand); font-style: normal; }
+.world--fieldpass .card { border-radius: 22px; }
+.world--fieldpass .eyebrow { color: var(--brand); }
+.fp-board { background: var(--surface); border: 1px solid var(--line); border-radius: 26px; padding: 18px; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+.fp-board-head { display: flex; justify-content: space-between; align-items: center; padding: 4px 6px 14px; }
+.fp-board-head b { font-size: 16px; }
+.fp-pill { font-size: 12px; font-weight: 700; padding: 5px 11px; border-radius: 999px; background: rgba(29,185,84,.14); color: var(--brand); }
+.fp-game {
+  display: grid; grid-template-columns: 64px 1fr auto; gap: 14px; align-items: center;
+  padding: 14px; border-radius: 18px; background: var(--surface-2); border: 1px solid var(--line); margin-top: 10px;
+}
+.fp-date { text-align: center; border-radius: 14px; background: rgba(29,185,84,.12); padding: 8px 0; }
+.fp-date span { display: block; font-size: 11px; font-weight: 700; color: var(--brand); text-transform: uppercase; letter-spacing: .08em; }
+.fp-date b { display: block; font-size: 22px; font-weight: 900; line-height: 1.1; }
+.fp-game strong { display: block; font-size: 15px; }
+.fp-game small { color: var(--muted); font-size: 13px; }
+.fp-action { font-size: 13px; font-weight: 800; padding: 9px 14px; border-radius: 999px; background: var(--brand); color: var(--brand-ink); white-space: nowrap; }
+.fp-action.ghost { background: transparent; color: var(--brand); box-shadow: inset 0 0 0 1px rgba(29,185,84,.5); }
+.fp-steps .card { position: relative; padding-top: 64px; }
+.fp-steps .num {
+  position: absolute; top: 22px; left: 26px; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 900; font-size: 14px; background: var(--brand); color: var(--brand-ink);
+}
+@media (max-width: 480px) { .fp-game { grid-template-columns: 54px 1fr; } .fp-action { grid-column: 2; justify-self: start; } }
+
+/* --- Field Intelligence: black, red, field-ops and bracketed --- */
+.world--field {
+  --brand: #DC2626; --brand-2: #1A1A1A; --brand-ink: #FFFFFF;
+  --bg: #0A0A0A; --surface: #121212; --surface-2: #1A1A1A;
+  --line: rgba(255,255,255,.09); --line-strong: rgba(255,255,255,.18);
+  --text: #FFFFFF; --muted: rgba(255,255,255,.66); --dim: rgba(255,255,255,.42);
+  background:
+    linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px) 0 0 / 44px 44px,
+    var(--bg);
+}
+.world--field h2 { font-weight: 900; letter-spacing: -0.03em; font-size: clamp(40px, 6vw, 68px); }
+.world--field .mono, .world--field .eyebrow {
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em;
+}
+.world--field .card { border-radius: 4px; position: relative; }
+.world--field .card::before, .world--field .card::after {
+  content: ""; position: absolute; width: 16px; height: 16px; border: 2px solid var(--brand);
+}
+.world--field .card::before { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+.world--field .card::after { bottom: -1px; left: -1px; border-right: 0; border-top: 0; border-color: rgba(255,255,255,.5); }
+.fi-capture { background: var(--surface); border: 1px solid var(--line); padding: 22px; position: relative; }
+.fi-capture .viewfinder {
+  height: 170px; position: relative; background: linear-gradient(135deg, #1A1A1A, #0F0F0F);
+  display: grid; place-items: center; color: var(--dim); font-size: 13px;
+}
+.fi-capture .viewfinder::before, .fi-capture .viewfinder::after {
+  content: ""; position: absolute; width: 28px; height: 28px; border: 3px solid #FFFFFF;
+}
+.fi-capture .viewfinder::before { top: 14px; left: 14px; border-right: 0; border-bottom: 0; }
+.fi-capture .viewfinder::after { top: 14px; right: 14px; border-left: 0; border-bottom: 0; border-color: var(--brand); }
+.fi-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.fi-meta span { font-size: 12px; padding: 5px 9px; border: 1px solid var(--line-strong); color: var(--muted); }
+.fi-meta span.hot { border-color: var(--brand); color: var(--brand); }
+.fi-rows { margin-top: 14px; display: grid; gap: 6px; }
+.fi-rows div { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; padding: 9px 12px; background: var(--surface-2); color: var(--muted); }
+.fi-rows b { color: var(--text); font-weight: 600; }
+.fi-stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; margin-top: 30px; }
+.fi-stats div { border-left: 3px solid var(--brand); padding-left: 14px; }
+.fi-stats b { display: block; font-size: 30px; font-weight: 900; }
+.fi-stats span { font-size: 13px; color: var(--muted); }
+
+/* Overview card link down to its section */
+.product .jump {
+  display: inline-flex; align-items: center; gap: 6px; font-weight: 800; font-size: 15px; text-decoration: none;
+  padding: 11px 16px; border-radius: 12px; background: var(--p-accent); color: var(--p-ink);
+}
+.product .jump:hover { filter: brightness(1.08); }
+.world-back { margin-top: 48px; font-size: 14px; }
+.world-back a { color: var(--muted); text-decoration: none; }
+.world-back a:hover { color: var(--text); }
+
+section[id], header[id] { scroll-margin-top: 68px; }
