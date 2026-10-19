@@ -662,3 +662,9 @@ only element every product carries ("a Bobert AI product").
 - `assets/bobert-site.css` is shared plumbing only. Each product picks its look with a
   body class (`theme-bobert`, `theme-programhome`). This replaces the original
   029 wording that every page shares one look.
+
+**Amendment 2 (October 18, 2026):** No contact details anywhere on the site
+for now. The `hello@bobert.ai` address, contact sections and "Request a demo"
+buttons are removed from `/`, `/programs` and `/field`. A contact method gets
+added once a business email domain is set up. This replaces the `hello@bobert.ai`
+open item above.
